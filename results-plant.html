@@ -1,0 +1,212 @@
+<section>
+  <nav>
+    <div
+      class="nav nav-tabs justify-content-center"
+      id="nav-tab"
+      role="tablist"
+    >
+      <button
+        class="nav-item nav-link active"
+        id="tab-plant-nerfacto"
+        data-bs-toggle="tab"
+        data-bs-target="#video-plant-nerfacto"
+        role="tab"
+        type="button"
+        aria-controls="tab-plant-nerfacto"
+        aria-selected="true"
+      >
+        Nerfacto
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-plant-nerfacto-vis"
+        data-bs-toggle="tab"
+        data-bs-target="#video-plant-nerfacto-vis"
+        role="tab"
+        type="button"
+        aria-controls="tab-plant-nerfacto-vis"
+        aria-selected="false"
+      >
+        Nerfacto + Vis
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-plant-nerfacto-vis-sparsity"
+        data-bs-toggle="tab"
+        data-bs-target="#video-plant-nerfacto-vis-sparsity"
+        role="tab"
+        type="button"
+        aria-controls="tab-plant-nerfacto-sparsity"
+        aria-selected="false"
+      >
+        Nerfacto + Vis + Sparsity
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-plant-nerfacto-vis"
+        data-bs-toggle="tab"
+        data-bs-target="#video-plant-nerfacto-vis-tv"
+        role="tab"
+        type="button"
+        aria-controls="tab-plant-nerfacto-vis-tv"
+        aria-selected="false"
+      >
+        Nerfacto + Vis + TV
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-plant-nerfacto-vis"
+        data-bs-toggle="tab"
+        data-bs-target="#video-plant-nerfacto-vis-regnerf"
+        role="tab"
+        type="button"
+        aria-controls="tab-plant-nerfacto-vis-regnerf"
+        aria-selected="false"
+      >
+        Nerfacto + Vis + RegNeRF
+      </button>
+    </div>
+  </nav>
+
+  <div class="tab-content" id="nav-tabContent">
+    <div
+      class="tab-pane fade show active text-center"
+      id="video-plant-nerfacto"
+      role="tabpanel"
+      aria-labelledby="tab-plant-nerfacto"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="plant-nerfactoDiv">
+        <video
+          class="plant-video"
+          id="plant-nerfacto"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/plant---nerfacto.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas height="0" class="videoMerge" id="plant-nerfactoMerge"></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="plant">Play / Pause</button>
+      </div>
+    </div>
+
+    <div
+      class="tab-pane fade text-center"
+      id="video-plant-nerfacto-vis"
+      role="tabpanel"
+      aria-labelledby="tab-plant-nerfacto-vis"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="plant-nerfacto-visDiv">
+        <video
+          class="plant-video"
+          id="plant-nerfacto-vis"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/plant---nerfacto-frustum.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="plant-nerfacto-visMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="plant">Play / Pause</button>
+      </div>
+    </div>
+
+    <div
+      class="tab-pane fade text-center"
+      id="video-plant-nerfacto-vis-sparsity"
+      role="tabpanel"
+      aria-labelledby="tab-plant-nerfacto-vis-sparsity"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="plant-nerfacto-vis-sparsityDiv">
+        <video
+          class="plant-video"
+          id="plant-nerfacto-vis-sparsity"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/plant---nerfacto-frustum-sparsity.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="plant-nerfacto-vis-sparsityMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="plant">Play / Pause</button>
+      </div>
+    </div>
+
+    <div
+      class="tab-pane fade text-center"
+      id="video-plant-nerfacto-vis-tv"
+      role="tabpanel"
+      aria-labelledby="tab-plant-nerfacto-vis-tv"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="plant-nerfacto-vis-tvDiv">
+        <video
+          class="plant-video"
+          id="plant-nerfacto-vis-tv"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/plant---nerfacto-frustum-TV.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="plant-nerfacto-vis-tvMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="plant">Play / Pause</button>
+      </div>
+    </div>
+    <div
+      class="tab-pane fade text-center"
+      id="video-plant-nerfacto-vis-regnerf"
+      role="tabpanel"
+      aria-labelledby="tab-plant-nerfacto-vis-regnerf"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="plant-nerfacto-vis-regnerfDiv">
+        <video
+          class="plant-video"
+          id="plant-nerfacto-vis-regnerf"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/plant---nerfacto-frustum-regnerf.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="plant-nerfacto-vis-regnerfMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="plant">Play / Pause</button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,212 @@
+<section>
+  <nav>
+    <div
+      class="nav nav-tabs justify-content-center"
+      id="nav-tab"
+      role="tablist"
+    >
+      <button
+        class="nav-item nav-link active"
+        id="tab-car-nerfacto"
+        data-bs-toggle="tab"
+        data-bs-target="#video-car-nerfacto"
+        role="tab"
+        type="button"
+        aria-controls="tab-car-nerfacto"
+        aria-selected="true"
+      >
+        Nerfacto
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-car-nerfacto-vis"
+        data-bs-toggle="tab"
+        data-bs-target="#video-car-nerfacto-vis"
+        role="tab"
+        type="button"
+        aria-controls="tab-car-nerfacto-vis"
+        aria-selected="false"
+      >
+        Nerfacto + Vis
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-car-nerfacto-vis-sparsity"
+        data-bs-toggle="tab"
+        data-bs-target="#video-car-nerfacto-vis-sparsity"
+        role="tab"
+        type="button"
+        aria-controls="tab-car-nerfacto-sparsity"
+        aria-selected="false"
+      >
+        Nerfacto + Vis + Sparsity
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-car-nerfacto-vis"
+        data-bs-toggle="tab"
+        data-bs-target="#video-car-nerfacto-vis-tv"
+        role="tab"
+        type="button"
+        aria-controls="tab-car-nerfacto-vis-tv"
+        aria-selected="false"
+      >
+        Nerfacto + Vis + TV
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-car-nerfacto-vis"
+        data-bs-toggle="tab"
+        data-bs-target="#video-car-nerfacto-vis-regnerf"
+        role="tab"
+        type="button"
+        aria-controls="tab-car-nerfacto-vis-regnerf"
+        aria-selected="false"
+      >
+        Nerfacto + Vis + RegNeRF
+      </button>
+    </div>
+  </nav>
+
+  <div class="tab-content" id="nav-tabContent">
+    <div
+      class="tab-pane fade show active text-center"
+      id="video-car-nerfacto"
+      role="tabpanel"
+      aria-labelledby="tab-car-nerfacto"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="car-nerfactoDiv">
+        <video
+          class="car-video"
+          id="car-nerfacto"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/car---nerfacto.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas height="0" class="videoMerge" id="car-nerfactoMerge"></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="car">Play / Pause</button>
+      </div>
+    </div>
+
+    <div
+      class="tab-pane fade text-center"
+      id="video-car-nerfacto-vis"
+      role="tabpanel"
+      aria-labelledby="tab-car-nerfacto-vis"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="car-nerfacto-visDiv">
+        <video
+          class="car-video"
+          id="car-nerfacto-vis"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/car---nerfacto-frustum.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="car-nerfacto-visMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="car">Play / Pause</button>
+      </div>
+    </div>
+
+    <div
+      class="tab-pane fade text-center"
+      id="video-car-nerfacto-vis-sparsity"
+      role="tabpanel"
+      aria-labelledby="tab-car-nerfacto-vis-sparsity"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="car-nerfacto-vis-sparsityDiv">
+        <video
+          class="car-video"
+          id="car-nerfacto-vis-sparsity"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/car---nerfacto-frustum-sparsity.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="car-nerfacto-vis-sparsityMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="car">Play / Pause</button>
+      </div>
+    </div>
+
+    <div
+      class="tab-pane fade text-center"
+      id="video-car-nerfacto-vis-tv"
+      role="tabpanel"
+      aria-labelledby="tab-car-nerfacto-vis-tv"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="car-nerfacto-vis-tvDiv">
+        <video
+          class="car-video"
+          id="car-nerfacto-vis-tv"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/car---nerfacto-frustum-TV.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="car-nerfacto-vis-tvMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="car">Play / Pause</button>
+      </div>
+    </div>
+    <div
+      class="tab-pane fade text-center"
+      id="video-car-nerfacto-vis-regnerf"
+      role="tabpanel"
+      aria-labelledby="tab-car-nerfacto-vis-regnerf"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="car-nerfacto-vis-regnerfDiv">
+        <video
+          class="car-video"
+          id="car-nerfacto-vis-regnerf"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/car---nerfacto-frustum-regnerf.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="car-nerfacto-vis-regnerfMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="car">Play / Pause</button>
+      </div>
+    </div>
+  </div>
+</section>

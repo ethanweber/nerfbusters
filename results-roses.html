@@ -1,0 +1,212 @@
+<section>
+  <nav>
+    <div
+      class="nav nav-tabs justify-content-center"
+      id="nav-tab"
+      role="tablist"
+    >
+      <button
+        class="nav-item nav-link active"
+        id="tab-roses-nerfacto"
+        data-bs-toggle="tab"
+        data-bs-target="#video-roses-nerfacto"
+        role="tab"
+        type="button"
+        aria-controls="tab-roses-nerfacto"
+        aria-selected="true"
+      >
+        Nerfacto
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-roses-nerfacto-vis"
+        data-bs-toggle="tab"
+        data-bs-target="#video-roses-nerfacto-vis"
+        role="tab"
+        type="button"
+        aria-controls="tab-roses-nerfacto-vis"
+        aria-selected="false"
+      >
+        Nerfacto + Vis
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-roses-nerfacto-vis-sparsity"
+        data-bs-toggle="tab"
+        data-bs-target="#video-roses-nerfacto-vis-sparsity"
+        role="tab"
+        type="button"
+        aria-controls="tab-roses-nerfacto-sparsity"
+        aria-selected="false"
+      >
+        Nerfacto + Vis + Sparsity
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-roses-nerfacto-vis"
+        data-bs-toggle="tab"
+        data-bs-target="#video-roses-nerfacto-vis-tv"
+        role="tab"
+        type="button"
+        aria-controls="tab-roses-nerfacto-vis-tv"
+        aria-selected="false"
+      >
+        Nerfacto + Vis + TV
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-roses-nerfacto-vis"
+        data-bs-toggle="tab"
+        data-bs-target="#video-roses-nerfacto-vis-regnerf"
+        role="tab"
+        type="button"
+        aria-controls="tab-roses-nerfacto-vis-regnerf"
+        aria-selected="false"
+      >
+        Nerfacto + Vis + RegNeRF
+      </button>
+    </div>
+  </nav>
+
+  <div class="tab-content" id="nav-tabContent">
+    <div
+      class="tab-pane fade show active text-center"
+      id="video-roses-nerfacto"
+      role="tabpanel"
+      aria-labelledby="tab-roses-nerfacto"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="roses-nerfactoDiv">
+        <video
+          class="roses-video"
+          id="roses-nerfacto"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/roses---nerfacto.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas height="0" class="videoMerge" id="roses-nerfactoMerge"></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="roses">Play / Pause</button>
+      </div>
+    </div>
+
+    <div
+      class="tab-pane fade text-center"
+      id="video-roses-nerfacto-vis"
+      role="tabpanel"
+      aria-labelledby="tab-roses-nerfacto-vis"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="roses-nerfacto-visDiv">
+        <video
+          class="roses-video"
+          id="roses-nerfacto-vis"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/roses---nerfacto-frustum.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="roses-nerfacto-visMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="roses">Play / Pause</button>
+      </div>
+    </div>
+
+    <div
+      class="tab-pane fade text-center"
+      id="video-roses-nerfacto-vis-sparsity"
+      role="tabpanel"
+      aria-labelledby="tab-roses-nerfacto-vis-sparsity"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="roses-nerfacto-vis-sparsityDiv">
+        <video
+          class="roses-video"
+          id="roses-nerfacto-vis-sparsity"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/roses---nerfacto-frustum-sparsity.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="roses-nerfacto-vis-sparsityMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="roses">Play / Pause</button>
+      </div>
+    </div>
+
+    <div
+      class="tab-pane fade text-center"
+      id="video-roses-nerfacto-vis-tv"
+      role="tabpanel"
+      aria-labelledby="tab-roses-nerfacto-vis-tv"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="roses-nerfacto-vis-tvDiv">
+        <video
+          class="roses-video"
+          id="roses-nerfacto-vis-tv"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/roses---nerfacto-frustum-TV.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="roses-nerfacto-vis-tvMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="roses">Play / Pause</button>
+      </div>
+    </div>
+    <div
+      class="tab-pane fade text-center"
+      id="video-roses-nerfacto-vis-regnerf"
+      role="tabpanel"
+      aria-labelledby="tab-roses-nerfacto-vis-regnerf"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="roses-nerfacto-vis-regnerfDiv">
+        <video
+          class="roses-video"
+          id="roses-nerfacto-vis-regnerf"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/roses---nerfacto-frustum-regnerf.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="roses-nerfacto-vis-regnerfMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="roses">Play / Pause</button>
+      </div>
+    </div>
+  </div>
+</section>

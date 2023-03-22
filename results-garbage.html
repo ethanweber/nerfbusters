@@ -1,0 +1,219 @@
+<section>
+  <nav>
+    <div
+      class="nav nav-tabs justify-content-center"
+      id="nav-tab"
+      role="tablist"
+    >
+      <button
+        class="nav-item nav-link active"
+        id="tab-garbage-nerfacto"
+        data-bs-toggle="tab"
+        data-bs-target="#video-garbage-nerfacto"
+        role="tab"
+        type="button"
+        aria-controls="tab-garbage-nerfacto"
+        aria-selected="true"
+      >
+        Nerfacto
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-garbage-nerfacto-vis"
+        data-bs-toggle="tab"
+        data-bs-target="#video-garbage-nerfacto-vis"
+        role="tab"
+        type="button"
+        aria-controls="tab-garbage-nerfacto-vis"
+        aria-selected="false"
+      >
+        Nerfacto + Vis
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-garbage-nerfacto-vis-sparsity"
+        data-bs-toggle="tab"
+        data-bs-target="#video-garbage-nerfacto-vis-sparsity"
+        role="tab"
+        type="button"
+        aria-controls="tab-garbage-nerfacto-sparsity"
+        aria-selected="false"
+      >
+        Nerfacto + Vis + Sparsity
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-garbage-nerfacto-vis"
+        data-bs-toggle="tab"
+        data-bs-target="#video-garbage-nerfacto-vis-tv"
+        role="tab"
+        type="button"
+        aria-controls="tab-garbage-nerfacto-vis-tv"
+        aria-selected="false"
+      >
+        Nerfacto + Vis + TV
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-garbage-nerfacto-vis"
+        data-bs-toggle="tab"
+        data-bs-target="#video-garbage-nerfacto-vis-regnerf"
+        role="tab"
+        type="button"
+        aria-controls="tab-garbage-nerfacto-vis-regnerf"
+        aria-selected="false"
+      >
+        Nerfacto + Vis + RegNeRF
+      </button>
+    </div>
+  </nav>
+
+  <div class="tab-content" id="nav-tabContent">
+    <div
+      class="tab-pane fade show active text-center"
+      id="video-garbage-nerfacto"
+      role="tabpanel"
+      aria-labelledby="tab-garbage-nerfacto"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="garbage-nerfactoDiv">
+        <video
+          class="garbage-video"
+          id="garbage-nerfacto"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/garbage---nerfacto.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="garbage-nerfactoMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="garbage">Play / Pause</button>
+      </div>
+    </div>
+
+    <div
+      class="tab-pane fade text-center"
+      id="video-garbage-nerfacto-vis"
+      role="tabpanel"
+      aria-labelledby="tab-garbage-nerfacto-vis"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="garbage-nerfacto-visDiv">
+        <video
+          class="garbage-video"
+          id="garbage-nerfacto-vis"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/garbage---nerfacto-frustum.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="garbage-nerfacto-visMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="garbage">Play / Pause</button>
+      </div>
+    </div>
+
+    <div
+      class="tab-pane fade text-center"
+      id="video-garbage-nerfacto-vis-sparsity"
+      role="tabpanel"
+      aria-labelledby="tab-garbage-nerfacto-vis-sparsity"
+      style="background-color: white"
+    >
+      <div
+        class="video-compare-container"
+        id="garbage-nerfacto-vis-sparsityDiv"
+      >
+        <video
+          class="garbage-video"
+          id="garbage-nerfacto-vis-sparsity"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/garbage---nerfacto-frustum-sparsity.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="garbage-nerfacto-vis-sparsityMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="garbage">Play / Pause</button>
+      </div>
+    </div>
+
+    <div
+      class="tab-pane fade text-center"
+      id="video-garbage-nerfacto-vis-tv"
+      role="tabpanel"
+      aria-labelledby="tab-garbage-nerfacto-vis-tv"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="garbage-nerfacto-vis-tvDiv">
+        <video
+          class="garbage-video"
+          id="garbage-nerfacto-vis-tv"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/garbage---nerfacto-frustum-TV.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="garbage-nerfacto-vis-tvMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="garbage">Play / Pause</button>
+      </div>
+    </div>
+    <div
+      class="tab-pane fade text-center"
+      id="video-garbage-nerfacto-vis-regnerf"
+      role="tabpanel"
+      aria-labelledby="tab-garbage-nerfacto-vis-regnerf"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="garbage-nerfacto-vis-regnerfDiv">
+        <video
+          class="garbage-video"
+          id="garbage-nerfacto-vis-regnerf"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/garbage---nerfacto-frustum-regnerf.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="garbage-nerfacto-vis-regnerfMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="garbage">Play / Pause</button>
+      </div>
+    </div>
+  </div>
+</section>

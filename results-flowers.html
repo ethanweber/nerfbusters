@@ -1,0 +1,219 @@
+<section>
+  <nav>
+    <div
+      class="nav nav-tabs justify-content-center"
+      id="nav-tab"
+      role="tablist"
+    >
+      <button
+        class="nav-item nav-link active"
+        id="tab-flowers-nerfacto"
+        data-bs-toggle="tab"
+        data-bs-target="#video-flowers-nerfacto"
+        role="tab"
+        type="button"
+        aria-controls="tab-flowers-nerfacto"
+        aria-selected="true"
+      >
+        Nerfacto
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-flowers-nerfacto-vis"
+        data-bs-toggle="tab"
+        data-bs-target="#video-flowers-nerfacto-vis"
+        role="tab"
+        type="button"
+        aria-controls="tab-flowers-nerfacto-vis"
+        aria-selected="false"
+      >
+        Nerfacto + Vis
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-flowers-nerfacto-vis-sparsity"
+        data-bs-toggle="tab"
+        data-bs-target="#video-flowers-nerfacto-vis-sparsity"
+        role="tab"
+        type="button"
+        aria-controls="tab-flowers-nerfacto-sparsity"
+        aria-selected="false"
+      >
+        Nerfacto + Vis + Sparsity
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-flowers-nerfacto-vis"
+        data-bs-toggle="tab"
+        data-bs-target="#video-flowers-nerfacto-vis-tv"
+        role="tab"
+        type="button"
+        aria-controls="tab-flowers-nerfacto-vis-tv"
+        aria-selected="false"
+      >
+        Nerfacto + Vis + TV
+      </button>
+      <button
+        class="nav-item nav-link"
+        id="tab-flowers-nerfacto-vis"
+        data-bs-toggle="tab"
+        data-bs-target="#video-flowers-nerfacto-vis-regnerf"
+        role="tab"
+        type="button"
+        aria-controls="tab-flowers-nerfacto-vis-regnerf"
+        aria-selected="false"
+      >
+        Nerfacto + Vis + RegNeRF
+      </button>
+    </div>
+  </nav>
+
+  <div class="tab-content" id="nav-tabContent">
+    <div
+      class="tab-pane fade show active text-center"
+      id="video-flowers-nerfacto"
+      role="tabpanel"
+      aria-labelledby="tab-flowers-nerfacto"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="flowers-nerfactoDiv">
+        <video
+          class="flowers-video"
+          id="flowers-nerfacto"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/flowers---nerfacto.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="flowers-nerfactoMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="flowers">Play / Pause</button>
+      </div>
+    </div>
+
+    <div
+      class="tab-pane fade text-center"
+      id="video-flowers-nerfacto-vis"
+      role="tabpanel"
+      aria-labelledby="tab-flowers-nerfacto-vis"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="flowers-nerfacto-visDiv">
+        <video
+          class="flowers-video"
+          id="flowers-nerfacto-vis"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/flowers---nerfacto-frustum.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="flowers-nerfacto-visMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="flowers">Play / Pause</button>
+      </div>
+    </div>
+
+    <div
+      class="tab-pane fade text-center"
+      id="video-flowers-nerfacto-vis-sparsity"
+      role="tabpanel"
+      aria-labelledby="tab-flowers-nerfacto-vis-sparsity"
+      style="background-color: white"
+    >
+      <div
+        class="video-compare-container"
+        id="flowers-nerfacto-vis-sparsityDiv"
+      >
+        <video
+          class="flowers-video"
+          id="flowers-nerfacto-vis-sparsity"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/flowers---nerfacto-frustum-sparsity.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="flowers-nerfacto-vis-sparsityMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="flowers">Play / Pause</button>
+      </div>
+    </div>
+
+    <div
+      class="tab-pane fade text-center"
+      id="video-flowers-nerfacto-vis-tv"
+      role="tabpanel"
+      aria-labelledby="tab-flowers-nerfacto-vis-tv"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="flowers-nerfacto-vis-tvDiv">
+        <video
+          class="flowers-video"
+          id="flowers-nerfacto-vis-tv"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/flowers---nerfacto-frustum-TV.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="flowers-nerfacto-vis-tvMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="flowers">Play / Pause</button>
+      </div>
+    </div>
+    <div
+      class="tab-pane fade text-center"
+      id="video-flowers-nerfacto-vis-regnerf"
+      role="tabpanel"
+      aria-labelledby="tab-flowers-nerfacto-vis-regnerf"
+      style="background-color: white"
+    >
+      <div class="video-compare-container" id="flowers-nerfacto-vis-regnerfDiv">
+        <video
+          class="flowers-video"
+          id="flowers-nerfacto-vis-regnerf"
+          loop
+          playsinline
+          muted
+          src="comparison_videos/flowers---nerfacto-frustum-regnerf.mp4"
+          onplay="resizeAndPlay(this)"
+        ></video>
+
+        <canvas
+          height="0"
+          class="videoMerge"
+          id="flowers-nerfacto-vis-regnerfMerge"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <button onclick="play(this)" id="flowers">Play / Pause</button>
+      </div>
+    </div>
+  </div>
+</section>
