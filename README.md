@@ -12,6 +12,8 @@ First, you need to install the nerfstudio environment. Then you can install addi
 
 Install Nerfstudio and dependencies
 
+> Currently we are using the branch [cleanerf-changes](https://github.com/nerfstudio-project/nerfstudio/tree/cleanerf-changes).
+
 ```bash
 cd /path/to/nerfstudio
 pip install -e .
