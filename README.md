@@ -84,8 +84,8 @@ python scripts/download_cleanerf_dataset.py captures
 You'll notice that the file structure has two videos where one is for training and the `-eval` one is for evaluation. If you want to replicate the processing that we did, simply run the following.
 
 ```bash
-export DATASET=aloe
-ns-process-data video --data data/${DATASET}/${DATASET}.mp4 projects/magic_eraser/captures/${DATASET}/${DATASET}-eval.mp4 --output-dir projects/magic_eraser/data/${DATASET} --num-frames-target 300
+export DATASET=aloe;
+ns-process-data video --data data/cleanerf-captures/${DATASET}/${DATASET}.mp4 data/cleanerf-captures/${DATASET}/${DATASET}-eval.mp4 --output-dir data/cleanerf-processed-data/${DATASET} --num-frames-target 300;
 ```
 
 ### NeRF experiments
