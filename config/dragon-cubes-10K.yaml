@@ -1,0 +1,31 @@
+dataset: cubes
+scene: shapenet
+cubes_filename: "datasets/dragon-cubes-10K/crops.pt"
+train_len: 9984
+batch_size: 32
+val_batch_size: 32
+val_len: 96
+val_cubes_filename: "datasets/dragon-cubes-1K/crops.pt"
+
+noise_scheduler: "ddpm"
+num_train_timesteps: 1000
+num_inference_steps: 1000
+beta_start: 0.0015
+beta_end: 0.05
+
+# noise_scheduler: "ddim"
+# num_train_timesteps: 1000
+# num_inference_steps: 50
+
+save_images_locally: False
+
+# unet values
+
+use_ema: True
+
+model_channels: 32
+num_res_blocks: 1
+channel_mult: [1, 2, 4]
+attention_resolutions: [4]
+
+architecture: "unet3d"

@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cleanerf"
+version = "0.0.0"
+description = "CleaNeRF package"
+requires-python = ">=3.7.3"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python",
+]
+dependencies = [
+    "diffusers==0.12.1",
+    "dotmap",
+    "trimesh",
+    "pysdf",
+    "pytorch-lightning"
+]
+
+[tool.setuptools.packages.find]
+include = ["cleanerf*"]
+
+[project.entry-points.'nerfstudio.method_configs']
+cleanerf = 'cleanerf.nerf.cleanerf_config:cleanerf_config'

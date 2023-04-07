@@ -1,0 +1,4 @@
+dataset: mnist
+# data_dir: "/home/ethanweber/data"
+
+noise_scheduler : "ddim"

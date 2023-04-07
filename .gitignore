@@ -1,0 +1,6 @@
+*.egg-info/
+data/
+datasets/
+lightning_logs/
+outputs/
+renders/
