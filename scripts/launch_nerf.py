@@ -123,7 +123,7 @@ class ExperimentConfig(PrintableConfig):
 
 @dataclass
 class Train(ExperimentConfig):
-    """Train magic eraser models."""
+    """Train cleanerf models."""
 
     baseline_experiment_name: Optional[Path] = None
     nerf_checkpoint_path: Optional[Path] = None
@@ -183,7 +183,7 @@ class Train(ExperimentConfig):
 
 @dataclass
 class Render(ExperimentConfig):
-    """Render magic eraser models."""
+    """Render cleanerf models."""
 
     input_folder: Path = Path("outputs")
     rendered_output_names: List[str] = field(
@@ -223,7 +223,7 @@ class Render(ExperimentConfig):
 
 @dataclass
 class Metrics(ExperimentConfig):
-    """Render magic eraser models."""
+    """Render cleanerf models."""
 
     input_folder: Path = Path("outputs-renders")
     visibility_experiment_name: Path = Path("visibility_experiment_name")

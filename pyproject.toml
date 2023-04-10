@@ -16,7 +16,8 @@ dependencies = [
     "dotmap",
     "trimesh",
     "pysdf",
-    "pytorch-lightning"
+    "pytorch-lightning==1.8.6",
+    "scipy",
 ]
 
 [tool.setuptools.packages.find]

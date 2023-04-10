@@ -27,7 +27,7 @@ import torch
 import yaml
 from dotmap import DotMap
 from cleanerf.cubes.visualize3D import get_image_grid
-from cleanerf.lightning.magic_eraser_2d import MagicEraser2D
+from cleanerf.lightning.cleanerf_trainer import CleaNerfTrainer
 from cleanerf.utils.visualizations import get_3Dimage_fast
 from cleanerf.nerf.cleanerf_utils import random_train_pose
 from torchtyping import TensorType
@@ -149,7 +149,7 @@ class WeightGrid(torch.nn.Module):
 
 @dataclass
 class CleanerfPipelineConfig(VanillaPipelineConfig):
-    """Magic Eraser Pipeline Config"""
+    """CleaNeRF Pipeline Config"""
 
     _target: Type = field(default_factory=lambda: CleanerfPipeline)
 
@@ -355,7 +355,7 @@ class CleanerfPipeline(VanillaPipeline):
     def load_diffusion_model(self, diffusion_config_path, diffusion_ckpt_path):
         config = yaml.load(open(diffusion_config_path, "r"), Loader=yaml.Loader)
         config = DotMap(config)
-        model = MagicEraser2D(config)
+        model = CleaNerfTrainer(config)
         ckpt = torch.load(diffusion_ckpt_path, map_location="cpu")
         model.load_state_dict(ckpt["state_dict"])
         model.eval()
@@ -483,7 +483,7 @@ class CleanerfPipeline(VanillaPipeline):
         mask_full = xhat == 1
         density = density.unsqueeze(1)
         loss = (density.abs() * mask_empty).sum()
-        loss += (torch.clamp(self.config.singlestep_target - density.abs(), 0) * mask_full).sum()
+        loss += (torch.clamp((self.config.singlestep_target - density).abs(), 0) * mask_full).sum()
         loss = loss / math.prod(density.shape)  # average loss
         return self.config.singlestep_cube_loss_mult * loss
 

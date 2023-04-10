@@ -1,3 +1,0 @@
-dataset : fashionmnist
-
-noise_scheduler : "ddpm"
