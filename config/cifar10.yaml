@@ -1,4 +1,0 @@
-dataset : cifar10
-
-noise_scheduler : "ddpm"
-batch_size : 128

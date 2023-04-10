@@ -9,7 +9,7 @@ import torch
 import yaml
 from dotmap import DotMap
 from cleanerf.data_modules.datamodule import DataModule
-from cleanerf.lightning.magic_eraser_2d import MagicEraser2D
+from cleanerf.lightning.cleanerf_trainer import CleaNerfTrainer
 from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 from pytorch_lightning.loggers import WandbLogger
 
@@ -29,7 +29,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--config",
-        default="configs/cub200/det_model.yaml",
+        default="configs/shapenet.yaml",
         type=str,
         help="config file",
     )
@@ -67,12 +67,10 @@ def main(args, config):
 
     # lightning trainer
     checkpoint_callback = ModelCheckpoint(
-        monitor="Val_acc/sds_epoch" if config.dataset in ("cubes", "planes") else "Val_psnr/sds_epoch",
+        monitor="Val_acc/dsds_epoch",
         dirpath=f"{savepath}/checkpoints",
         # filename="best",
-        filename="{epoch:02d}-{Val_acc/sds_epoch:.2f}"
-        if config.dataset in ("cubes", "planes")
-        else "{epoch:02d}-{Val_psnr/sds_epoch:.2f}",
+        filename="{epoch:02d}-{Val_acc/dsds_epoch:.2f}",
         save_top_k=-1,
         mode="max",
         save_last=True,
@@ -86,7 +84,7 @@ def main(args, config):
 
     callbacks = [LearningRateMonitor(logging_interval="step"), checkpoint_callback]
 
-    model = MagicEraser2D(config, savepath=savepath)
+    model = CleaNerfTrainer(config, savepath=savepath)
     data_module = DataModule(**config.toDict())
 
     trainer = pl.Trainer.from_argparse_args(
@@ -95,7 +93,7 @@ def main(args, config):
         devices=[args.gpu],
         precision=32,
         max_epochs=100,
-        check_val_every_n_epoch=10 if config.dataset in ("cubes", "planes") else 1,
+        check_val_every_n_epoch=10,
         logger=logger,
         callbacks=callbacks,
         log_every_n_steps=1,

@@ -1,6 +1,0 @@
-dataset : patches2d # sintel, mnist, cifar10, fashionmnist
-scene : "kitchen" # kitchen, rooms
-train_split_percentage : 0.5
-val_batch_size: 32
-
-noise_scheduler : "ddim"

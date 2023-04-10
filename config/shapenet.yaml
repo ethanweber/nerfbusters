@@ -31,4 +31,4 @@ attention_resolutions: [4]
 architecture: "unet3d"
 condition_on_scale: True
 guidance_weight : 1
-sds_type : "unguided"
+diffusion_loss : "loss_dsds_unguided"

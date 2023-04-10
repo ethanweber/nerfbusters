@@ -8,7 +8,7 @@ import torch.nn.functional as F
 import wandb
 from diffusers import DDIMPipeline, DDIMScheduler, DDPMPipeline, DDPMScheduler
 from diffusers.training_utils import EMAModel
-from cleanerf.lightning.sds_loss import SDSLoss
+from cleanerf.lightning.dsds_loss import DSDSLoss
 from cleanerf.models.model import get_model
 from cleanerf.utils import metrics
 from cleanerf.utils.utils import get_gaussian_kernel1d
@@ -22,19 +22,13 @@ from torch.optim.lr_scheduler import ExponentialLR
 
 def format_batch(batch):
 
-    # TODO: use a dictionary and unpack
-    if isinstance(batch, list) and len(batch) == 2:
-        # relevant for MNIST
-        x, _ = batch
-    elif isinstance(batch, dict):
-
-        x = batch["input"]
-        scale = batch["scale"]
+    x = batch["input"]
+    scale = batch["scale"]
 
     return x, scale
 
 
-class MagicEraser2D(pl.LightningModule):
+class CleaNerfTrainer(pl.LightningModule):
     def __init__(self, config, savepath=""):
         super().__init__()
 
@@ -44,17 +38,9 @@ class MagicEraser2D(pl.LightningModule):
         self.save_images_locally = config.get("save_images_locally", False)
         self.val_batch_size = config.get("val_batch_size", 32)
 
-        if self.config.dataset in ("cubes", "planes"):
-            self.data_size = (1, 32, 32, 32)
-        elif self.config.dataset in ("mnist", "fashionmnist"):
-            self.data_size = (1, 28, 28)
-        elif self.config.dataset in ("flowers"):
-            self.data_size = (3, 64, 64)
-        elif self.config.dataset in ("hypersim"):
-            self.data_size = (len(self.config.input), 48, 48)
-        else:
-            self.data_size = (3, 32, 32)
-
+        # size of shapenet cubes
+        self.data_size = (1, 32, 32, 32)
+        
         self.model = get_model(self.config)
         # self.model.convert_to_fp16()
 
@@ -83,12 +69,11 @@ class MagicEraser2D(pl.LightningModule):
             )
 
         self.loss_fn = nn.MSELoss()
-        self.sds_loss = SDSLoss(
+        self.dsds_loss = DSDSLoss(
             self.noise_scheduler,
-            sds_type=config.get("sds_type", "unguided"),
+            diffusion_loss=config.get("diffusion_loss", "loss_dsds_unguided"),
             guidance_weight=config.get("guidance_weight", 1),
             anneal=config.get("anneal", "random"),
-            dataset=config.dataset,
         )
 
         self.save_hyperparameters()
@@ -102,30 +87,21 @@ class MagicEraser2D(pl.LightningModule):
         noise = torch.randn_like(x, device=x.device)
         timesteps = torch.randint(0, self.noise_scheduler.num_train_timesteps, (bs,), dtype=torch.long, device=x.device)
 
-        if self.config.dataset == "cubes":
-            # add low frequency noise
-            # TODO: (don't add the same blur to entire batch)
-            with torch.no_grad():
-                sigma = torch.rand((1,)) * 7 + 0.1  # 0.1 to 5.1
-                k = get_gaussian_kernel1d(31, sigma)
-                k3d = torch.einsum("i,j,k->ijk", k, k, k)
-                k3d = k3d / k3d.sum()
-                k3d = k3d.to(x.device)
-                x_smooth = F.conv3d(x, k3d.reshape(1, 1, *k3d.shape), stride=1, padding=len(k) // 2)
-                low_freq_noise = x - x_smooth
+        # add low frequency noise (extra data augmentation)
+        with torch.no_grad():
+            sigma = torch.rand((1,)) * 7 + 0.1  # 0.1 to 5.1
+            k = get_gaussian_kernel1d(31, sigma)
+            k3d = torch.einsum("i,j,k->ijk", k, k, k)
+            k3d = k3d / k3d.sum()
+            k3d = k3d.to(x.device)
+            x_smooth = F.conv3d(x, k3d.reshape(1, 1, *k3d.shape), stride=1, padding=len(k) // 2)
+            low_freq_noise = x - x_smooth
 
-                # add constant (didn't seem to help)
-                # constant = torch.rand((1,), device=x.device) - 0.3  # [-0.3, 0.3]
-                # low_freq_noise += torch.ones_like(x, device=x.device) * constant
-
-                noise = noise + low_freq_noise
+            noise = noise + low_freq_noise
 
         noisy_x = self.noise_scheduler.add_noise(x, noise, timesteps)
 
-        if self.config.dataset == "cubes":
-            noise_pred = self.model(noisy_x, timesteps, scale=scale).sample
-        else:
-            noise_pred = self.model(noisy_x, timesteps).sample
+        noise_pred = self.model(noisy_x, timesteps, scale=scale).sample
 
         loss = self.loss_fn(noise_pred, noise)
         self.log("Train/loss", loss, on_step=True, on_epoch=True, prog_bar=True, logger=True)
@@ -171,62 +147,53 @@ class MagicEraser2D(pl.LightningModule):
         decorrupted = self.reverse_process(sample=corrupted_x, scale=scale, num_inference_steps=num_inference_steps)
         decorrupted_time = time.time() - t
 
-        # print("Running decorruption with SDS optimization...")
+        # print("Running decorruption with DSDS optimization...")
+        torch.set_grad_enabled(True)
         t = time.time()
-        decorrupted_opt, _ = self.sds_loss.optimize_patch(
-            corrupted_x, self.model, gt=x, num_steps=num_sds_steps, scale=scale
+        decorrupted_opt, _ = self.dsds_loss.optimize_patch(
+            corrupted_x, self, gt=x, num_steps=num_sds_steps, scale=scale
         )
         decorrupted_opt_time = time.time() - t
+        torch.set_grad_enabled(False)
 
         self.log("Timing/decorrupted_opt_time", decorrupted_opt_time)
         self.log("Timing/generated_time", generated_time)
         self.log("Timing/decorrupted_time", decorrupted_time)
 
-        # 2D if 4 dimensions
-        is_2d = len(x.shape) == 4
         for k, v in [
             ("original", x),
             ("generated", generated),
             ("corrupted_x", corrupted_x),
             ("decorrupted", decorrupted),
-            ("sds", decorrupted_opt),
-        ]:  #
-            if is_2d:
-                visualize_grid2d(f"{self.savepath}/{k}", v, save_locally=self.save_images_locally)
+            ("dsds", decorrupted_opt),
+        ]:  
+            
+            # 3D if 5 dimensions
+            assert len(v.shape) == 5
 
-                # 3D metrics
-                mse = metrics.mse(pred=v, gt=x)
-                psnr = metrics.psnr(pred=v, gt=x)
-                self.log(f"Val_mse/{k}", mse, on_step=True, on_epoch=True, prog_bar=True, logger=True)
-                self.log(f"Val_psnr/{k}", psnr, on_step=True, on_epoch=True, prog_bar=True, logger=True)
+            # 3D metrics
+            iou = metrics.voxel_iou(pred=v, gt=x)
+            acc = metrics.voxel_acc(pred=v, gt=x)
+            f1 = metrics.voxel_f1(pred=v, gt=x)
+            self.log(f"Val_iou/{k}", iou, on_step=True, on_epoch=True, prog_bar=True, logger=True)
+            self.log(f"Val_acc/{k}", acc, on_step=True, on_epoch=True, prog_bar=True, logger=True)
+            self.log(f"Val_f1/{k}", f1, on_step=True, on_epoch=True, prog_bar=True, logger=True)
 
-            else:
-                # 3D if 5 dimensions
-                assert len(v.shape) == 5
+            # 3D visualization
+            visualize_grid3d(
+                f"{self.savepath}/{k}",
+                v[:4],
+                working_dir=self.savepath,
+                save_locally=self.save_images_locally,
+                num_views=4,
+            )
 
-                # 3D metrics
-                iou = metrics.voxel_iou(pred=v, gt=x)
-                acc = metrics.voxel_acc(pred=v, gt=x)
-                f1 = metrics.voxel_f1(pred=v, gt=x)
-                self.log(f"Val_iou/{k}", iou, on_step=True, on_epoch=True, prog_bar=True, logger=True)
-                self.log(f"Val_acc/{k}", acc, on_step=True, on_epoch=True, prog_bar=True, logger=True)
-                self.log(f"Val_f1/{k}", f1, on_step=True, on_epoch=True, prog_bar=True, logger=True)
-
-                # 3D visualization
-                visualize_grid3d(
-                    f"{self.savepath}/{k}",
-                    v[:4],
-                    working_dir=self.savepath,
-                    save_locally=self.save_images_locally,
-                    num_views=4,
-                )
-
-                # 2D visualization of slices
-                visualize_grid3d_slices(
-                    f"{self.savepath}/{k}",
-                    v[:4],
-                    save_locally=self.save_images_locally,
-                )
+            # 2D visualization of slices
+            visualize_grid3d_slices(
+                f"{self.savepath}/{k}",
+                v[:4],
+                save_locally=self.save_images_locally,
+            )
 
     def test_step(self, batch, batch_idx):
 
@@ -247,7 +214,7 @@ class MagicEraser2D(pl.LightningModule):
                 corrupted_crops.min() >= -1 and corrupted_crops.max() <= 1
             ), f"{corrupted_crops.min()} {corrupted_crops.max()}"
 
-            optimized_crops, out = self.sds_loss.optimize_patch(
+            optimized_crops, out = self.dsds_loss.optimize_patch(
                 corrupted_crops, self.model, gt=x, num_steps=600, scale=scale
             )
 
@@ -283,21 +250,15 @@ class MagicEraser2D(pl.LightningModule):
 
         step_size = starting_t // num_inference_steps
         timesteps = torch.arange(starting_t - 1, 0, -step_size).to(self.device)
-        # timesteps = (
-        #    torch.linspace(self.noise_scheduler.num_train_timesteps - 1, 0, num_inference_steps).long().to(self.device)
-        # )
         for _, t in enumerate(timesteps):
 
             # 1. predict noise model_output
             bs = sample.shape[0]
             t = torch.tensor([t], dtype=torch.long, device=self.device)
 
-            if self.config.dataset == "cubes":
-                noise_pred = self.model(sample, t, scale=scale).sample
-            else:
-                noise_pred = self.model(sample, t).sample
+            noise_pred = self.model(sample, t, scale=scale).sample
+            
             # 2. compute previous image: x_t -> x_t-1
-            # Update sample with step
             sample = self.noise_scheduler.step(noise_pred, t, sample).prev_sample
 
         return sample
@@ -310,14 +271,10 @@ class MagicEraser2D(pl.LightningModule):
         with torch.no_grad():
             t = torch.tensor([starting_t], dtype=torch.long, device=x.device)
 
-            # noise = torch.randn_like(x)
-            # x = self.noise_scheduler.add_noise(x, noise, t)
-
             # 1. predict noise model_output
             noise_pred = self.model(x, t, scale=scale).sample
 
             # 2. compute previous image: x_t -> x_0
-            # Update sample with step
             x = self.noise_scheduler.step(noise_pred, t, sample).pred_original_sample
 
         w = self.noise_scheduler.alphas[t] ** 2

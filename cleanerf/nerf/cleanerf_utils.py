@@ -1,5 +1,5 @@
 """
-Utils for magic eraser project..
+Utils for cleanerf project..
 """
 
 from __future__ import annotations
