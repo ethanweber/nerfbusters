@@ -16,7 +16,7 @@ conda activate cleanerf
 python -m pip install --upgrade pip
 ```
 
-2) Install Nerfstudio and dependencies
+2) Install Nerfstudio and dependencies. Installation guide can be found [install nerfstudio](https://docs.nerf.studio/en/latest/quickstart/installation.html)
 
 > Currently we are using the branch [cleanerf-changes](https://github.com/nerfstudio-project/nerfstudio/tree/cleanerf-changes).
 
