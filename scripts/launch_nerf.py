@@ -34,9 +34,7 @@ from cleanerf.nerf.experiment_configs.experiments_wild import arguments_list_of_
 from cleanerf.nerf.experiment_configs.utils import (
     get_experiment_name_and_argument_combinations,
 )
-from torchmetrics import PeakSignalNoiseRatio, StructuralSimilarityIndexMeasure
-from torchmetrics.functional import structural_similarity_index_measure
-from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity
+from nerfstudio.utils.metrics import PSNRModule, SSIMModule, LPIPSModule
 from tqdm import tqdm
 from typing_extensions import Annotated
 
@@ -236,13 +234,13 @@ class Metrics(ExperimentConfig):
         # TODO: move this code elsewhere so we can spawn multiple jobs here
 
         print("Using visibility masks from experiment: ", self.visibility_experiment_name)
-
-        psnr_module = PeakSignalNoiseRatio(data_range=1.0).to(self.device)
-        ssim_module = StructuralSimilarityIndexMeasure(data_range=1.0, reduction="none", return_full_image=True).to(
-            self.device
-        )
-        lpips_module = LearnedPerceptualImagePatchSimilarity(normalize=True).to(self.device)
+        
         mse_module = MSELoss()
+
+        # image metrics
+        psnr_module = PSNRModule()
+        ssim_module = SSIMModule()
+        lpips_module = LPIPSModule()
 
         # go through all the experiments
         experiment_names = os.listdir(self.input_folder)
