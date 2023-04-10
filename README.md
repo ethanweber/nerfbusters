@@ -4,7 +4,7 @@ This project is CleaNeRF: ðŸ§¹ Erasing Artifacts from Casually Captured NeRFs ðŸ
 
 # Project page
 
-See the `gh-pages` branch of this repo for the [project website](https://ethanweber.me/CleaNeRF/) code.
+See the `gh-pages` branch of this repo for the [project website](https://ethanweber.me/CleaNeRF/) code. You may have to run the viewer locally until this branch is merged into main.
 
 # Installation
 
