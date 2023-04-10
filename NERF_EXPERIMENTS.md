@@ -55,7 +55,7 @@ Now we improve the NeRFs with various regularizers, including our CleaNeRF metho
 With the baseline experiment name...
 
 ```bash
-python projects/magic_eraser/scripts/launch_nerf.py train --data projects/magic_eraser/data/${DATASET} --output-folder ${OUTPUT_FOLDER} --baseline-experiment-name ${BASENAME_EXPERIMENT_NAME} --dry-run
+python scripts/launch_nerf.py train --data projects/magic_eraser/data/${DATASET} --output-folder ${OUTPUT_FOLDER} --baseline-experiment-name ${BASENAME_EXPERIMENT_NAME} --dry-run
 ```
 
 Or without and then it's up to your configs to handle everything!
