@@ -79,6 +79,7 @@ class CleaNeRFDataDownload(DatasetDownload):
             zip_ref.extractall(str(save_dir))
         os.remove(download_path)
 
+
 def main(
     dataset: DatasetDownload,
 ):
@@ -98,6 +99,11 @@ Commands = Union[
     Annotated[CleaNeRFCapturesDownload, tyro.conf.subcommand(name="captures")],
     Annotated[CleaNeRFDataDownload, tyro.conf.subcommand(name="dataset")],
 ]
+
+
+def cleanerf_setup():
+    """The function that needs to be run to setup CleaNeRF for the Nerfstudio codebase."""
+    CleaNeRFDiffusionCubeWeightsDownload().download(Path("data/"))
 
 
 def entrypoint():

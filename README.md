@@ -85,7 +85,7 @@ Set the checkpoint path to use later.
 export NERF_CHECKPOINT_PATH=outputs/stdunstanfish/nerfacto/2023-04-04_002153/nerfstudio_models/step-000029999.ckpt
 ```
 
-Now you'll need to download the diffusion model weights. Run `python scripts/download_cleanerf_dataset.py diffusion-cube-weights` if you haven't downloaded them yet or haven't trained your own model. Then you can run post-processing with our method. *If you wan't to use a your own / a specific 3D diffusion model, then update the config `--pipeline.diffusioncube_config_path` and weights checkpoint with `--pipeline.diffusioncube_ckpt_path`.*
+Now you'll need to download the diffusion model weights. Run `python cleanerf/download_cleanerf_dataset.py diffusion-cube-weights` if you haven't downloaded them yet or haven't trained your own model. Then you can run post-processing with our method. *If you wan't to use a your own / a specific 3D diffusion model, then update the config `--pipeline.diffusioncube_config_path` and weights checkpoint with `--pipeline.diffusioncube_ckpt_path`.*
 
 Now you can fine-tune (i.e., post-process) with our CleaNeRF method!
 
@@ -100,13 +100,13 @@ Here we use the CleaNeRF evaluation procedure to run the experiments in our pape
 To download the already-processed version, run the following command. This download is 12.6GB. This writes to the `data/cleanerf-dataset` folder.
 
 ```bash
-python scripts/download_cleanerf_dataset.py dataset
+python cleanerf/download_cleanerf_dataset.py dataset
 ```
 
 If you want to download the two orignial videos per "capture", run this. The download is 381MB. This writes to the `data/cleanerf-captures` folder.
 
 ```bash
-python scripts/download_cleanerf_dataset.py captures
+python cleanerf/download_cleanerf_dataset.py captures
 ```
 
 You'll notice that the file structure has two videos where one is for training and the `-eval` one is for evaluation. If you want to replicate the processing that we did, simply run the following.

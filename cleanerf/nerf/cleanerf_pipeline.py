@@ -270,15 +270,13 @@ class CleanerfPipelineConfig(VanillaPipelineConfig):
     use_total_variation_loss: bool = False
     total_variation_loss_mult: float = 1e-7
 
-    # frustum loss
-    use_frustum_loss: bool = True
-    frustum_loss_quantity: Literal["weights", "densities"] = "densities"
-    frustum_loss_mult: float = 1e-6
-    frustum_min_views: int = 1
+    # visibility loss
+    use_visibility_loss: bool = True
+    visibility_loss_quantity: Literal["weights", "densities"] = "densities"
+    visibility_loss_mult: float = 1e-6
+    visibility_min_views: int = 1
     """Minimum number of training views that must be seen."""
-    frustum_num_rays: int = 10
-    # frustum_start_step: int = 500
-    # frustum_end_step: int = 1000
+    visibility_num_rays: int = 10
 
     # threshold loss
     use_threshold_loss: bool = False
@@ -716,11 +714,11 @@ class CleanerfPipeline(VanillaPipeline):
                 .permute(2, 0, 1, 3)[..., 0]
             )  # (num_patches, patch_resolution, patch_resolution)
 
-        if self.config.use_frustum_loss:
+        if self.config.use_visibility_loss:
             # randomly sample a center within the aabb
             center = (torch.rand(3, device=self.device) * (self.aabb[1] - self.aabb[0]) + self.aabb[0]).tolist()
             cameras, _, _ = random_train_pose(
-                size=self.config.frustum_num_rays,
+                size=self.config.visibility_num_rays,
                 resolution=1,
                 device=self.device,
                 radius_mean=self.config.aabb_scalar * math.sqrt(3.0),
@@ -731,15 +729,15 @@ class CleanerfPipeline(VanillaPipeline):
                 jitter_std=0,
                 center=center,
             )
-            # NOTE: we only use the first camera index, but it doesn't matter since we don't care about appearance embeddings
-            # when using the frustum loss
-            camera_indices = torch.tensor([0] * self.config.frustum_num_rays).unsqueeze(-1)
+            # We only use the first camera index, but it doesn't matter since we don't care about appearance embeddings
+            # when using the visibility loss.
+            camera_indices = torch.tensor([0] * self.config.visibility_num_rays).unsqueeze(-1)
             ray_bundle_rays = cameras.generate_rays(camera_indices)
-            # ray_bundle is (1, 1, self.config.frustum_num_rays)
+            # ray_bundle is (1, 1, self.config.visibility_num_rays)
             ray_bundle_rays = ray_bundle_rays.flatten()
             model_outputs_rays = self.model(ray_bundle_rays)
-            quantity_list = model_outputs_rays[f"{self.config.frustum_loss_quantity}_list"]  # weights or densities
-            frustum_loss = 0.0
+            quantity_list = model_outputs_rays[f"{self.config.visibility_loss_quantity}_list"]  # weights or densities
+            visibility_loss = 0.0
             for i in range(len(quantity_list)):
                 quantity_samples = quantity_list[i]
                 ray_samples = model_outputs_rays["ray_samples_list"][i]
@@ -768,11 +766,11 @@ class CleanerfPipeline(VanillaPipeline):
                                 if normalized_positions.numel() != 0:
                                     self.weight_grid.update(normalized_positions, quant)
 
-                quantity_samples_masked = quantity_samples[visibility_samples < self.config.frustum_min_views]
+                quantity_samples_masked = quantity_samples[visibility_samples < self.config.visibility_min_views]
                 if quantity_samples_masked.numel() != 0:
-                    frustum_loss_i = self.config.frustum_loss_mult * quantity_samples_masked.mean()
-                    frustum_loss += frustum_loss_i
-            loss_dict["frustum_loss"] = frustum_loss
+                    visibility_loss_i = self.config.visibility_loss_mult * quantity_samples_masked.mean()
+                    visibility_loss += visibility_loss_i
+            loss_dict["visibility_loss"] = visibility_loss
 
         if self.config.use_regnerf_loss:
             regnerf_loss = self.apply_regnerf_loss(step, depth_patches)

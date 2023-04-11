@@ -16,7 +16,7 @@ arguments_list_of_lists.append(pseudo_gt_datasets_lists)
 experiments_list = [
     Argument(
         name="nerfacto",
-        arg_string="",
+        arg_string="--pipeline.use_visibility_loss False --pipeline.use_singlestep_cube_loss False",
     )
 ]
 arguments_list_of_lists.append(experiments_list)

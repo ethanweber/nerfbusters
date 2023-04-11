@@ -25,4 +25,7 @@ dependencies = [
 include = ["cleanerf*"]
 
 [project.entry-points.'nerfstudio.method_configs']
-cleanerf = 'cleanerf.nerf.cleanerf_config:cleanerf_config'
+cleanerf = "cleanerf.nerf.cleanerf_config:cleanerf_config"
+
+[project.scripts]
+cleanerf-setup = "cleanerf.download_cleanerf_dataset:cleanerf_setup"

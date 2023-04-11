@@ -59,27 +59,27 @@ arguments_list_of_lists.append(dataset_lists)
 experiments_list = [
     Argument(
         name="nerfacto",
+        arg_string="--pipeline.use_visibility_loss False --pipeline.use_singlestep_cube_loss False",
+    ),
+    Argument(
+        name="nerfacto-visibility",
+        arg_string="--pipeline.use_visibility_loss True --pipeline.use_singlestep_cube_loss False",
+    ),
+    Argument(
+        name="nerfacto-visibility-cube",
         arg_string="",
     ),
     Argument(
-        name="nerfacto-frustum",
-        arg_string="--pipeline.use_frustum_loss True",
+        name="nerfacto-visibility-sparsity",
+        arg_string="--pipeline.use_visibility_loss True --pipeline.use_singlestep_cube_loss False --pipeline.use_sparsity_loss True",
     ),
     Argument(
-        name="nerfacto-frustum-cube",
-        arg_string="--pipeline.use_frustum_loss True --pipeline.use_singlestep_cube_loss True",
+        name="nerfacto-visibility-TV",
+        arg_string="--pipeline.use_visibility_loss True --pipeline.use_singlestep_cube_loss False --pipeline.use_total_variation_loss True",
     ),
     Argument(
-        name="nerfacto-frustum-sparsity",
-        arg_string="--pipeline.use_frustum_loss True --pipeline.use_sparsity_loss True",
-    ),
-    Argument(
-        name="nerfacto-frustum-TV",
-        arg_string="--pipeline.use_frustum_loss True --pipeline.use_total_variation_loss True",
-    ),
-    Argument(
-        name="nerfacto-frustum-regnerf",
-        arg_string="--pipeline.use_frustum_loss True --pipeline.use_regnerf_loss True",
+        name="nerfacto-visibility-regnerf",
+        arg_string="--pipeline.use_visibility_loss True --pipeline.use_singlestep_cube_loss False --pipeline.use_regnerf_loss True",
     )
 ]
 arguments_list_of_lists.append(experiments_list)
