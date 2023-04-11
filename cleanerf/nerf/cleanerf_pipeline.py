@@ -482,8 +482,8 @@ class CleanerfPipeline(VanillaPipeline):
         mask_empty = xhat == -1
         mask_full = xhat == 1
         density = density.unsqueeze(1)
-        loss = (density.abs() * mask_empty).sum()
-        loss += (torch.clamp((self.config.singlestep_target - density).abs(), 0) * mask_full).sum()
+        loss = (density * mask_empty).sum()
+        loss += (torch.clamp(self.config.singlestep_target - density, 0) * mask_full).sum()
         loss = loss / math.prod(density.shape)  # average loss
         return self.config.singlestep_cube_loss_mult * loss
 
