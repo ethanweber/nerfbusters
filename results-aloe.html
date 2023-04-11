@@ -7,60 +7,60 @@
     >
       <button
         class="nav-item nav-link active"
-        id="tab-aleo-nerfacto"
+        id="tab-aloe-nerfacto"
         data-bs-toggle="tab"
-        data-bs-target="#video-aleo-nerfacto"
+        data-bs-target="#video-aloe-nerfacto"
         role="tab"
         type="button"
-        aria-controls="tab-aleo-nerfacto"
+        aria-controls="tab-aloe-nerfacto"
         aria-selected="true"
       >
         Nerfacto
       </button>
       <button
         class="nav-item nav-link"
-        id="tab-aleo-nerfacto-vis"
+        id="tab-aloe-nerfacto-vis"
         data-bs-toggle="tab"
-        data-bs-target="#video-aleo-nerfacto-vis"
+        data-bs-target="#video-aloe-nerfacto-vis"
         role="tab"
         type="button"
-        aria-controls="tab-aleo-nerfacto-vis"
+        aria-controls="tab-aloe-nerfacto-vis"
         aria-selected="false"
       >
         Nerfacto + Vis
       </button>
       <button
         class="nav-item nav-link"
-        id="tab-aleo-nerfacto-vis-sparsity"
+        id="tab-aloe-nerfacto-vis-sparsity"
         data-bs-toggle="tab"
-        data-bs-target="#video-aleo-nerfacto-vis-sparsity"
+        data-bs-target="#video-aloe-nerfacto-vis-sparsity"
         role="tab"
         type="button"
-        aria-controls="tab-aleo-nerfacto-sparsity"
+        aria-controls="tab-aloe-nerfacto-sparsity"
         aria-selected="false"
       >
         Nerfacto + Vis + Sparsity
       </button>
       <button
         class="nav-item nav-link"
-        id="tab-aleo-nerfacto-vis"
+        id="tab-aloe-nerfacto-vis"
         data-bs-toggle="tab"
-        data-bs-target="#video-aleo-nerfacto-vis-tv"
+        data-bs-target="#video-aloe-nerfacto-vis-tv"
         role="tab"
         type="button"
-        aria-controls="tab-aleo-nerfacto-vis-tv"
+        aria-controls="tab-aloe-nerfacto-vis-tv"
         aria-selected="false"
       >
         Nerfacto + Vis + TV
       </button>
       <button
         class="nav-item nav-link"
-        id="tab-aleo-nerfacto-vis"
+        id="tab-aloe-nerfacto-vis"
         data-bs-toggle="tab"
-        data-bs-target="#video-aleo-nerfacto-vis-regnerf"
+        data-bs-target="#video-aloe-nerfacto-vis-regnerf"
         role="tab"
         type="button"
-        aria-controls="tab-aleo-nerfacto-vis-regnerf"
+        aria-controls="tab-aloe-nerfacto-vis-regnerf"
         aria-selected="false"
       >
         Nerfacto + Vis + RegNeRF
@@ -71,15 +71,15 @@
   <div class="tab-content" id="nav-tabContent">
     <div
       class="tab-pane fade text-center"
-      id="video-aleo-nerfacto"
+      id="video-aloe-nerfacto"
       role="tabpanel"
-      aria-labelledby="tab-aleo-nerfacto"
+      aria-labelledby="tab-aloe-nerfacto"
       style="background-color: white"
     >
-      <div class="video-compare-container" id="aleo-nerfactoDiv">
+      <div class="video-compare-container" id="aloe-nerfactoDiv">
         <video  
-          class="aleo-video"
-          id="aleo-nerfacto"
+          class="aloe-video"
+          id="aloe-nerfacto"
           loop
           playsinline
           muted
@@ -88,24 +88,21 @@
           onplay="resizeAndPlay(this)"
         ></video>
 
-        <canvas height="0" class="videoMerge" id="aleo-nerfactoMerge"></canvas>
-      </div>
-      <div class="text-center">
-        <button onclick="play(this)" id="aleo" class="video-btn fa fa-lg fa-pause"></button>
+        <canvas height="0" class="videoMerge" id="aloe-nerfactoMerge"></canvas>
       </div>
     </div>
 
     <div
       class="tab-pane fade show active text-center"
-      id="video-aleo-nerfacto-vis"
+      id="video-aloe-nerfacto-vis"
       role="tabpanel"
-      aria-labelledby="tab-aleo-nerfacto-vis"
+      aria-labelledby="tab-aloe-nerfacto-vis"
       style="background-color: white"
     >
-      <div class="video-compare-container" id="aleo-nerfacto-visDiv">
+      <div class="video-compare-container" id="aloe-nerfacto-visDiv">
         <video  controls preload="none" 
-          class="aleo-video"
-          id="aleo-nerfacto-vis"
+          class="aloe-video"
+          id="aloe-nerfacto-vis"
           loop
           playsinline
           muted
@@ -117,25 +114,22 @@
         <canvas
           height="0"
           class="videoMerge"
-          id="aleo-nerfacto-visMerge"
+          id="aloe-nerfacto-visMerge"
         ></canvas>
-      </div>
-      <div class="text-center">
-        <button onclick="play(this)" id="aleo" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
 
     <div
       class="tab-pane fade text-center"
-      id="video-aleo-nerfacto-vis-sparsity"
+      id="video-aloe-nerfacto-vis-sparsity"
       role="tabpanel"
-      aria-labelledby="tab-aleo-nerfacto-vis-sparsity"
+      aria-labelledby="tab-aloe-nerfacto-vis-sparsity"
       style="background-color: white"
     >
-      <div class="video-compare-container" id="aleo-nerfacto-vis-sparsityDiv">
+      <div class="video-compare-container" id="aloe-nerfacto-vis-sparsityDiv">
         <video  controls preload="none" 
-          class="aleo-video"
-          id="aleo-nerfacto-vis-sparsity"
+          class="aloe-video"
+          id="aloe-nerfacto-vis-sparsity"
           loop
           playsinline
           muted
@@ -147,25 +141,22 @@
         <canvas
           height="0"
           class="videoMerge"
-          id="aleo-nerfacto-vis-sparsityMerge"
+          id="aloe-nerfacto-vis-sparsityMerge"
         ></canvas>
-      </div>
-      <div class="text-center">
-        <button onclick="play(this)" id="aleo" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
 
     <div
       class="tab-pane fade text-center"
-      id="video-aleo-nerfacto-vis-tv"
+      id="video-aloe-nerfacto-vis-tv"
       role="tabpanel"
-      aria-labelledby="tab-aleo-nerfacto-vis-tv"
+      aria-labelledby="tab-aloe-nerfacto-vis-tv"
       style="background-color: white"
     >
-      <div class="video-compare-container" id="aleo-nerfacto-vis-tvDiv">
+      <div class="video-compare-container" id="aloe-nerfacto-vis-tvDiv">
         <video  controls preload="none" 
-          class="aleo-video"
-          id="aleo-nerfacto-vis-tv"
+          class="aloe-video"
+          id="aloe-nerfacto-vis-tv"
           loop
           playsinline
           muted
@@ -177,24 +168,21 @@
         <canvas
           height="0"
           class="videoMerge"
-          id="aleo-nerfacto-vis-tvMerge"
+          id="aloe-nerfacto-vis-tvMerge"
         ></canvas>
-      </div>
-      <div class="text-center">
-        <button onclick="play(this)" id="aleo" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
     <div
       class="tab-pane fade text-center"
-      id="video-aleo-nerfacto-vis-regnerf"
+      id="video-aloe-nerfacto-vis-regnerf"
       role="tabpanel"
-      aria-labelledby="tab-aleo-nerfacto-vis-regnerf"
+      aria-labelledby="tab-aloe-nerfacto-vis-regnerf"
       style="background-color: white"
     >
-      <div class="video-compare-container" id="aleo-nerfacto-vis-regnerfDiv">
+      <div class="video-compare-container" id="aloe-nerfacto-vis-regnerfDiv">
         <video  controls preload="none" 
-          class="aleo-video"
-          id="aleo-nerfacto-vis-regnerf"
+          class="aloe-video"
+          id="aloe-nerfacto-vis-regnerf"
           loop
           playsinline
           muted
@@ -206,11 +194,8 @@
         <canvas
           height="0"
           class="videoMerge"
-          id="aleo-nerfacto-vis-regnerfMerge"
+          id="aloe-nerfacto-vis-regnerfMerge"
         ></canvas>
-      </div>
-      <div class="text-center">
-        <button onclick="play(this)" id="aleo" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
   </div>

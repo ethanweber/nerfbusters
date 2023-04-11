@@ -125,16 +125,16 @@ function play(element)
             elements[i].play();
 
             if (i == 0){
-                element.classList.remove("fa-pause");
-                element.classList.add("fa-play");
+                element.classList.remove("fa-play");
+                element.classList.add("fa-pause");
             }
         }
         else{
             elements[i].pause();
 
             if (i == 0){
-                element.classList.remove("fa-play");
-                element.classList.add("fa-pause");
+                element.classList.remove("fa-pause");
+                element.classList.add("fa-play");
             }
         }
 }
@@ -177,18 +177,31 @@ function playresults(element)
     // pause all videos
     for (var j = 0; j < datasets.length; j++){
         var elements = document.getElementsByClassName(datasets[j] + "-video");
+        var button = document.getElementById(datasets[j]);
         for(var i  = 0; i< elements.length; i++) 
             if (elements[i].paused){}
             else{
                 elements[i].pause();
+
+                if (i == 0){
+                    button.classList.remove("fa-pause");
+                    button.classList.add("fa-play");
+                }
             }
     }
 
     // play selected videos
     var results = element.id.replace("tab-", "");
     var elements = document.getElementsByClassName(results + "-video");
+    var button = document.getElementById(results);
     for(var i  = 0; i< elements.length; i++) 
         if (elements[i].paused){
             elements[i].play();
+
+            if (i == 0){
+                button.classList.remove("fa-play");
+                button.classList.add("fa-pause");
+            }
+
         }
 }
