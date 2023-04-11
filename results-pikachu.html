@@ -7,60 +7,60 @@
     >
       <button
         class="nav-item nav-link active"
-        id="tab-pipe-nerfacto"
+        id="tab-pikachu-nerfacto"
         data-bs-toggle="tab"
-        data-bs-target="#video-pipe-nerfacto"
+        data-bs-target="#video-pikachu-nerfacto"
         role="tab"
         type="button"
-        aria-controls="tab-pipe-nerfacto"
+        aria-controls="tab-pikachu-nerfacto"
         aria-selected="true"
       >
         Nerfacto
       </button>
       <button
         class="nav-item nav-link"
-        id="tab-pipe-nerfacto-vis"
+        id="tab-pikachu-nerfacto-vis"
         data-bs-toggle="tab"
-        data-bs-target="#video-pipe-nerfacto-vis"
+        data-bs-target="#video-pikachu-nerfacto-vis"
         role="tab"
         type="button"
-        aria-controls="tab-pipe-nerfacto-vis"
+        aria-controls="tab-pikachu-nerfacto-vis"
         aria-selected="false"
       >
         Nerfacto + Vis
       </button>
       <button
         class="nav-item nav-link"
-        id="tab-pipe-nerfacto-vis-sparsity"
+        id="tab-pikachu-nerfacto-vis-sparsity"
         data-bs-toggle="tab"
-        data-bs-target="#video-pipe-nerfacto-vis-sparsity"
+        data-bs-target="#video-pikachu-nerfacto-vis-sparsity"
         role="tab"
         type="button"
-        aria-controls="tab-pipe-nerfacto-sparsity"
+        aria-controls="tab-pikachu-nerfacto-sparsity"
         aria-selected="false"
       >
         Nerfacto + Vis + Sparsity
       </button>
       <button
         class="nav-item nav-link"
-        id="tab-pipe-nerfacto-vis"
+        id="tab-pikachu-nerfacto-vis"
         data-bs-toggle="tab"
-        data-bs-target="#video-pipe-nerfacto-vis-tv"
+        data-bs-target="#video-pikachu-nerfacto-vis-tv"
         role="tab"
         type="button"
-        aria-controls="tab-pipe-nerfacto-vis-tv"
+        aria-controls="tab-pikachu-nerfacto-vis-tv"
         aria-selected="false"
       >
         Nerfacto + Vis + TV
       </button>
       <button
         class="nav-item nav-link"
-        id="tab-pipe-nerfacto-vis"
+        id="tab-pikachu-nerfacto-vis"
         data-bs-toggle="tab"
-        data-bs-target="#video-pipe-nerfacto-vis-regnerf"
+        data-bs-target="#video-pikachu-nerfacto-vis-regnerf"
         role="tab"
         type="button"
-        aria-controls="tab-pipe-nerfacto-vis-regnerf"
+        aria-controls="tab-pikachu-nerfacto-vis-regnerf"
         aria-selected="false"
       >
         Nerfacto + Vis + RegNeRF
@@ -71,141 +71,141 @@
   <div class="tab-content" id="nav-tabContent">
     <div
       class="tab-pane fade show active text-center"
-      id="video-pipe-nerfacto"
+      id="video-pikachu-nerfacto"
       role="tabpanel"
-      aria-labelledby="tab-pipe-nerfacto"
+      aria-labelledby="tab-pikachu-nerfacto"
       style="background-color: white"
     >
-      <div class="video-compare-container" id="pipe-nerfactoDiv">
+      <div class="video-compare-container" id="pikachu-nerfactoDiv">
         <video  controls preload="none" 
-          class="pipe-video"
-          id="pipe-nerfacto"
+          class="pikachu-video"
+          id="pikachu-nerfacto"
           loop
           playsinline
           muted autoplay
-          src="comparison_videos/pipe---nerfacto.mp4"
+          src="comparison_videos/pikachu---nerfacto.mp4"
           onplay="resizeAndPlay(this)"
         ></video>
 
-        <canvas height="0" class="videoMerge" id="pipe-nerfactoMerge"></canvas>
+        <canvas height="0" class="videoMerge" id="pikachu-nerfactoMerge"></canvas>
       </div>
       <div class="text-center">
-        <button onclick="play(this)" id="pipe" class="video-btn fa fa-lg fa-pause"></button>
+        <button onclick="play(this)" id="pikachu" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
 
     <div
       class="tab-pane fade text-center"
-      id="video-pipe-nerfacto-vis"
+      id="video-pikachu-nerfacto-vis"
       role="tabpanel"
-      aria-labelledby="tab-pipe-nerfacto-vis"
+      aria-labelledby="tab-pikachu-nerfacto-vis"
       style="background-color: white"
     >
-      <div class="video-compare-container" id="pipe-nerfacto-visDiv">
+      <div class="video-compare-container" id="pikachu-nerfacto-visDiv">
         <video  controls preload="none" 
-          class="pipe-video"
-          id="pipe-nerfacto-vis"
+          class="pikachu-video"
+          id="pikachu-nerfacto-vis"
           loop
           playsinline
           muted autoplay
-          src="comparison_videos/pipe---nerfacto-frustum.mp4"
+          src="comparison_videos/pikachu---nerfacto-frustum.mp4"
           onplay="resizeAndPlay(this)"
         ></video>
 
         <canvas
           height="0"
           class="videoMerge"
-          id="pipe-nerfacto-visMerge"
+          id="pikachu-nerfacto-visMerge"
         ></canvas>
       </div>
       <div class="text-center">
-        <button onclick="play(this)" id="pipe" class="video-btn fa fa-lg fa-pause"></button>
+        <button onclick="play(this)" id="pikachu" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
 
     <div
       class="tab-pane fade text-center"
-      id="video-pipe-nerfacto-vis-sparsity"
+      id="video-pikachu-nerfacto-vis-sparsity"
       role="tabpanel"
-      aria-labelledby="tab-pipe-nerfacto-vis-sparsity"
+      aria-labelledby="tab-pikachu-nerfacto-vis-sparsity"
       style="background-color: white"
     >
-      <div class="video-compare-container" id="pipe-nerfacto-vis-sparsityDiv">
+      <div class="video-compare-container" id="pikachu-nerfacto-vis-sparsityDiv">
         <video  controls preload="none" 
-          class="pipe-video"
-          id="pipe-nerfacto-vis-sparsity"
+          class="pikachu-video"
+          id="pikachu-nerfacto-vis-sparsity"
           loop
           playsinline
           muted autoplay
-          src="comparison_videos/pipe---nerfacto-frustum-sparsity.mp4"
+          src="comparison_videos/pikachu---nerfacto-frustum-sparsity.mp4"
           onplay="resizeAndPlay(this)"
         ></video>
 
         <canvas
           height="0"
           class="videoMerge"
-          id="pipe-nerfacto-vis-sparsityMerge"
+          id="pikachu-nerfacto-vis-sparsityMerge"
         ></canvas>
       </div>
       <div class="text-center">
-        <button onclick="play(this)" id="pipe" class="video-btn fa fa-lg fa-pause"></button>
+        <button onclick="play(this)" id="pikachu" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
 
     <div
       class="tab-pane fade text-center"
-      id="video-pipe-nerfacto-vis-tv"
+      id="video-pikachu-nerfacto-vis-tv"
       role="tabpanel"
-      aria-labelledby="tab-pipe-nerfacto-vis-tv"
+      aria-labelledby="tab-pikachu-nerfacto-vis-tv"
       style="background-color: white"
     >
-      <div class="video-compare-container" id="pipe-nerfacto-vis-tvDiv">
+      <div class="video-compare-container" id="pikachu-nerfacto-vis-tvDiv">
         <video  controls preload="none" 
-          class="pipe-video"
-          id="pipe-nerfacto-vis-tv"
+          class="pikachu-video"
+          id="pikachu-nerfacto-vis-tv"
           loop
           playsinline
           muted autoplay
-          src="comparison_videos/pipe---nerfacto-frustum-TV.mp4"
+          src="comparison_videos/pikachu---nerfacto-frustum-TV.mp4"
           onplay="resizeAndPlay(this)"
         ></video>
 
         <canvas
           height="0"
           class="videoMerge"
-          id="pipe-nerfacto-vis-tvMerge"
+          id="pikachu-nerfacto-vis-tvMerge"
         ></canvas>
       </div>
       <div class="text-center">
-        <button onclick="play(this)" id="pipe" class="video-btn fa fa-lg fa-pause"></button>
+        <button onclick="play(this)" id="pikachu" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
     <div
       class="tab-pane fade text-center"
-      id="video-pipe-nerfacto-vis-regnerf"
+      id="video-pikachu-nerfacto-vis-regnerf"
       role="tabpanel"
-      aria-labelledby="tab-pipe-nerfacto-vis-regnerf"
+      aria-labelledby="tab-pikachu-nerfacto-vis-regnerf"
       style="background-color: white"
     >
-      <div class="video-compare-container" id="pipe-nerfacto-vis-regnerfDiv">
+      <div class="video-compare-container" id="pikachu-nerfacto-vis-regnerfDiv">
         <video  controls preload="none" 
-          class="pipe-video"
-          id="pipe-nerfacto-vis-regnerf"
+          class="pikachu-video"
+          id="pikachu-nerfacto-vis-regnerf"
           loop
           playsinline
           muted autoplay
-          src="comparison_videos/pipe---nerfacto-frustum-regnerf.mp4"
+          src="comparison_videos/pikachu---nerfacto-frustum-regnerf.mp4"
           onplay="resizeAndPlay(this)"
         ></video>
 
         <canvas
           height="0"
           class="videoMerge"
-          id="pipe-nerfacto-vis-regnerfMerge"
+          id="pikachu-nerfacto-vis-regnerfMerge"
         ></canvas>
       </div>
       <div class="text-center">
-        <button onclick="play(this)" id="pipe" class="video-btn fa fa-lg fa-pause"></button>
+        <button onclick="play(this)" id="pikachu" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
   </div>

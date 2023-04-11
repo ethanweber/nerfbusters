@@ -43,13 +43,13 @@ function playVids(videoId) {
             var arrowLength = 0.09 * vidHeight;
             var arrowheadWidth = 0.025 * vidHeight;
             var arrowheadLength = 0.04 * vidHeight;
-            var arrowPosY = vidHeight / 10;
+            var arrowPosY = vidHeight / 2;
             var arrowWidth = 0.007 * vidHeight;
             var currX = vidWidth * position;
 
             // Draw circle
             mergeContext.arc(currX, arrowPosY, arrowLength*0.7, 0, Math.PI * 2, false);
-            mergeContext.fillStyle = "#FFD79340";
+            mergeContext.fillStyle = "#FFFFFF";
             mergeContext.fill()
             //mergeContext.strokeStyle = "#444444";
             //mergeContext.stroke()
@@ -59,7 +59,7 @@ function playVids(videoId) {
             mergeContext.moveTo(vidWidth*position, 0);
             mergeContext.lineTo(vidWidth*position, vidHeight);
             mergeContext.closePath()
-            mergeContext.strokeStyle = "#444444";
+            mergeContext.strokeStyle = "#FFFFFF";
             mergeContext.lineWidth = 5;            
             mergeContext.stroke();
 
@@ -90,7 +90,7 @@ function playVids(videoId) {
 
             mergeContext.closePath();
 
-            mergeContext.fillStyle = "#444444";
+            mergeContext.fillStyle = "#4287f5";
             mergeContext.fill();
 
             
@@ -123,8 +123,72 @@ function play(element)
     for(var i  = 0; i< elements.length; i++) 
         if (elements[i].paused){
             elements[i].play();
+
+            if (i == 0){
+                element.classList.remove("fa-pause");
+                element.classList.add("fa-play");
+            }
         }
         else{
             elements[i].pause();
+
+            if (i == 0){
+                element.classList.remove("fa-play");
+                element.classList.add("fa-pause");
+            }
+        }
+}
+
+function playdata(element)
+{
+
+    var datasets = ["aloe", "art", "car", "century", "flowers", "garbage", "picnic", "pikachu", "pipe", "plant", "roses", "table"];
+    // pause all videos
+    for (var i = 0; i < datasets.length; i++){
+        var train_data = document.getElementById(datasets[i] + "-video-train");
+        var eval_data = document.getElementById(datasets[i] + "-video-eval");
+
+        if (train_data.paused){}
+        else{
+            train_data.pause();
+            eval_data.pause();
+        }
+    }
+
+    // start playing the selected videos
+    var data = element.id.replace("tab-", "");
+    var train_data = document.getElementById(data + "-video-train");
+    var eval_data = document.getElementById(data + "-video-eval");
+
+    if (train_data.paused){
+        train_data.play();
+        eval_data.play();
+    }
+    else{
+        train_data.pause();
+        eval_data.pause();
+    }
+}
+
+function playresults(element)
+{
+    var datasets = ["aloe", "art", "car", "century", "flowers", "garbage", "picnic", "pikachu", "pipe", "plant", "roses", "table"];
+
+    // pause all videos
+    for (var j = 0; j < datasets.length; j++){
+        var elements = document.getElementsByClassName(datasets[j] + "-video");
+        for(var i  = 0; i< elements.length; i++) 
+            if (elements[i].paused){}
+            else{
+                elements[i].pause();
+            }
+    }
+
+    // play selected videos
+    var results = element.id.replace("tab-", "");
+    var elements = document.getElementsByClassName(results + "-video");
+    for(var i  = 0; i< elements.length; i++) 
+        if (elements[i].paused){
+            elements[i].play();
         }
 }

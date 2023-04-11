@@ -7,13 +7,14 @@
     >
       <button
         class="nav-item nav-link active"
-        id="tab-aleo"
+        id="tab-aloe"
         data-bs-toggle="tab"
-        data-bs-target="#video-aleo"
+        data-bs-target="#video-aloe"
         role="tab"
         type="button"
-        aria-controls="tab-aleo"
+        aria-controls="tab-aloe"
         aria-selected="true"
+        onclick="playdata(this)"
       >
         Aloe
       </button>
@@ -26,6 +27,7 @@
         type="button"
         aria-controls="tab-art"
         aria-selected="false"
+        onclick="playdata(this)"
       >
         Art
       </button>
@@ -38,6 +40,7 @@
         type="button"
         aria-controls="tab-car"
         aria-selected="false"
+        onclick="playdata(this)"
       >
         Car
       </button>
@@ -50,18 +53,20 @@
         type="button"
         aria-controls="tab-century"
         aria-selected="false"
+        onclick="playdata(this)"
       >
         Century
       </button>
       <button
         class="nav-item nav-link"
-        id="tab-century"
+        id="tab-flowers"
         data-bs-toggle="tab"
         data-bs-target="#video-flowers"
         role="tab"
         type="button"
         aria-controls="tab-flowers"
         aria-selected="false"
+        onclick="playdata(this)"
       >
         Flowers
       </button>
@@ -74,6 +79,7 @@
         type="button"
         aria-controls="tab-garbage"
         aria-selected="false"
+        onclick="playdata(this)"
       >
         Garbage
       </button>
@@ -86,6 +92,7 @@
         type="button"
         aria-controls="tab-picnic"
         aria-selected="false"
+        onclick="playdata(this)"
       >
         Picnic
       </button>
@@ -98,6 +105,7 @@
         type="button"
         aria-controls="tab-pikachu"
         aria-selected="false"
+        onclick="playdata(this)"
       >
         Pikachu
       </button>
@@ -110,6 +118,7 @@
         type="button"
         aria-controls="tab-pipe"
         aria-selected="false"
+        onclick="playdata(this)"
       >
         Pipe
       </button>
@@ -122,6 +131,7 @@
         type="button"
         aria-controls="tab-plant"
         aria-selected="false"
+        onclick="playdata(this)"
       >
         Plant
       </button>
@@ -134,6 +144,7 @@
         type="button"
         aria-controls="tab-roses"
         aria-selected="false"
+        onclick="playdata(this)"
       >
         Roses
       </button>
@@ -146,6 +157,7 @@
         type="button"
         aria-controls="tab-table"
         aria-selected="false"
+        onclick="playdata(this)"
       >
         Table
       </button>
@@ -155,16 +167,16 @@
   <div class="tab-content" id="nav-tabContent">
     <div
       class="tab-pane fade show active text-center"
-      id="video-aleo"
+      id="video-aloe"
       role="tabpanel"
-      aria-labelledby="tab-aleo"
+      aria-labelledby="tab-aloe"
       style="background-color: white"
     >
       <table width="50%" align="center" class="results">
         <tbody>
           <tr align="center">
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video id="aloe-video-train" autoplay width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/aloe/aloe.mp4"
                   type="video/mp4"
@@ -172,7 +184,7 @@
               </video>
             </td>
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video id="aloe-video-eval" autoplay width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/aloe/aloe-eval.mp4"
                   type="video/mp4"
@@ -199,7 +211,7 @@
         <tbody>
           <tr align="center">
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="art-video-train" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/art/art.mp4"
                   type="video/mp4"
@@ -207,7 +219,7 @@
               </video>
             </td>
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="art-video-eval" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/art/art-eval.mp4"
                   type="video/mp4"
@@ -234,7 +246,7 @@
         <tbody>
           <tr align="center">
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="car-video-train" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/car-small/car.mp4"
                   type="video/mp4"
@@ -242,7 +254,7 @@
               </video>
             </td>
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="car-video-eval" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/car-small/car-eval.mp4"
                   type="video/mp4"
@@ -269,7 +281,7 @@
         <tbody>
           <tr align="center">
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="century-video-train" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/century/century.mp4"
                   type="video/mp4"
@@ -277,7 +289,7 @@
               </video>
             </td>
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="century-video-eval" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/century/century-eval.mp4"
                   type="video/mp4"
@@ -304,7 +316,7 @@
         <tbody>
           <tr align="center">
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="flowers-video-train" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/flowers/flowers.mp4"
                   type="video/mp4"
@@ -312,7 +324,7 @@
               </video>
             </td>
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="flowers-video-eval" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/flowers/flowers-eval.mp4"
                   type="video/mp4"
@@ -339,7 +351,7 @@
         <tbody>
           <tr align="center">
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="garbage-video-train" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/garbage/garbage.mp4"
                   type="video/mp4"
@@ -347,7 +359,7 @@
               </video>
             </td>
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="garbage-video-eval" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/garbage/garbage-eval.mp4"
                   type="video/mp4"
@@ -374,7 +386,7 @@
         <tbody>
           <tr align="center">
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="picnic-video-train" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/picnic/picnic.mp4"
                   type="video/mp4"
@@ -382,7 +394,7 @@
               </video>
             </td>
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="picnic-video-eval" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/picnic/picnic-eval.mp4"
                   type="video/mp4"
@@ -409,7 +421,7 @@
         <tbody>
           <tr align="center">
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="pikachu-video-train" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/pikachu/pikachu.mp4"
                   type="video/mp4"
@@ -417,7 +429,7 @@
               </video>
             </td>
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="pikachu-video-eval" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/pikachu/pikachu-eval.mp4"
                   type="video/mp4"
@@ -444,7 +456,7 @@
         <tbody>
           <tr align="center">
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="pipe-video-train" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/pipe/pipe.mp4"
                   type="video/mp4"
@@ -452,7 +464,7 @@
               </video>
             </td>
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="pipe-video-eval" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/pipe/pipe-eval.mp4"
                   type="video/mp4"
@@ -479,7 +491,7 @@
         <tbody>
           <tr align="center">
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="plant-video-train" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/plant/plant.mp4"
                   type="video/mp4"
@@ -487,7 +499,7 @@
               </video>
             </td>
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="plant-video-eval" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/plant/plant-eval.mp4"
                   type="video/mp4"
@@ -514,7 +526,7 @@
         <tbody>
           <tr align="center">
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="roses-video-train" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/roses/roses.mp4"
                   type="video/mp4"
@@ -522,7 +534,7 @@
               </video>
             </td>
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="roses-video-eval" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/roses/roses-eval.mp4"
                   type="video/mp4"
@@ -549,7 +561,7 @@
         <tbody>
           <tr align="center">
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="table-video-train" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/table/table.mp4"
                   type="video/mp4"
@@ -557,7 +569,7 @@
               </video>
             </td>
             <td width="50%">
-              <video width="100%" loop muted controls>
+              <video class="lazy" id="table-video-eval" controls preload="none"  width="100%" loop muted controls>
                 <source
                   src="media/nerf-captures/table/table-eval.mp4"
                   type="video/mp4"

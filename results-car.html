@@ -77,12 +77,13 @@
       style="background-color: white"
     >
       <div class="video-compare-container" id="car-nerfactoDiv">
-        <video
+        <video  controls preload="none" 
           class="car-video"
           id="car-nerfacto"
           loop
           playsinline
           muted
+          autoplay
           src="comparison_videos/car---nerfacto.mp4"
           onplay="resizeAndPlay(this)"
         ></video>
@@ -90,7 +91,7 @@
         <canvas height="0" class="videoMerge" id="car-nerfactoMerge"></canvas>
       </div>
       <div class="text-center">
-        <button onclick="play(this)" id="car">Play / Pause</button>
+        <button onclick="play(this)" id="car" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
 
@@ -102,11 +103,12 @@
       style="background-color: white"
     >
       <div class="video-compare-container" id="car-nerfacto-visDiv">
-        <video
+        <video  controls preload="none" 
           class="car-video"
           id="car-nerfacto-vis"
           loop
           playsinline
+          autoplay
           muted
           src="comparison_videos/car---nerfacto-frustum.mp4"
           onplay="resizeAndPlay(this)"
@@ -119,7 +121,7 @@
         ></canvas>
       </div>
       <div class="text-center">
-        <button onclick="play(this)" id="car">Play / Pause</button>
+        <button onclick="play(this)" id="car" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
 
@@ -131,12 +133,13 @@
       style="background-color: white"
     >
       <div class="video-compare-container" id="car-nerfacto-vis-sparsityDiv">
-        <video
+        <video  controls preload="none" 
           class="car-video"
           id="car-nerfacto-vis-sparsity"
           loop
           playsinline
           muted
+          autoplay
           src="comparison_videos/car---nerfacto-frustum-sparsity.mp4"
           onplay="resizeAndPlay(this)"
         ></video>
@@ -148,7 +151,7 @@
         ></canvas>
       </div>
       <div class="text-center">
-        <button onclick="play(this)" id="car">Play / Pause</button>
+        <button onclick="play(this)" id="car" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
 
@@ -160,12 +163,13 @@
       style="background-color: white"
     >
       <div class="video-compare-container" id="car-nerfacto-vis-tvDiv">
-        <video
+        <video  controls preload="none" 
           class="car-video"
           id="car-nerfacto-vis-tv"
           loop
           playsinline
           muted
+          autoplay
           src="comparison_videos/car---nerfacto-frustum-TV.mp4"
           onplay="resizeAndPlay(this)"
         ></video>
@@ -177,7 +181,7 @@
         ></canvas>
       </div>
       <div class="text-center">
-        <button onclick="play(this)" id="car">Play / Pause</button>
+        <button onclick="play(this)" id="car" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
     <div
@@ -188,12 +192,13 @@
       style="background-color: white"
     >
       <div class="video-compare-container" id="car-nerfacto-vis-regnerfDiv">
-        <video
+        <video  controls preload="none" 
           class="car-video"
           id="car-nerfacto-vis-regnerf"
           loop
           playsinline
           muted
+          autoplay
           src="comparison_videos/car---nerfacto-frustum-regnerf.mp4"
           onplay="resizeAndPlay(this)"
         ></video>
@@ -205,7 +210,7 @@
         ></canvas>
       </div>
       <div class="text-center">
-        <button onclick="play(this)" id="car">Play / Pause</button>
+        <button onclick="play(this)" id="car" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
   </div>

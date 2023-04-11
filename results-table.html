@@ -77,12 +77,12 @@
       style="background-color: white"
     >
       <div class="video-compare-container" id="table-nerfactoDiv">
-        <video
+        <video  controls preload="none" 
           class="table-video"
           id="table-nerfacto"
           loop
           playsinline
-          muted
+          muted autoplay
           src="comparison_videos/table---nerfacto.mp4"
           onplay="resizeAndPlay(this)"
         ></video>
@@ -90,7 +90,7 @@
         <canvas height="0" class="videoMerge" id="table-nerfactoMerge"></canvas>
       </div>
       <div class="text-center">
-        <button onclick="play(this)" id="table">Play / Pause</button>
+        <button onclick="play(this)" id="table" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
 
@@ -102,12 +102,12 @@
       style="background-color: white"
     >
       <div class="video-compare-container" id="table-nerfacto-visDiv">
-        <video
+        <video  controls preload="none" 
           class="table-video"
           id="table-nerfacto-vis"
           loop
           playsinline
-          muted
+          muted autoplay
           src="comparison_videos/table---nerfacto-frustum.mp4"
           onplay="resizeAndPlay(this)"
         ></video>
@@ -119,7 +119,7 @@
         ></canvas>
       </div>
       <div class="text-center">
-        <button onclick="play(this)" id="table">Play / Pause</button>
+        <button onclick="play(this)" id="table" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
 
@@ -131,12 +131,12 @@
       style="background-color: white"
     >
       <div class="video-compare-container" id="table-nerfacto-vis-sparsityDiv">
-        <video
+        <video  controls preload="none" 
           class="table-video"
           id="table-nerfacto-vis-sparsity"
           loop
           playsinline
-          muted
+          muted autoplay
           src="comparison_videos/table---nerfacto-frustum-sparsity.mp4"
           onplay="resizeAndPlay(this)"
         ></video>
@@ -148,7 +148,7 @@
         ></canvas>
       </div>
       <div class="text-center">
-        <button onclick="play(this)" id="table">Play / Pause</button>
+        <button onclick="play(this)" id="table" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
 
@@ -160,12 +160,12 @@
       style="background-color: white"
     >
       <div class="video-compare-container" id="table-nerfacto-vis-tvDiv">
-        <video
+        <video  controls preload="none" 
           class="table-video"
           id="table-nerfacto-vis-tv"
           loop
           playsinline
-          muted
+          muted autoplay
           src="comparison_videos/table---nerfacto-frustum-TV.mp4"
           onplay="resizeAndPlay(this)"
         ></video>
@@ -177,7 +177,7 @@
         ></canvas>
       </div>
       <div class="text-center">
-        <button onclick="play(this)" id="table">Play / Pause</button>
+        <button onclick="play(this)" id="table" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
     <div
@@ -188,12 +188,12 @@
       style="background-color: white"
     >
       <div class="video-compare-container" id="table-nerfacto-vis-regnerfDiv">
-        <video
+        <video  controls preload="none" 
           class="table-video"
           id="table-nerfacto-vis-regnerf"
           loop
           playsinline
-          muted
+          muted autoplay
           src="comparison_videos/table---nerfacto-frustum-regnerf.mp4"
           onplay="resizeAndPlay(this)"
         ></video>
@@ -205,7 +205,7 @@
         ></canvas>
       </div>
       <div class="text-center">
-        <button onclick="play(this)" id="table">Play / Pause</button>
+        <button onclick="play(this)" id="table" class="video-btn fa fa-lg fa-pause"></button>
       </div>
     </div>
   </div>

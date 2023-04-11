@@ -80,8 +80,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="js/includeHTML.js" type="text/javascript"></script>
-    <script src="js/script.js" type="text/javascript"></script>
     <script src="js/video_comparison.js"></script>
+    <script src="js/lazy_load.js"></script>
 
     <link
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -95,85 +95,86 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-  </head>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Material+Icons"
-    rel="stylesheet"
-  />
-  <!-- Bootstrap JS -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"
-  ></script>
-  <!-- Customized style -->
-  <style>
-    html * {
-      color: #333;
-      font-family: "Lato", sans-serif;
-    }
-    table.results td {
-      color: #888;
-      font-size: 90%;
-    }
-    .mtitle {
-      margin-top: 0;
-      margin-bottom: 0;
-      font-family: "Varela Round", sans-serif;
-      color: #4d4d4d;
-      font-size: 50px;
-      line-height: 80px;
-      font-weight: 600;
-      letter-spacing: 3px;
-    }
-    .msubtitle {
-      margin-top: -30px;
-      margin-bottom: -20px;
-      font-size: 23px;
-      line-height: 65px;
-      letter-spacing: 2px;
-    }
-    .mneurips {
-      color: #aaa;
-      font-size: 20px;
-    }
-    .mauthors {
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 15px;
-    }
-    .mauthors_affiliation {
-      margin-top: -12px;
-      margin-bottom: 24px;
-      font-family: "Open Sans", sans-serif;
-      font-size: 12px;
-      line-height: 15px;
-    }
-    .darker_bg {
-      padding-top: 32px;
-      padding-bottom: 32px;
-      background-color: #f5f5f5;
-    }
-    .nav-link {
-      color: #333;
-    }
-    .nav-link a:hover,
-    a:hover,
-    a:active {
-      color: #888 !important;
-    }
-    .accordion-button:not(.collapsed) {
-      color: inherit;
-      background: #f5f5f5;
-    }
-    .accordion-button:not(.collapsed)::after {
-      filter: brightness(0%) invert(70%);
-    }
-    .accordion-button:focus {
-      box-shadow: inherit;
-    }
-  </style>
+  
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
 
+    <!-- Customized style -->
+    <style>
+      html * {
+        color: #333;
+        font-family: "Lato", sans-serif;
+      }
+      table.results td {
+        color: #888;
+        font-size: 90%;
+      }
+      .mtitle {
+        margin-top: 0;
+        margin-bottom: 0;
+        font-family: "Varela Round", sans-serif;
+        color: #4d4d4d;
+        font-size: 50px;
+        line-height: 80px;
+        font-weight: 600;
+        letter-spacing: 3px;
+      }
+      .msubtitle {
+        margin-top: -30px;
+        margin-bottom: -20px;
+        font-size: 23px;
+        line-height: 65px;
+        letter-spacing: 2px;
+      }
+      .mneurips {
+        color: #aaa;
+        font-size: 20px;
+      }
+      .mauthors {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 15px;
+      }
+      .mauthors_affiliation {
+        margin-top: -12px;
+        margin-bottom: 24px;
+        font-family: "Open Sans", sans-serif;
+        font-size: 12px;
+        line-height: 15px;
+      }
+      .darker_bg {
+        padding-top: 32px;
+        padding-bottom: 32px;
+        background-color: #f5f5f5;
+      }
+      .nav-link {
+        color: #333;
+      }
+      .nav-link a:hover,
+      a:hover,
+      a:active {
+        color: #888 !important;
+      }
+      .accordion-button:not(.collapsed) {
+        color: inherit;
+        background: #f5f5f5;
+      }
+      .accordion-button:not(.collapsed)::after {
+        filter: brightness(0%) invert(70%);
+      }
+      .accordion-button:focus {
+        box-shadow: inherit;
+      }
+    </style>
+  </head>
   <body>
     <div class="section">
       <div class="container">
@@ -273,24 +274,24 @@
           and we present a method that uses a 3D diffusion prior to clean NeRFs.
         </h1>
         <video id="main-video" autobuffer muted autoplay loop controls>
-          <source id="mp4" src="media/car-fly-swipe.mp4" type="video/mp4" />
+          <source id="mp4" src="media/car-fly-swipe.mp4" type="video/mp4"/>
         </video>
 
         <div class="base-row">
           <h1>Overview</h1>
           <img id="main-img" src="media/teaser.png" />
           <p class="paragraph">
-            Casually captured Neural Radiance Fields (NeRFs) suf- fer from
+            Casually captured Neural Radiance Fields (NeRFs) suffer from
             artifacts such as floaters or flawed geometry when rendered outside
             the path of the training views. However, common practice is still to
             evaluate on every 8th frame, which does not measure rendering
-            quality away from train- ing views, hindering progress in volume
-            rendering. We pro- pose a new dataset and evaluation procedure,
+            quality away from training views, hindering progress in volume
+            rendering. We propose a new dataset and evaluation procedure,
             where two camera trajectories are recorded of the scene, one used
-            for training, and the other for evaluation. We find that exist- ing
-            hand-crafted regularizers do not remove floaters nor im- prove scene
+            for training, and the other for evaluation. We find that existing
+            hand-crafted regularizers do not remove floaters nor improve scene
             geometry in this more challenging in-the-wild setting. To this end,
-            we propose a learned, local 3D diffu- sion prior and a novel density
+            we propose a learned, local 3D diffusion prior and a novel density
             score distillation sampling loss. We show that this learned prior
             removes floaters and improves scene geometry for casual captures.
           </p>
@@ -302,6 +303,20 @@
             <video id="main-video" muted loop controls>
               <source id="mp4" src="todo.mp4" type="video/mp4" />
             </video>
+          </div>
+
+
+          <div class="base-row">
+            <h1>Diffusion Method</h1>
+            <img id="main-img" src="media/method.png" />
+            <p class="paragraph">
+              We learn a local 3D prior with a diffusion model that regularizes the 3D geometry of NeRFs. 
+              We use importance sampling to query a 32^3 cube with NeRF densities. 
+              We binarize these densities and perform one single denoising step using a pre-trained 3D diffusion model. 
+              With these denoised densities, we compute a density score distillation sampling (DSDS) that 
+              penalizes NeRF densities where the diffusion model predicts empty voxels and pushes the NeRF densities 
+              above the target w where the diffusion model predicts occupied voxels.
+            </p>
           </div>
 
         <div class="base-row">
@@ -333,13 +348,6 @@
           </div>
         </div>
 
-          <div class="base-row">
-            <h1>Diffusion Method</h1>
-            <p class="paragraph">
-                TODO
-            </p>
-            <img id="main-img" src="media/method.png" />
-          </div>
 
           <div class="base-row">
             <h1 id="abstract">
@@ -360,20 +368,23 @@
               If you use this work or find it helpful, please consider citing:
               (bibtex)
             </p>
-<pre id="codecell0">
-@article{CleaNeRF2023,
-&nbsp;author = {Frederik Warburg* and Ethan Weber* and Matthew Tancik and Aleksander Hołyński and Angjoo Kanazawa},
-&nbsp;title = {CleaNeRF: Erasing Artifacts from Casually Captured NeRFs},
-&nbsp;journal = {arXiv preprint TODO},
-&nbsp;year = {2023},
-} </pre>
+            <pre id="codecell0">
+                @article{CleaNeRF2023,
+                &nbsp;author = {Frederik Warburg* and Ethan Weber* and Matthew Tancik and Aleksander Hołyński and Angjoo Kanazawa},
+                &nbsp;title = {CleaNeRF: Erasing Artifacts from Casually Captured NeRFs},
+                &nbsp;journal = {arXiv preprint TODO},
+                &nbsp;year = {2023},
+                } 
+              </pre>
           </div>
         </div>
       </div>
     </div>
+
+    <script>
+      includeHTML();
+    </script>
+
   </body>
 </html>
 
-<script>
-  includeHTML();
-</script>
