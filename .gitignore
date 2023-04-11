@@ -6,5 +6,5 @@ __pycache__/
 data/
 datasets/
 lightning_logs/
-outputs/
-renders/
+outputs*/
+renders*/

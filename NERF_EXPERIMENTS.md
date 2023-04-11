@@ -48,20 +48,28 @@ ns-train nerfacto \
     --eval-frame-indices 1
 ```
 
+Then we copy the checkpoints into a folder `outputs-checkpoints`. We also give the checkpoints names in the format `outputs-checkpoints/aloe-baseline.ckpt` and `outputs-checkpoints/aloe-pseudo-gt.ckpt`. We do this for every capture.
+
 # Improve the NeRFs with post-processing
 
-Now we improve the NeRFs with various regularizers, including our CleaNeRF method.
+Now we improve the NeRFs with various regularizers, including our CleaNeRF method. Remove `--dry-run` from any of the following commands to actually execute them.
 
-With the baseline experiment name...
+To run the **baseline experiments**, modify the file [cleanerf/nerf/experiment_configs/experiments_baseline.py](cleanerf/nerf/experiment_configs/experiments_baseline.py). *We've commented out everything except the aloe scene.*
 
 ```bash
-python scripts/launch_nerf.py train --data projects/magic_eraser/data/${DATASET} --output-folder ${OUTPUT_FOLDER} --baseline-experiment-name ${BASENAME_EXPERIMENT_NAME} --dry-run
+python scripts/launch_nerf.py train --experiment-name baselines --dry-run
 ```
 
-Or without and then it's up to your configs to handle everything!
+To run the **ablations experiments**, modify the file [cleanerf/nerf/experiment_configs/experiments_ablations.py](cleanerf/nerf/experiment_configs/experiments_ablations.py). *This will require preprocessing the garbage scene.*
 
 ```bash
-python projects/magic_eraser/scripts/launch_nerf.py train --dry-run
+python scripts/launch_nerf.py train --experiment-name ablations --dry-run
+```
+
+To run the **pseudo gt experiments**, modify the file [cleanerf/nerf/experiment_configs/experiments_pseudo_gt.py](cleanerf/nerf/experiment_configs/experiments_pseudo_gt.py). *We've commented out everything except the aloe scene.*
+
+```bash
+python scripts/launch_nerf.py train --experiment-name pseudo-gt --dry-run
 ```
 
 Remove `--dry-run` when the output of the script looks good to you. Notice that can also take any of these commands and run them on your own individually.
@@ -87,3 +95,7 @@ python projects/magic_eraser/scripts/launch_nerf.py metrics \
     --input-folder ${RENDER_FOLDER} \
     --visibility-experiment-name ${VISIBILITY_EXPERIMENT_NAME}
 ```
+
+# Creating a table from results
+
+You can see our notebook at [notebooks/nerf_table.ipynb](notebooks/nerf_table.ipynb) for creating tables.
