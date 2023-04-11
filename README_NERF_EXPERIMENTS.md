@@ -7,7 +7,7 @@ This section of our documentation assumes that you have the processed data. We w
 We first train two NeRFs per capture. (1) One which will be the NeRF that we improve with post-processing techniques, and (2) another which will serve as a pseudo ground truth for our evaluations. (1) is only trained on the training split, while (2) is trained on both the training and evaluation splits. We use the nerfacto method for these training runs.
 
 Set these for pretraining the NeRFs.
- ```bash
+```bash
 export DATASET=aloe;
 export BASENAME_EXPERIMENT_NAME=${DATASET}-baseline;
 export GT_EXPERIMENT_NAME=${DATASET}-pseudo-gt;
@@ -15,7 +15,7 @@ export OUTPUT_FOLDER_PRE=outputs-pretrained/${DATASET};
 ```
 
 Then set these for post-processing the NeRFs.
- ```bash
+```bash
 export OUTPUT_FOLDER_POST=outputs-postprocessed/${DATASET};
 export RENDER_FOLDER_POST=renders-postprocessed/${DATASET};
 ```
@@ -30,7 +30,7 @@ ns-train nerfacto \
     --output-dir ${OUTPUT_FOLDER_PRE} \
     nerfstudio-data \
     --eval-mode eval-frame-index \
-    --train-frame-indices 0
+    --train-frame-indices 0 \
     --eval-frame-indices 1
 ```
 

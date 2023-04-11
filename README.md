@@ -120,4 +120,4 @@ ns-process-data video --data data/cleanerf-captures/${DATASET}/${DATASET}.mp4 da
 
 ### NeRF experiments
 
-See for [NERF_EXPERIMENTS.md](NERF_EXPERIMENTS.md) to replicate our experiments and evaluation procedure described in the paper.
+See for [README_NERF_EXPERIMENTS.md](README_NERF_EXPERIMENTS.md) to replicate our experiments and evaluation procedure described in the paper.
