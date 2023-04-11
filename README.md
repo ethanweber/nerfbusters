@@ -66,9 +66,7 @@ Then you can train the 3D diffusion model.
 python cleanerf/run.py --config config/shapenet.yaml --name shapenet-experiment
 ```
 
-We also provide checkpoints for a trained diffusion model [pretrained checkpoint]()
-
-TODO: Ethan, do you want to host checkpoint?
+We also provide checkpoints for a trained diffusion model [pretrained checkpoint](https://data.nerf.studio/cleanerf-diffusion-cube-weights.ckpt)
 
 # Running CleaNeRF in-the-wild
 
