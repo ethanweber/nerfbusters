@@ -4,7 +4,8 @@ This project is CleaNeRF: ðŸ§¹ Erasing Artifacts from Casually Captured NeRFs ðŸ
 
 # Project page
 
-See the `gh-pages` branch of this repo for the [project website](https://ethanweber.me/CleaNeRF/).
+
+See the `gh-pages` branch of this repo for the [project website](https://ethanweber.me/CleaNeRF/). You may have to run the viewer locally until this branch is merged into main.
 
 # Installation
 
@@ -65,9 +66,7 @@ Then you can train the 3D diffusion model.
 python cleanerf/run.py --config config/shapenet.yaml --name shapenet-experiment
 ```
 
-We also provide checkpoints for a trained diffusion model [pretrained checkpoint]()
-
-TODO: Ethan, do you want to host checkpoint?
+We also provide checkpoints for a trained diffusion model [pretrained checkpoint](https://data.nerf.studio/cleanerf-diffusion-cube-weights.ckpt)
 
 # Running CleaNeRF in-the-wild
 
@@ -119,4 +118,4 @@ ns-process-data video --data data/cleanerf-captures/${DATASET}/${DATASET}.mp4 da
 
 ### NeRF experiments
 
-See for [NERF_EXPERIMENTS.md](NERF_EXPERIMENTS.md) to replicate our experiments and evaluation procedure described in the paper.
+See for [README_NERF_EXPERIMENTS.md](README_NERF_EXPERIMENTS.md) to replicate our experiments and evaluation procedure described in the paper.

@@ -18,6 +18,7 @@ dependencies = [
     "pysdf",
     "pytorch-lightning==1.8.6",
     "scipy",
+    "GPUtil"
 ]
 
 [tool.setuptools.packages.find]

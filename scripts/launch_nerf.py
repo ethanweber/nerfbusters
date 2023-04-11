@@ -22,28 +22,22 @@ import mediapy as media
 import numpy as np
 import torch
 import tyro
-
-from cleanerf.nerf.experiment_configs.experiments_ablations import arguments_list_of_lists as experiments_ablations_list
-from cleanerf.nerf.experiment_configs.experiments_baseline import arguments_list_of_lists as experiments_baselines_list
-from cleanerf.nerf.experiment_configs.experiments_visibility import (
-    arguments_list_of_lists as experiments_visibility_list,
-)
-from cleanerf.nerf.experiment_configs.experiments_wild import arguments_list_of_lists as experiments_wild_list
-
-
-from cleanerf.nerf.experiment_configs.utils import (
-    get_experiment_name_and_argument_combinations,
-)
-from torchmetrics import PeakSignalNoiseRatio, StructuralSimilarityIndexMeasure
-from torchmetrics.functional import structural_similarity_index_measure
-from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity
-from tqdm import tqdm
-from typing_extensions import Annotated
-
 from nerfstudio.configs.base_config import PrintableConfig
 from nerfstudio.model_components.losses import MSELoss
+from nerfstudio.utils.metrics import LPIPSModule, PSNRModule, SSIMModule
 from nerfstudio.utils.scripts import run_command
 from nerfstudio.viewer.server.subprocess import get_free_port
+from tqdm import tqdm
+from typing_extensions import Annotated, Literal
+
+from cleanerf.nerf.experiment_configs.experiments_ablations import \
+    arguments_list_of_lists as experiments_ablations_list
+from cleanerf.nerf.experiment_configs.experiments_baseline import \
+    arguments_list_of_lists as experiments_baselines_list
+from cleanerf.nerf.experiment_configs.experiments_pseudo_gt import \
+    arguments_list_of_lists as experiments_pseudo_gt_list
+from cleanerf.nerf.experiment_configs.utils import \
+    get_experiment_name_and_argument_combinations
 
 
 def get_free_ports(num: int) -> List[int]:
@@ -125,58 +119,38 @@ class ExperimentConfig(PrintableConfig):
 class Train(ExperimentConfig):
     """Train cleanerf models."""
 
-    baseline_experiment_name: Optional[Path] = None
-    nerf_checkpoint_path: Optional[Path] = None
-    data: Optional[Path] = None
+    experiment_name: Literal["baselines", "ablations", "pseudo-gt"] = "baselines"
+    """Which experiment to run"""
 
     def main(self, dry_run: bool = False):
         jobs = []
         experiment_names = []
         argument_combinations = []
 
-        # For our experiments in the paper...
-        experiment_names_ab, argument_combinations_ab = get_experiment_name_and_argument_combinations(
-            experiments_visibility_list
-        )
-        experiment_names_ba, argument_combinations_ba = get_experiment_name_and_argument_combinations(
-            experiments_baselines_list
-        )
-        experiment_names = experiment_names_ab + experiment_names_ba
-        argument_combinations = argument_combinations_ab + argument_combinations_ba
+        if self.experiment_name == "baselines":
+            # For our baseline experiments in the paper
+            experiment_names, argument_combinations = get_experiment_name_and_argument_combinations(
+                experiments_baselines_list
+            )
+        elif self.experiment_name == "ablations":
+            # For the ablations experiments in the paper
+            experiment_names, argument_combinations = get_experiment_name_and_argument_combinations(
+                experiments_ablations_list
+            )
+        elif self.experiment_name == "pseudo-gt":
+            # For the pseudo-gt experiments in the paper
+            experiment_names, argument_combinations = get_experiment_name_and_argument_combinations(
+                experiments_pseudo_gt_list
+            )
 
-        # For the ablations experiments in the paper...
-        # experiment_names, argument_combinations = get_experiment_name_and_argument_combinations(
-        #     experiments_ablations_list
-        # )
-
-        # For fun with nerfstudio wild captures...
-        # experiment_names, argument_combinations = get_experiment_name_and_argument_combinations(experiments_wild_list)
 
         num_jobs = len(experiment_names)
         websocket_ports = get_free_ports(num_jobs)
         for experiment_name, argument_string, websocket_port in zip(
             experiment_names, argument_combinations, websocket_ports
         ):
-            # base_cmd = f"ns-train magic-eraser --experiment-name {experiment_name} --vis viewer+wandb --output-dir {self.output_folder}"
-            base_cmd = f"ns-train magic-eraser --experiment-name {experiment_name} --vis wandb"
-            if self.output_folder is not None:
-                base_cmd += f" --output-dir {self.output_folder}"
-            if self.data is not None:
-                base_cmd += f" --data {self.data}"
-            if self.baseline_experiment_name is not None:
-                glob_str = str(
-                    self.output_folder / self.baseline_experiment_name / "magic-eraser/*/nerfstudio_models/*"
-                )
-                nerf_checkpoint_path = sorted(glob.glob(glob_str))[-1]
-                # TODO: throw some sort of assert here if needed
-                base_cmd += f" --pipeline.nerf_checkpoint_path {nerf_checkpoint_path}"
-            # jobs.append(
-            #     f" {base_cmd} {argument_string} --viewer.websocket-port {websocket_port} --viewer.quit_on_train_completion True"
-            # )
+            base_cmd = f"ns-train cleanerf --experiment-name {experiment_name} --vis wandb"
             jobs.append(f" {base_cmd} {argument_string}")
-
-        # randomize the order of the jobs
-        # random.shuffle(jobs)
 
         launch_experiments(jobs, dry_run=dry_run, gpu_ids=self.gpu_ids)
 
@@ -236,13 +210,13 @@ class Metrics(ExperimentConfig):
         # TODO: move this code elsewhere so we can spawn multiple jobs here
 
         print("Using visibility masks from experiment: ", self.visibility_experiment_name)
-
-        psnr_module = PeakSignalNoiseRatio(data_range=1.0).to(self.device)
-        ssim_module = StructuralSimilarityIndexMeasure(data_range=1.0, reduction="none", return_full_image=True).to(
-            self.device
-        )
-        lpips_module = LearnedPerceptualImagePatchSimilarity(normalize=True).to(self.device)
+        
         mse_module = MSELoss()
+
+        # image metrics
+        psnr_module = PSNRModule()
+        ssim_module = SSIMModule()
+        lpips_module = LPIPSModule()
 
         # go through all the experiments
         experiment_names = os.listdir(self.input_folder)

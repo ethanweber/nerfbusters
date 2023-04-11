@@ -361,7 +361,7 @@ class CleanerfPipeline(VanillaPipeline):
         model.eval()
         model = model.to(self.device)
         model.noise_scheduler.alphas_cumprod = model.noise_scheduler.alphas_cumprod.to(self.device)
-        model.sds_loss.alphas = model.sds_loss.alphas.to(self.device)
+        model.dsds_loss.alphas = model.dsds_loss.alphas.to(self.device)
         print("Loaded diffusion config from", diffusion_config_path)
         print("Loaded diffusion checkpoint from", diffusion_ckpt_path)
         return model
@@ -538,8 +538,8 @@ class CleanerfPipeline(VanillaPipeline):
         timesteps = torch.randint(min_t, max_t, (1,)).to(self.device).long().item()
 
         model = self.diffusioncube_model.model
-        sds_loss = self.diffusioncube_model.sds_loss
-        grad = sds_loss.grad_sds_unconditional(x, model, timesteps, scales, mult=self.config.cube_loss_mult)
+        dsds_loss = self.diffusioncube_model.dsds_loss
+        grad = dsds_loss.grad_sds_unconditional(x, model, timesteps, scales, mult=self.config.cube_loss_mult)
         grad_mag = torch.mean(grad**2) ** 0.5
         return grad_mag
 

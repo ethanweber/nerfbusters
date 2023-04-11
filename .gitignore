@@ -1,7 +1,10 @@
+# Byte-compiled / optimized / DLL files
 __pycache__/
+*.py[cod]
+
 *.egg-info/
 data/
 datasets/
 lightning_logs/
-outputs/
-renders/
+outputs*/
+renders*/
