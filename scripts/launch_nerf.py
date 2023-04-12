@@ -1,15 +1,10 @@
 """
-Benchmarking script for nerfstudio paper.
-- nerfacto and instant-ngp methods on mipnerf360 data
-- nerfacto ablations
+Commands for the CleaNeRF paper.
 """
 
-import copy
 import glob
 import json
 import os
-import random
-import socket
 import threading
 import time
 from collections import defaultdict
@@ -21,13 +16,13 @@ import GPUtil
 import mediapy as media
 import numpy as np
 import torch
+import torch.nn.functional as F
 import tyro
 from nerfstudio.configs.base_config import PrintableConfig
 from nerfstudio.model_components.losses import MSELoss
 from nerfstudio.utils.metrics import LPIPSModule, PSNRModule, SSIMModule
 from nerfstudio.utils.scripts import run_command
 from nerfstudio.viewer.server.subprocess import get_free_port
-from tqdm import tqdm
 from typing_extensions import Annotated, Literal
 
 from cleanerf.nerf.experiment_configs.experiments_ablations import \
@@ -143,12 +138,7 @@ class Train(ExperimentConfig):
                 experiments_pseudo_gt_list
             )
 
-
-        num_jobs = len(experiment_names)
-        websocket_ports = get_free_ports(num_jobs)
-        for experiment_name, argument_string, websocket_port in zip(
-            experiment_names, argument_combinations, websocket_ports
-        ):
+        for experiment_name, argument_string in zip(experiment_names, argument_combinations):
             base_cmd = f"ns-train cleanerf --experiment-name {experiment_name} --vis wandb"
             jobs.append(f" {base_cmd} {argument_string}")
 
@@ -159,7 +149,7 @@ class Train(ExperimentConfig):
 class Render(ExperimentConfig):
     """Render cleanerf models."""
 
-    input_folder: Path = Path("outputs")
+    input_folder: Path = Path("input-folder")
     rendered_output_names: List[str] = field(
         default_factory=lambda: ["rgb", "depth", "normals", "visibility_median_count"]
     )
@@ -168,7 +158,7 @@ class Render(ExperimentConfig):
     """Specifies the near plane for depth rendering."""
     depth_far_plane: Optional[float] = 2.0
     """Specifies the far plane for depth rendering."""
-    downscale_factor: Optional[int] = 1
+    downscale_factor: Optional[int] = 2
 
     def main(self, dry_run: bool = False):
         # get all the experiment names and configs from the input folder
@@ -197,26 +187,24 @@ class Render(ExperimentConfig):
 
 @dataclass
 class Metrics(ExperimentConfig):
-    """Render cleanerf models."""
+    """Compute metrics for cleanerf on the renders."""
 
-    input_folder: Path = Path("outputs-renders")
-    visibility_experiment_name: Path = Path("visibility_experiment_name")
+    input_folder: Path = Path("input-folder")
+    pseudo_gt_experiment_name: Path = Path("pseudo_gt_experiment_name")
     device: str = "cuda:0"
     max_depth: float = 2
+    """Maximum depth to use for metrics."""
     min_views: int = 1
+    """Minimum number of views to use for metrics."""
 
     def main(self, dry_run: bool = False):
 
-        # TODO: move this code elsewhere so we can spawn multiple jobs here
-
-        print("Using visibility masks from experiment: ", self.visibility_experiment_name)
-        
-        mse_module = MSELoss()
+        print("Using visibility masks from experiment: ", self.pseudo_gt_experiment_name)
 
         # image metrics
-        psnr_module = PSNRModule()
-        ssim_module = SSIMModule()
-        lpips_module = LPIPSModule()
+        psnr_module = PSNRModule().to(self.device)
+        ssim_module = SSIMModule().to(self.device)
+        lpips_module = LPIPSModule().to(self.device)
 
         # go through all the experiments
         experiment_names = os.listdir(self.input_folder)
@@ -224,7 +212,7 @@ class Metrics(ExperimentConfig):
         for experiment_name in experiment_names:
             rgb_gt_filenames = sorted(glob.glob(str(self.input_folder / experiment_name / "rgb_gt" / "*")))
             visibility_filenames = sorted(
-                glob.glob(str(self.input_folder / self.visibility_experiment_name / "visibility_median_count" / "*"))
+                glob.glob(str(self.input_folder / self.pseudo_gt_experiment_name / "visibility_median_count" / "*"))
             )
             metrics = defaultdict(list)
             video = []  # images to make a video
@@ -233,76 +221,58 @@ class Metrics(ExperimentConfig):
                 print("No rgb_gt images found, skipping experiment")
                 continue
             for idx, rgb_gt_filename in enumerate(rgb_gt_filenames):
-                rgb_filename = rgb_gt_filename.replace("rgb_gt", "rgb")
-                normals_filename = rgb_gt_filename.replace("rgb_gt", "normals")
-                depth_filename = rgb_gt_filename.replace("rgb_gt", "depth")
-                depth_raw_filename = rgb_gt_filename.replace("rgb_gt", "depth_raw").replace(".png", ".npy")
-                rgb_gt = media.read_image(rgb_gt_filename)
+                
+                # read in the images
+                depth = media.read_image(rgb_gt_filename.replace("rgb_gt", "depth"))
+                depth_raw = np.load(rgb_gt_filename.replace("rgb_gt", "depth_raw").replace(".png", ".npy"))[..., 0]
+                normals = media.read_image(rgb_gt_filename.replace("rgb_gt", "normals"))
                 pseudo_gt_visibility = media.read_image(visibility_filenames[idx])
-                rgb = media.read_image(rgb_filename)
-                normals = media.read_image(normals_filename)
-                depth = media.read_image(depth_filename)
-                depth_raw = np.load(depth_raw_filename)[..., 0]
-                pseudo_gt_depth_raw_filename = (
+                psuedo_gt_depth_raw = np.load(
                     visibility_filenames[idx].replace("visibility_median_count", "depth_raw").replace(".png", ".npy")
+                )[..., 0]
+                psuedo_gt_normals = media.read_image(
+                    visibility_filenames[idx].replace("visibility_median_count", "normals")
                 )
-                psuedo_gt_depth_raw = np.load(pseudo_gt_depth_raw_filename)[..., 0]
-                psuedo_gt_normals_filename = visibility_filenames[idx].replace("visibility_median_count", "normals")
-                psuedo_gt_normals = media.read_image(psuedo_gt_normals_filename)
-                assert len(depth_raw.shape) == 2
-                assert len(psuedo_gt_depth_raw.shape) == 2
+                rgb = media.read_image(rgb_gt_filename.replace("rgb_gt", "rgb"))
+                rgb_gt = media.read_image(rgb_gt_filename)
 
-                # move to torch and device
-                rgb_gt = torch.from_numpy(rgb_gt).float().to(self.device) / 255.0  # (H, W, 3)
-                rgb = torch.from_numpy(rgb).float().to(self.device) / 255.0
-                pseudo_gt_visibility = (
-                    torch.from_numpy(pseudo_gt_visibility).float().to(self.device)
-                )  # has integer values
-                psuedo_gt_depth_raw = torch.from_numpy(psuedo_gt_depth_raw).float().to(self.device)
-                depth_raw = torch.from_numpy(depth_raw).float().to(self.device)
+                # move images to torch and to the correct device
                 depth = torch.from_numpy(depth).float().to(self.device) / 255.0  # 'depth' is a colormap
-                psuedo_gt_normals = torch.from_numpy(psuedo_gt_normals).float().to(self.device) / 255.0
-                psuedo_gt_normals_raw = psuedo_gt_normals * 2.0 - 1.0
+                depth_raw = torch.from_numpy(depth_raw).float().to(self.device)
                 normals = torch.from_numpy(normals).float().to(self.device) / 255.0
                 normals_raw = normals * 2.0 - 1.0
+                pseudo_gt_visibility = torch.from_numpy(pseudo_gt_visibility).long().to(self.device)
+                psuedo_gt_depth_raw = torch.from_numpy(psuedo_gt_depth_raw).float().to(self.device)
+                psuedo_gt_normals = torch.from_numpy(psuedo_gt_normals).float().to(self.device) / 255.0
+                psuedo_gt_normals_raw = psuedo_gt_normals * 2.0 - 1.0
+                rgb = torch.from_numpy(rgb).float().to(self.device) / 255.0
+                rgb_gt = torch.from_numpy(rgb_gt).float().to(self.device) / 255.0  # (H, W, 3)
 
                 # create masks
                 visibilty_mask = (pseudo_gt_visibility[..., 0] >= self.min_views).float()
                 depth_mask = (depth_raw < self.max_depth).float()
                 mask = visibilty_mask * depth_mask  # (H, W)
-                # make mask 3 channels
                 mask = mask[..., None].repeat(1, 1, 3)
 
                 # show masked versions
+                # shape is (H, W, 3)
                 rgb_gt_masked = rgb_gt * mask
                 rgb_masked = rgb * mask
                 depth_masked = depth * mask
                 normals_masked = normals * mask
 
-                # compute psnr
-                psnr = float(psnr_module(rgb[mask == 1].view(-1, 3), rgb_gt[mask == 1].view(-1, 3)))
-
-                # compute ssim
-                ssim_value, ssim_image = ssim_module(
-                    preds=rgb_masked.unsqueeze(0).permute(0, 3, 1, 2),
-                    target=rgb_gt_masked.unsqueeze(0).permute(0, 3, 1, 2),
-                )
-                ssim = float(ssim_image[0].permute(1, 2, 0)[mask[..., 0] == 1].mean())
-
-                # compute lpips
-                lpips_mask = mask.unsqueeze(0).permute(0, 3, 1, 2)[0, 0]  # (H, W)
-                lpips = float(
-                    lpips_module(
-                        rgb_masked.unsqueeze(0).permute(0, 3, 1, 2),
-                        rgb_gt_masked.unsqueeze(0).permute(0, 3, 1, 2),
-                        lpips_mask,
-                    )
-                )
-                # print(lpips)
+                # compute the image metrics
+                # reshape the images to (1, C, H, W)
+                x = rgb_masked.permute(2, 0, 1).unsqueeze(0)  # (1, 3, H, W)
+                x_gt = rgb_gt_masked.permute(2, 0, 1).unsqueeze(0)  # (1, 3, H, W)
+                m = mask.permute(2, 0, 1).unsqueeze(0)[:, 0:1]  # (1, 1, H, W)
+                psnr = float(psnr_module(x, x_gt, m)[0])
+                ssim = float(ssim_module(x, x_gt, m)[0])
+                lpips = float(lpips_module(x, x_gt, m)[0])
 
                 # depth
                 depth_mask = mask[..., 0] == 1
-                depth_mse = float(mse_module(depth_raw[depth_mask], psuedo_gt_depth_raw[depth_mask]))
+                depth_mse = float(F.mse_loss(depth_raw[depth_mask], psuedo_gt_depth_raw[depth_mask]))
 
                 # disparity
                 disparity_raw = 1.0 / depth_raw
@@ -339,8 +309,7 @@ class Metrics(ExperimentConfig):
                 metrics["normals_median_list"].append(normals_median)
                 metrics["coverage_list"].append(coverage)
 
-                # TODO: compute the metrics for masked versions
-
+                # save the images
                 rgb_gt = (rgb_gt * 255.0).cpu().numpy().astype(np.uint8)
                 pseudo_gt_visibility = (pseudo_gt_visibility).cpu().numpy().astype(np.uint8)
                 rgb_gt_masked = (rgb_gt_masked * 255.0).cpu().numpy().astype(np.uint8)
@@ -353,7 +322,6 @@ class Metrics(ExperimentConfig):
                 image_filename = self.input_folder / experiment_name / "composited" / f"{idx:04d}.png"
                 image_filename.parent.mkdir(parents=True, exist_ok=True)
                 media.write_image(image_filename, image)
-
                 video.append(image)
 
             # write out the video
@@ -383,38 +351,10 @@ class Metrics(ExperimentConfig):
                 json.dump(metrics, f, indent=4)
 
 
-@dataclass
-class MetricsAll(ExperimentConfig):
-    """Run all the metrics."""
-
-    def main(self, dry_run: bool = False):
-        jobs = []
-        # TODO: clean this up
-        DATASETS = [
-            "flowers",
-            "pipe",
-            "roses",
-            "pikachu",
-            "car",
-            "aloe",
-            "picnic",
-            "table",
-            "century",
-            "art",
-            "plant",
-            "garbage",
-        ]
-        for dataset in DATASETS:
-            job = f"python projects/magic_eraser/scripts/launch_nerf.py metrics --input-folder /shared/ethanweber/magic-eraser/nerf-renders/{dataset} --visibility-experiment-name {dataset}---nerfacto---visibility-split"
-            jobs.append(job)
-        launch_experiments(jobs, dry_run=dry_run, gpu_ids=self.gpu_ids)
-
-
 Commands = Union[
     Annotated[Train, tyro.conf.subcommand(name="train")],
     Annotated[Render, tyro.conf.subcommand(name="render")],
     Annotated[Metrics, tyro.conf.subcommand(name="metrics")],
-    Annotated[MetricsAll, tyro.conf.subcommand(name="metrics-all")],
 ]
 
 

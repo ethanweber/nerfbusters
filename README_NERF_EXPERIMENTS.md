@@ -76,24 +76,24 @@ Remove `--dry-run` when the output of the script looks good to you. Notice that 
 
 # Render out the results
 
-Finally, when the models are trained to completition, you can use them to render videos! Yay! :) Run the following commands to make that happen.
+Finally, when the models are trained to completition, you can use them to render videos! Run the following commands to make that happen. Reminder to remove `--dry-run`.
 
 ```bash
-python projects/magic_eraser/scripts/launch_nerf.py render \
-    --input-folder ${OUTPUT_FOLDER} \
+python scripts/launch_nerf.py render \
+    --input-folder ${OUTPUT_FOLDER_POST} \
     --output-folder ${RENDER_FOLDER_POST} \
-    --downscale-factor 1 \
+    --downscale-factor 2 \
     --dry-run
 ```
 
 # Compute the metrics
 
-Now we compute number of the rendered images.
+Now we compute number of the rendered images. This is no `--dry-run` flag for this.
 
 ```bash
-python projects/magic_eraser/scripts/launch_nerf.py metrics \
-    --input-folder ${RENDER_FOLDER} \
-    --visibility-experiment-name ${VISIBILITY_EXPERIMENT_NAME}
+python scripts/launch_nerf.py metrics \
+    --input-folder ${RENDER_FOLDER_POST} \
+    --pseudo-gt-experiment-name ${DATASET}---nerfacto---pseudo-gt
 ```
 
 # Creating a table from results

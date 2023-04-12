@@ -63,7 +63,7 @@ experiments_list = [
     ),
     Argument(
         name="nerfacto-visibility",
-        arg_string="--pipeline.use_visibility_loss False --pipeline.use_singlestep_cube_loss False",
+        arg_string="--pipeline.use_visibility_loss True --pipeline.use_singlestep_cube_loss False",
     ),
     Argument(
         name="nerfacto-visibility-cube",
