@@ -205,3 +205,16 @@ function playresults(element)
 
         }
 }
+
+
+function updatebaselinetext(element){
+    // tab-aloe-nerfacto-vis-sparsity
+    var text = element.id.replace("tab-", "");
+
+    var dataset = text.split("-")[0];
+    
+    var text_element = document.getElementById("baseline-" + dataset);
+    text_element.innerHTML = (element.textContent || element.innerText) + " &#8593";
+
+    
+}
