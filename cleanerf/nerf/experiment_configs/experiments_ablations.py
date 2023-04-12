@@ -23,11 +23,11 @@ experiments_list = [
     # activation
     Argument(
         name="nerfacto-frustum-cube-activation-sigmoid",
-        arg_string="--pipeline.use_frustum_loss True --pipeline.use_cube_loss True --pipeline.density_to_x_activation sigmoid",
+        arg_string="--pipeline.use_frustum_loss True --pipeline.use_singlestep_cube_loss False --pipeline.use_cube_loss True --pipeline.density_to_x_activation sigmoid",
     ),
     Argument(
         name="nerfacto-frustum-cube-activation-clamp",
-        arg_string="--pipeline.use_frustum_loss True --pipeline.use_cube_loss True --pipeline.density_to_x_activation clamp",
+        arg_string="--pipeline.use_frustum_loss True --pipeline.use_singlestep_cube_loss False --pipeline.use_cube_loss True --pipeline.density_to_x_activation clamp",
     ),
     # cubesize
     Argument(
