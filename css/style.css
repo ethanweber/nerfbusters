@@ -115,7 +115,7 @@ body {
 }
 
 .icon-col {
-    width: 50%;
+    width: 33%;
 }
 
 .icon-img {
@@ -206,7 +206,7 @@ body {
 }
 #main-img {
     width: 100%;
-    max-width: 700px;
+    /* max-width: 700px; */
     margin-top: 00px;
     margin-bottom: 0px;
 }

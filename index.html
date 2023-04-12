@@ -21,10 +21,10 @@
     <meta content="CleaNeRF: Erasing Artifacts from Casually Captured NeRFs" name="description" />
     <meta content="CleaNeRF: Erasing Artifacts from Casually Captured NeRFs" property="og:title" />
     <meta content="CleaNeRF: Erasing Artifacts from Casually Captured NeRFs" property="og:description" />
-    <!-- <meta content="http://lerf.io/data/lerf_meta_img.jpg" property="og:image" /> -->
+    <meta content="https://ethanweber.me/CleaNeRF/media/teaser.png" property="og:image" />
     <meta content="CleaNeRF: Erasing Artifacts from Casually Captured NeRFs" property="twitter:title" />
     <meta content="CleaNeRF: Erasing Artifacts from Casually Captured NeRFs" property="twitter:description" />
-    <!-- <meta content="http://lerf.io/data/lerf_meta_img.jpg" property="twitter:image" /> -->
+    <meta content="https://ethanweber.me/CleaNeRF/media/teaser.png" property="twitter:image" />
     <meta property="og:type" content="website" />
     <meta content="summary_large_image" name="twitter:card" />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
@@ -134,8 +134,12 @@
         padding-bottom: 32px;
         background-color: #f5f5f5;
       }
+      .nav {
+        margin-bottom: 5px;
+      }
       .nav-link {
         color: #333;
+        margin: 2px;
       }
       .nav-link a:hover,
       a:hover,
@@ -239,6 +243,16 @@
                 class="github-img-icon"
             /></a>
           </div>
+          <!-- TODO: Update code and data link -->
+          <div class="base-col icon-col">
+            <a href="https://github.com/ethanweber/CleaNeRF" class="link-block"
+              ><img
+                src="https://pbs.twimg.com/profile_images/1577549224484384768/M2iaxtYc_400x400.jpg"
+                alt="code-and-data"
+                sizes="(max-width: 479px) 12vw, (max-width: 767px) 7vw, (max-width: 991px) 41.8515625px, 56.6953125px"
+                class="github-img-icon"
+            /></a>
+          </div>
         </div>
         <div class="link-labels base-row">
           <div class="base-col icon-col">
@@ -246,6 +260,9 @@
           </div>
           <div class="base-col icon-col">
             <strong class="link-labels-text">Code and data</strong>
+          </div>
+          <div class="base-col icon-col">
+            <strong class="link-labels-text">Nerfstudio page</strong>
           </div>
         </div>
         <h1 class="tldr">
@@ -257,8 +274,7 @@
         </video>
 
         <div class="base-row">
-          <h1>Overview</h1>
-          <img id="main-img" src="media/teaser.png" />
+          <h1>Abstract</h1>
           <p class="paragraph">
             Casually captured Neural Radiance Fields (NeRFs) suffer from
             artifacts such as floaters or flawed geometry when rendered outside
@@ -274,6 +290,7 @@
             score distillation sampling loss. We show that this learned prior
             removes floaters and improves scene geometry for casual captures.
           </p>
+          <img id="main-img" src="media/teaser.png" />
         </div>
 
         <div class="base-row">
@@ -286,28 +303,36 @@
 
 
           <div class="base-row">
-            <h1>Diffusion Method</h1>
-            <img id="main-img" src="media/method.png" />
+            <h1>Model Overview</h1>
             <p class="paragraph">
               We learn a local 3D prior with a diffusion model that regularizes the 3D geometry of NeRFs. 
-              We use importance sampling to query a 32^3 cube with NeRF densities. 
+              We use importance sampling to query a cube with NeRF densities. 
               We binarize these densities and perform one single denoising step using a pre-trained 3D diffusion model. 
               With these denoised densities, we compute a density score distillation sampling (DSDS) that 
               penalizes NeRF densities where the diffusion model predicts empty voxels and pushes the NeRF densities 
               above the target w where the diffusion model predicts occupied voxels.
             </p>
+            <img id="main-img" src="media/method.png" />
+          </div>
+
+          <div class="base-row">
+            <h1>Visibility Loss</h1>
+            <p class="paragraph">
+              Our visibility loss enables stepping behind or outside the training camera frustums. We accomplish this by supervising densities to be low when not seen by at least one training view. Other solutions would be to store an occupancy grid or compute ray-frustum intersection tests during rendering. Our solution is easy to implement and applicable to any NeRF.
+            </p>
+            <img id="main-img" style="width: 75%" src="media/visibility_loss.png" />
           </div>
 
         <div class="base-row">
           <div class="base-row add-top-padding">
             <h1 id="abstract">CleaNeRF Dataset</h1>
-            <p class="paragraph">
-              We show training and evaluation videos from the 12 scenes of the
-              CleaNeRF dataset. We hope this casual captured dataset that
-              bridges the gap between current evaluation practice and the users
-              requirements, will refocus the community's efforts.
-            </p>
           </div>
+          <p class="paragraph">
+            We show training and evaluation videos from the 12 scenes of the
+            CleaNeRF dataset. We hope this casual captured dataset that
+            bridges the gap between current evaluation practice and the users
+            requirements, will refocus the community's efforts.
+          </p>
           <div class="container">
             <div w3-include-html="dataset.html"></div>
           </div>
@@ -319,7 +344,7 @@
             <p class="paragraph">
               We compare CleaNeRF with various baselines. Click the baselines
               buttons and swipe left and right to see the results. Our CleaNeRF
-              method appears on the right.
+              method appears on the right. You can also use the pause button and select different methods for the same capture.
             </p>
           </div>
           <div class="container">
@@ -327,33 +352,21 @@
           </div>
         </div>
 
-        <!-- 
+        
           <div class="base-row">
-            <h1 id="abstract">
-              <a id="coming_soon">Nerfstudio Integration Coming Soon</a>
-            </h1>
-            <p class="paragraph">
-              CleaNeRF will be integrated into the popular research codebase
-              <a href="https://github.com/nerfstudio-project/nerfstudio/"
-                >Nerfstudio</a
-              >!
-            </p>
-          </div> -->
-
-          <div class="citation add-top-padding">
-            <h1 id="abstract">Citation</h1>
-            <p>
-              If you use this work or find it helpful, please consider citing:
-              (bibtex)
-            </p>
-            <pre id="codecell0">
-                " @inproceedings{CleaNeRF2023,
-                author = {Frederik Warburg* and Ethan Weber* and Matthew Tancik and Aleksander Hołyński and Angjoo Kanazawa},
-                title = {CleaNeRF: Erasing Artifacts from Casually Captured NeRFs},
-                journal = {arXiv preprint TODO},
-                year = {2023}, } "
-            </pre>
+            <div class="base-row add-top-padding">
+              <h1>Citation</h1>
+              <p class="paragraph">If you use this work or find it helpful, please consider citing (BibTeX):</p>
+              <textarea id="bibtex" class="form-control" rows="6" cols="50" readonly="">
+@inproceedings{CleaNeRF2023,
+      title = {CleaNeRF: Erasing Artifacts from Casually Captured NeRFs},
+      author = {Frederik Warburg* and Ethan Weber* and Matthew Tancik and Aleksander Hołyński and Angjoo Kanazawa},
+      journal = {arXiv preprint TODO},
+      year = {2023},
+}</textarea>
           </div>
+          </div>
+        </div>
         </div>
       </div>
     </div>
