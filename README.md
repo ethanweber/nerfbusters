@@ -93,6 +93,12 @@ Now you can fine-tune (i.e., post-process) with our CleaNeRF method!
 ns-train cleanerf --data data/twitter/stdunstanfish --pipeline.nerf-checkpoint-path $NERF_CHECKPOINT_PATH nerfstudio-data --eval-mode train-split-fraction
 ```
 
+Finally, render a path!
+
+```bash
+ns-render --load-config path/to/config.yml  --traj filename --camera-path-filename path/to/camera-path.json --output-path renders/my-render.mp4
+```
+
 # Using CleaNeRF to evaluate methods
 
 Here we use the CleaNeRF evaluation procedure to run the experiments in our paper. You'll need our dataset for this step. You can download it with the following commands. We provide both the original videos or the already-processed versions of our dataset. The following commands will write to the `data/` folder.
