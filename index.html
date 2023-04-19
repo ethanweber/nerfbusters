@@ -373,7 +373,12 @@
           </div> -->
           <div class="base-row">
             <h1> NeRF evaluation for casually captured videos</h1>
-
+            <p class="paragraph">
+              We train on a single camera trajectory and evaluate on a second camera trajectory. Both methods succeed on the training trajectory, but only our method succeeds on the evaluation trajectory.
+            </p>
+            <video muted loop autoplay style="width: 100%; align-items: center;">
+              <source id="mp4" src="media/teaser-animated.m4v" type="video/mp4" />
+              </video>
             
           </div>
 
@@ -387,8 +392,8 @@
               penalizes NeRF densities where the diffusion model predicts empty voxels and pushes the NeRF densities 
               above the target w where the diffusion model predicts occupied voxels.
             </p>
-            <video muted lopp autoplay style="width: 100%; align-items: center;">
-              <source id="mp4" src="media/model_overview.m4v" type="video/mp4" />
+            <video muted loop autoplay style="width: 100%; align-items: center;">
+              <source id="mp4" src="media/model_overview_crop.mp4" type="video/mp4" />
               </video>
           </div>
 
@@ -397,7 +402,9 @@
             <p class="paragraph">
               Our visibility loss enables stepping behind or outside the training camera frustums. We accomplish this by supervising densities to be low when not seen by at least one training view. Other solutions would be to store an occupancy grid or compute ray-frustum intersection tests during rendering. Our solution is easy to implement and applicable to any NeRF.
             </p>
-            <img id="main-img" style="width: 75%" src="media/visibility_loss.png" />
+             <video muted loop autoplay style="width: 100%; align-items: center;">
+              <source id="mp4" src="media/visibility_loss-animated.m4v" type="video/mp4" />
+            </video>
           </div>
 
 
@@ -420,12 +427,12 @@
               <h1>Citation</h1>
               <p class="paragraph">If you use this work or find it helpful, please consider citing (BibTeX):</p>
               <textarea id="bibtex" class="form-control" rows="6" cols="50" readonly="">
-                @inproceedings{CleaNeRF2023,
-                      title = {CleaNeRF: Erasing Artifacts from Casually Captured NeRFs},
-                      author = {Frederik Warburg* and Ethan Weber* and Matthew Tancik and Aleksander Hołyński and Angjoo Kanazawa},
-                      journal = {arXiv preprint TODO},
-                      year = {2023},
-                }</textarea>
+@inproceedings{CleaNeRF2023,
+      title = {CleaNeRF: Erasing Artifacts from Casually Captured NeRFs},
+      author = {Frederik Warburg* and Ethan Weber* and Matthew Tancik and Aleksander Hołyński and Angjoo Kanazawa},
+      journal = {arXiv preprint TODO},
+      year = {2023},
+}</textarea>
           </div>
           </div>
         </div>
