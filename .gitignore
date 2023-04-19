@@ -8,3 +8,4 @@ datasets/
 lightning_logs/
 outputs*/
 renders*/
+temp*/
