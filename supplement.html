@@ -1,0 +1,310 @@
+<html>
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-FYQNRK8LHK"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-FYQNRK8LHK");
+    </script>
+
+    <meta charset="utf-8" />
+    <title>CleaNeRF: Erasing Artifacts from Casually Captured NeRFs</title>
+
+    <meta content="CleaNeRF: Erasing Artifacts from Casually Captured NeRFs" name="description" />
+    <meta content="CleaNeRF: Erasing Artifacts from Casually Captured NeRFs" property="og:title" />
+    <meta content="CleaNeRF: Erasing Artifacts from Casually Captured NeRFs" property="og:description" />
+    <meta content="https://ethanweber.me/CleaNeRF/media/teaser.png" property="og:image" />
+    <meta content="CleaNeRF: Erasing Artifacts from Casually Captured NeRFs" property="twitter:title" />
+    <meta content="CleaNeRF: Erasing Artifacts from Casually Captured NeRFs" property="twitter:description" />
+    <meta content="https://ethanweber.me/CleaNeRF/media/teaser.png" property="twitter:image" />
+    <meta property="og:type" content="website" />
+    <meta content="summary_large_image" name="twitter:card" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link
+      href="https://fonts.gstatic.com"
+      rel="preconnect"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"
+      type="text/javascript"
+    ></script>
+    <script type="text/javascript">
+      WebFont.load({
+        google: {
+          families: [
+            "Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic",
+            "Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic",
+            "Ubuntu:300,300italic,400,400italic,500,500italic,700,700italic",
+            "Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic",
+            "Changa One:400,400italic",
+            "Varela Round:400",
+            "Bungee Shade:regular",
+            "Roboto:300,regular,500",
+            "Bungee Outline:regular",
+          ],
+        },
+      });
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="js/includeHTML.js" type="text/javascript"></script>
+    <script src="js/video_comparison.js"></script>
+    <script src="js/lazy_load.js"></script>
+
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="media/favicon.png" rel="shortcut icon" type="image/x-icon" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Customized style -->
+    <style>
+      html * {
+        color: #333;
+        font-family: "Lato", sans-serif;
+      }
+      table.results td {
+        color: #888;
+        font-size: 90%;
+      }
+      .mtitle {
+        margin-top: 0;
+        margin-bottom: 0;
+        font-family: "Varela Round", sans-serif;
+        color: #4d4d4d;
+        font-size: 50px;
+        line-height: 80px;
+        font-weight: 600;
+        letter-spacing: 3px;
+      }
+      .msubtitle {
+        margin-top: -30px;
+        margin-bottom: -20px;
+        font-size: 23px;
+        line-height: 65px;
+        letter-spacing: 2px;
+      }
+      .mneurips {
+        color: #aaa;
+        font-size: 20px;
+      }
+      .mauthors {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 15px;
+      }
+      .mauthors_affiliation {
+        margin-top: -12px;
+        margin-bottom: 24px;
+        font-family: "Open Sans", sans-serif;
+        font-size: 12px;
+        line-height: 15px;
+      }
+      .darker_bg {
+        padding-top: 32px;
+        padding-bottom: 32px;
+        background-color: #f5f5f5;
+      }
+      .nav {
+        margin-bottom: 5px;
+      }
+      .nav-link {
+        color: #333;
+        margin: 2px;
+      }
+      .nav-link a:hover,
+      a:hover,
+      a:active {
+        color: #888 !important;
+      }
+      .accordion-button:not(.collapsed) {
+        color: inherit;
+        background: #f5f5f5;
+      }
+      .accordion-button:not(.collapsed)::after {
+        filter: brightness(0%) invert(70%);
+      }
+      .accordion-button:focus {
+        box-shadow: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="section">
+      <div class="container">
+        <div class="title-row">
+          <h1 class="title">CleaNeRF</h1>
+          <h1 class="subheader">
+            <nobr>🧹 Erasing Artifacts from</nobr>
+            <nobr>Casually Captured NeRFs 🧹</nobr>
+          </h1>
+        </div>
+        <div class="base-row author-row">
+          <div class="base-col author-col">
+            <a
+              href="https://frederikwarburg.github.io/"
+              target="_blank"
+              class="author-text"
+            >
+              Frederik Warburg
+              <span class="text-star">*</span>
+            </a>
+          </div>
+          <div class="base-col author-col">
+            <a
+              href="https://ethanweber.me/"
+              target="_blank"
+              class="author-text"
+            >
+              Ethan Weber
+              <span class="text-star">*</span>
+            </a>
+          </div>
+          <div class="base-col author-col">
+            <a
+              href="https://www.matthewtancik.com"
+              target="_blank"
+              class="author-text"
+            >
+              Matthew Tancik
+            </a>
+          </div>
+          <div class="base-col author-col">
+            <a href="https://holynski.org/" target="_blank" class="author-text">
+              Aleksander Hołyński
+            </a>
+          </div>
+          <div class="base-col author-col">
+            <a
+              href="https://people.eecs.berkeley.edu/~kanazawa/"
+              target="_blank"
+              class="author-text"
+            >
+              Angjoo Kanazawa
+              <span class="superscript"></span>
+            </a>
+          </div>
+        </div>
+        <br />
+        <div>
+          <h1 id="uc-berkeley">UC Berkeley</h1>
+          <!-- <br /> -->
+          <div id="equal_contrib">
+            <span class="text-star">*</span>Denotes equal contribution
+          </div>
+        </div>
+        <div class="link-labels base-row">
+          <!-- TODO: Update arxiv link -->
+          <div class="base-col icon-col">
+            <a href="#coming_soon" target="_blank" class="link-block"
+              ><img
+                src="https://uploads-ssl.webflow.com/51e0d73d83d06baa7a00000f/5cab99df4998decfbf9e218e_paper-01.png"
+                alt="paper"
+                sizes="(max-width: 479px) 12vw, (max-width: 767px) 7vw, (max-width: 991px) 41.8515625px, 56.6953125px"
+                class="icon-img"
+            /></a>
+          </div>
+          <!-- TODO: Update code and data link -->
+          <div class="base-col icon-col">
+            <a href="https://github.com/ethanweber/CleaNeRF" class="link-block"
+              ><img
+                src="https://uploads-ssl.webflow.com/51e0d73d83d06baa7a00000f/5cae3b53b42ebb3dd4175a82_68747470733a2f2f7777772e69636f6e66696e6465722e636f6d2f646174612f69636f6e732f6f637469636f6e732f313032342f6d61726b2d6769746875622d3235362e706e67.png"
+                alt="code-and-data"
+                sizes="(max-width: 479px) 12vw, (max-width: 767px) 7vw, (max-width: 991px) 41.8515625px, 56.6953125px"
+                class="github-img-icon"
+            /></a>
+          </div>
+          <!-- TODO: Update code and data link -->
+          <div class="base-col icon-col">
+            <a href="https://github.com/ethanweber/CleaNeRF" class="link-block"
+              ><img
+                src="https://pbs.twimg.com/profile_images/1577549224484384768/M2iaxtYc_400x400.jpg"
+                alt="code-and-data"
+                sizes="(max-width: 479px) 12vw, (max-width: 767px) 7vw, (max-width: 991px) 41.8515625px, 56.6953125px"
+                class="github-img-icon"
+            /></a>
+          </div>
+        </div>
+        <div class="link-labels base-row">
+          <div class="base-col icon-col">
+            <strong class="link-labels-text">Paper</strong>
+          </div>
+          <div class="base-col icon-col">
+            <strong class="link-labels-text">Code and data</strong>
+          </div>
+          <div class="base-col icon-col">
+            <strong class="link-labels-text">Nerfstudio page</strong>
+          </div>
+        </div>
+
+
+        <div class="base-row">
+          <div class="base-row add-top-padding">
+            <h1 id="abstract">CleaNeRF Dataset</h1>
+          </div>
+          <p class="paragraph">
+            We show training and evaluation videos from the 12 scenes of the
+            CleaNeRF dataset. We hope this casual captured dataset that
+            bridges the gap between current evaluation practice and the users
+            requirements, will refocus the community's efforts.
+          </p>
+          <div class="container">
+            <div w3-include-html="dataset.html"></div>
+          </div>
+        </div>
+
+        <div class="base-row">
+          <div class="base-row add-top-padding">
+            <h1>CleaNeRF Results</h1>
+            <p class="paragraph">
+              We compare CleaNeRF with various baselines. Click the baselines
+              buttons and swipe left and right to see the results. Our CleaNeRF
+              method appears on the right. You can also use the pause button and select different methods for the same capture.
+            </p>
+          </div>
+          <div class="container">
+            <div w3-include-html="results.html"></div>
+          </div>
+        </div>
+
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      includeHTML();
+    </script>
+
+  </body>
+</html>
+

@@ -156,6 +156,44 @@
       .accordion-button:focus {
         box-shadow: inherit;
       }
+
+
+      /* Styling for the carousel container */
+      .carousel {
+        display: flex;
+        overflow-x: scroll;
+        scroll-behavior: smooth;
+        width: 100%;
+      }
+
+      /* Styling for each video container */
+      .video-container {
+        flex: 1 0 100%; /* Two videos side by side */
+        margin-right: 10px;
+      }
+
+      /* Styling for each video */
+      video {
+        width: 100%;
+        height: auto;
+      }
+    
+      .carousel-button {
+        position: relative;
+        align-items: center;
+        font-size: 2rem;
+        top: -60px;
+      }
+
+      .carousel-button.left {
+        left: 0px;
+      }
+      
+      .carousel-button.right {
+        right: -20px;
+      } 
+
+
     </style>
   </head>
   <body>
@@ -266,12 +304,46 @@
           </div>
         </div>
         <h1 class="tldr">
-          <b>TLDR</b>: We propose an evaluation procedure for in-the-wild NeRFs,
+          <b>TL;DR</b>: We propose an evaluation procedure for in-the-wild NeRFs,
           and we present a method that uses a 3D diffusion prior to clean NeRFs.
         </h1>
-        <video id="main-video" autobuffer muted autoplay loop controls>
+        <!-- <video id="main-video" autobuffer muted autoplay loop controls>
           <source id="mp4" src="media/car-fly-swipe.mp4" type="video/mp4"/>
-        </video>
+        </video> -->
+        <section>
+          <nav>
+            <div class="carousel">
+              <div class="video-container">
+                <video  loop playsinline muted autoplay>
+                  <source src="media/nerf-comparisons/car-sq.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="video-container">
+                <video  loop playsinline muted autoplay>
+                  <source autoplay src="media/nerf-comparisons/garbage-sq.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="video-container">
+                <video  loop playsinline muted autoplay>
+                  <source autoplay src="media/nerf-comparisons/pikachu-sq.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="video-container">
+                <video  loop playsinline muted autoplay>
+                  <source autoplay src="media/nerf-comparisons/picnic-sq.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="video-container">
+                <video  loop playsinline muted autoplay>
+                  <source autoplay src="media/nerf-comparisons/century-sq.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+        
+            <button class="carousel-button left video-btn" type="button">&lt;</button>
+            <button class="carousel-button right video-btn" type="button">&gt;</button>
+          </nav>
+        </section>
 
         <div class="base-row">
           <h1>Abstract</h1>
@@ -290,17 +362,20 @@
             score distillation sampling loss. We show that this learned prior
             removes floaters and improves scene geometry for casual captures.
           </p>
-          <img id="main-img" src="media/teaser.png" />
         </div>
 
-        <div class="base-row">
+
+        <!-- <div class="base-row">
             <h1>Video</h1>
-            <p class="paragraph">Here is an overview video of our paper.</p>
             <video id="main-video" muted loop controls>
               <source id="mp4" src="todo.mp4" type="video/mp4" />
             </video>
-          </div>
+          </div> -->
+          <div class="base-row">
+            <h1> NeRF evaluation for casually captured videos</h1>
 
+            
+          </div>
 
           <div class="base-row">
             <h1>Model Overview</h1>
@@ -312,7 +387,9 @@
               penalizes NeRF densities where the diffusion model predicts empty voxels and pushes the NeRF densities 
               above the target w where the diffusion model predicts occupied voxels.
             </p>
-            <img id="main-img" src="media/method.png" />
+            <video muted lopp autoplay style="width: 100%; align-items: center;">
+              <source id="mp4" src="media/model_overview.m4v" type="video/mp4" />
+              </video>
           </div>
 
           <div class="base-row">
@@ -323,47 +400,32 @@
             <img id="main-img" style="width: 75%" src="media/visibility_loss.png" />
           </div>
 
-        <div class="base-row">
-          <div class="base-row add-top-padding">
-            <h1 id="abstract">CleaNeRF Dataset</h1>
-          </div>
-          <p class="paragraph">
-            We show training and evaluation videos from the 12 scenes of the
-            CleaNeRF dataset. We hope this casual captured dataset that
-            bridges the gap between current evaluation practice and the users
-            requirements, will refocus the community's efforts.
-          </p>
-          <div class="container">
-            <div w3-include-html="dataset.html"></div>
-          </div>
-        </div>
 
-        <div class="base-row">
-          <div class="base-row add-top-padding">
-            <h1>CleaNeRF Results</h1>
-            <p class="paragraph">
-              We compare CleaNeRF with various baselines. Click the baselines
-              buttons and swipe left and right to see the results. Our CleaNeRF
-              method appears on the right. You can also use the pause button and select different methods for the same capture.
-            </p>
-          </div>
-          <div class="container">
-            <div w3-include-html="results.html"></div>
-          </div>
-        </div>
+          <div class="base-row">
+            <h1>Interested in more results...?</h1>
 
+            <div>
+              <video id="main-video" muted loop controls autoplay style="width: 60%; align-items: center;">
+                <source id="mp4" src="comparison_videos/plant---nerfacto.mp4" type="video/mp4" />
+              </video>
+            </div>
+           
+            <button class="button-container video-btn" style="align-items: center; width: 200px">
+              <a style="color: white; font-size: 15px;" href="supplement.html">More Results</a>
+            </button>
+          </div>
         
           <div class="base-row">
             <div class="base-row add-top-padding">
               <h1>Citation</h1>
               <p class="paragraph">If you use this work or find it helpful, please consider citing (BibTeX):</p>
               <textarea id="bibtex" class="form-control" rows="6" cols="50" readonly="">
-@inproceedings{CleaNeRF2023,
-      title = {CleaNeRF: Erasing Artifacts from Casually Captured NeRFs},
-      author = {Frederik Warburg* and Ethan Weber* and Matthew Tancik and Aleksander Hołyński and Angjoo Kanazawa},
-      journal = {arXiv preprint TODO},
-      year = {2023},
-}</textarea>
+                @inproceedings{CleaNeRF2023,
+                      title = {CleaNeRF: Erasing Artifacts from Casually Captured NeRFs},
+                      author = {Frederik Warburg* and Ethan Weber* and Matthew Tancik and Aleksander Hołyński and Angjoo Kanazawa},
+                      journal = {arXiv preprint TODO},
+                      year = {2023},
+                }</textarea>
           </div>
           </div>
         </div>
@@ -372,7 +434,31 @@
     </div>
 
     <script>
-      includeHTML();
+
+      const carousel = document.querySelector('.carousel');
+      const videoContainers = document.querySelectorAll('.video-container');
+      let currentPosition = 0;
+
+      const leftButton = document.querySelector('.carousel-button.left');
+      leftButton.addEventListener('click', () => {
+        currentPosition = Math.max(0, currentPosition - 1);
+        carousel.scrollTo({ left: videoContainers[currentPosition].offsetLeft, behavior: 'smooth' });
+      });
+
+      const rightButton = document.querySelector('.carousel-button.right');
+      rightButton.addEventListener('click', () => {
+        currentPosition = Math.min(currentPosition + 1, videoContainers.length - 1);
+        carousel.scrollTo({ left: videoContainers[currentPosition].offsetLeft, behavior: 'smooth' });
+      });
+
+      carousel.addEventListener('wheel', (event) => {
+        event.preventDefault();
+        const direction = event.deltaY > 0 ? 1 : -1;
+        currentPosition += direction;
+        currentPosition = Math.max(0, Math.min(currentPosition, videoContainers.length - 1));
+        carousel.scrollTo({ left: videoContainers[currentPosition].offsetLeft, behavior: 'smooth' });
+      });
+
     </script>
 
   </body>
