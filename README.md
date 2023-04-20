@@ -5,7 +5,7 @@ This project is 👻 Nerfbusters 🧹: Removing Ghostly Artifacts from Casually 
 # Project page
 
 
-See the `gh-pages` branch of this repo for the [project website](https://ethanweber.me/nerfbusters/). You may have to run the viewer locally until this branch is merged into main.
+See the `gh-pages` branch of this repo for the [project website](https://ethanweber.me/nerfbusters/).
 
 # Installation
 
@@ -19,7 +19,7 @@ python -m pip install --upgrade pip
 
 2) Install Nerfstudio and dependencies. Installation guide can be found [install nerfstudio](https://docs.nerf.studio/en/latest/quickstart/installation.html)
 
-> Currently we are using the branch [nerfbusters-changes](https://github.com/nerfstudio-project/nerfstudio/tree/nerfbusters-changes).
+> Currently we are using the branch [nerfbusters-changes](https://github.com/nerfstudio-project/nerfstudio/tree/nerfbusters-changes). You may have to run the viewer locally until this branch is merged into main.
 
 ```bash
 cd path/to/nerfstudio
