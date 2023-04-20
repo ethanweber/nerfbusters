@@ -418,7 +418,7 @@ input:checked + .slider:before {
     outline: none;
     border: none;
     color: #fff;
-    background-color: #2196F3;
+    background-color: #4d4d4d;
     padding-bottom: 8px;
     border-radius: 10px;
 }
