@@ -8,11 +8,11 @@ import torch.nn.functional as F
 import wandb
 from diffusers import DDIMPipeline, DDIMScheduler, DDPMPipeline, DDPMScheduler
 from diffusers.training_utils import EMAModel
-from cleanerf.lightning.dsds_loss import DSDSLoss
-from cleanerf.models.model import get_model
-from cleanerf.utils import metrics
-from cleanerf.utils.utils import get_gaussian_kernel1d
-from cleanerf.utils.visualizations import (
+from nerfbusters.lightning.dsds_loss import DSDSLoss
+from nerfbusters.models.model import get_model
+from nerfbusters.utils import metrics
+from nerfbusters.utils.utils import get_gaussian_kernel1d
+from nerfbusters.utils.visualizations import (
     visualize_grid2d,
     visualize_grid3d,
     visualize_grid3d_slices,
@@ -28,7 +28,7 @@ def format_batch(batch):
     return x, scale
 
 
-class CleaNerfTrainer(pl.LightningModule):
+class NerfbustersTrainer(pl.LightningModule):
     def __init__(self, config, savepath=""):
         super().__init__()
 

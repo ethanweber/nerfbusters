@@ -1,7 +1,7 @@
 import copy
 
-from cleanerf.nerf.experiment_configs.experiments_baseline import dataset_lists
-from cleanerf.nerf.experiment_configs.utils import Argument
+from nerfbusters.nerf.experiment_configs.experiments_baseline import dataset_lists
+from nerfbusters.nerf.experiment_configs.utils import Argument
 
 # Here we replace the string .baseline.ckpt with .pseudo-gt.ckpt
 # to load the pseudo-gt checkpoint instead of the baseline checkpoint.

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 """
-The CleaNeRF pipeline.
+The Nerfbusters pipeline.
 """
 
 import math
@@ -26,10 +26,10 @@ import numpy as np
 import torch
 import yaml
 from dotmap import DotMap
-from cleanerf.cubes.visualize3D import get_image_grid
-from cleanerf.lightning.cleanerf_trainer import CleaNerfTrainer
-from cleanerf.utils.visualizations import get_3Dimage_fast
-from cleanerf.nerf.cleanerf_utils import random_train_pose
+from nerfbusters.cubes.visualize3D import get_image_grid
+from nerfbusters.lightning.nerfbusters_trainer import NerfbustersTrainer
+from nerfbusters.utils.visualizations import get_3Dimage_fast
+from nerfbusters.nerf.nerfbusters_utils import random_train_pose
 from torchtyping import TensorType
 from typing_extensions import Literal
 
@@ -148,10 +148,10 @@ class WeightGrid(torch.nn.Module):
 
 
 @dataclass
-class CleanerfPipelineConfig(VanillaPipelineConfig):
-    """CleaNeRF Pipeline Config"""
+class NerfbustersPipelineConfig(VanillaPipelineConfig):
+    """Nerfbusters Pipeline Config"""
 
-    _target: Type = field(default_factory=lambda: CleanerfPipeline)
+    _target: Type = field(default_factory=lambda: NerfbustersPipeline)
 
     # some default overrides
 
@@ -160,7 +160,7 @@ class CleanerfPipelineConfig(VanillaPipelineConfig):
 
     # 3D diffusion model
     diffusioncube_config_path: Optional[Path] = Path("config/shapenet.yaml")
-    diffusioncube_ckpt_path: Optional[Path] = Path("data/cleanerf-diffusion-cube-weights.ckpt")
+    diffusioncube_ckpt_path: Optional[Path] = Path("data/nerfbusters-diffusion-cube-weights.ckpt")
 
     # visualize options
     # what to visualize
@@ -283,16 +283,16 @@ class CleanerfPipelineConfig(VanillaPipelineConfig):
     threshold_loss_mult: float = 1e-1
 
 
-class CleanerfPipeline(VanillaPipeline):
+class NerfbustersPipeline(VanillaPipeline):
     """Pipeline with logic for changing the number of rays per batch."""
 
     # pylint: disable=abstract-method
 
-    config: CleanerfPipelineConfig
+    config: NerfbustersPipelineConfig
 
     def __init__(
         self,
-        config: CleanerfPipelineConfig,
+        config: NerfbustersPipelineConfig,
         device: str,
         test_mode: Literal["test", "val", "inference"] = "val",
         world_size: int = 1,
@@ -353,7 +353,7 @@ class CleanerfPipeline(VanillaPipeline):
     def load_diffusion_model(self, diffusion_config_path, diffusion_ckpt_path):
         config = yaml.load(open(diffusion_config_path, "r"), Loader=yaml.Loader)
         config = DotMap(config)
-        model = CleaNerfTrainer(config)
+        model = NerfbustersTrainer(config)
         ckpt = torch.load(diffusion_ckpt_path, map_location="cpu")
         model.load_state_dict(ckpt["state_dict"])
         model.eval()

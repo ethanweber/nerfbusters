@@ -10,8 +10,8 @@ import plotly.graph_objects as go
 import torch
 import trimesh
 
-from cleanerf.cubes.datasets3D import Crop
-from cleanerf.cubes.render import render_scenemesh
+from nerfbusters.cubes.datasets3D import Crop
+from nerfbusters.cubes.render import render_scenemesh
 
 
 def get_crop_as_scatter_fig(crop: Crop, resolution: int):

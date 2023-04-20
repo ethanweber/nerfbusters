@@ -3,7 +3,7 @@ from random import shuffle
 
 import pytorch_lightning as pl
 
-from cleanerf.data_modules.cubes3d import Cubes3D
+from nerfbusters.data_modules.cubes3d import Cubes3D
 from torch.utils.data import DataLoader
 
 

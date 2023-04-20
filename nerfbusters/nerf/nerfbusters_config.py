@@ -1,5 +1,5 @@
 """
-Define the CleaNeRF config.
+Define the Nerfbusters config.
 """
 
 from __future__ import annotations
@@ -13,12 +13,12 @@ from nerfstudio.plugins.types import MethodSpecification
 from nerfstudio.engine.optimizers import AdamOptimizerConfig
 
 
-from cleanerf.nerf.cleanerf_pipeline import CleanerfPipelineConfig
+from nerfbusters.nerf.nerfbusters_pipeline import NerfbustersPipelineConfig
 
-cleanerf_config = MethodSpecification(
+nerfbusters_config = MethodSpecification(
     TrainerConfig(
-        method_name="cleanerf",
-        project_name="CleaNeRF",
+        method_name="nerfbusters",
+        project_name="Nerfbusters",
         steps_per_eval_batch=1000,
         steps_per_eval_image=1000,
         steps_per_save=5000,
@@ -26,7 +26,7 @@ cleanerf_config = MethodSpecification(
         save_only_latest_checkpoint=False,
         max_num_iterations=5001,
         mixed_precision=True,
-        pipeline=CleanerfPipelineConfig(
+        pipeline=NerfbustersPipelineConfig(
             datamanager=VanillaDataManagerConfig(
                 dataparser=NerfstudioDataParserConfig(eval_mode="eval-frame-index"),
                 train_num_rays_per_batch=4096,
@@ -47,5 +47,5 @@ cleanerf_config = MethodSpecification(
         viewer=ViewerConfig(num_rays_per_chunk=1 << 15, websocket_port=None),
         vis="viewer",
     ),
-    description="Uses the CleaNeRF pipeline."
+    description="Uses the Nerfbusters pipeline."
 )

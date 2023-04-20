@@ -25,7 +25,7 @@ Train NeRF on train images, evaluate on eval images.
 ```bash
 ns-train nerfacto \
     --vis viewer+wandb \
-    --data data/cleanerf-dataset/${DATASET} \
+    --data data/nerfbusters-dataset/${DATASET} \
     --experiment-name ${BASENAME_EXPERIMENT_NAME} \
     --output-dir ${OUTPUT_FOLDER_PRE} \
     nerfstudio-data \
@@ -39,7 +39,7 @@ Train NeRF on all (train + eval) images, evaluate on eval images.
 ```bash
 ns-train nerfacto \
     --vis viewer+wandb \
-    --data data/cleanerf-dataset/${DATASET} \
+    --data data/nerfbusters-dataset/${DATASET} \
     --experiment-name ${GT_EXPERIMENT_NAME} \
     --output-dir ${OUTPUT_FOLDER_PRE} \
     nerfstudio-data \
@@ -52,21 +52,21 @@ Then we copy the checkpoints into a folder `outputs-checkpoints`. We also give t
 
 # Improve the NeRFs with post-processing
 
-Now we improve the NeRFs with various regularizers, including our CleaNeRF method. Remove `--dry-run` from any of the following commands to actually execute them.
+Now we improve the NeRFs with various regularizers, including our Nerfbusters method. Remove `--dry-run` from any of the following commands to actually execute them.
 
-To run the **baseline experiments**, modify the file [cleanerf/nerf/experiment_configs/experiments_baseline.py](cleanerf/nerf/experiment_configs/experiments_baseline.py). *We've commented out everything except the aloe scene.*
+To run the **baseline experiments**, modify the file [nerfbusters/nerf/experiment_configs/experiments_baseline.py](nerfbusters/nerf/experiment_configs/experiments_baseline.py). *We've commented out everything except the aloe scene.*
 
 ```bash
 python scripts/launch_nerf.py train --experiment-name baselines --dry-run
 ```
 
-To run the **ablations experiments**, modify the file [cleanerf/nerf/experiment_configs/experiments_ablations.py](cleanerf/nerf/experiment_configs/experiments_ablations.py). *This will require preprocessing the garbage scene.*
+To run the **ablations experiments**, modify the file [nerfbusters/nerf/experiment_configs/experiments_ablations.py](nerfbusters/nerf/experiment_configs/experiments_ablations.py). *This will require preprocessing the garbage scene.*
 
 ```bash
 python scripts/launch_nerf.py train --experiment-name ablations --dry-run
 ```
 
-To run the **pseudo gt experiments**, modify the file [cleanerf/nerf/experiment_configs/experiments_pseudo_gt.py](cleanerf/nerf/experiment_configs/experiments_pseudo_gt.py). *We've commented out everything except the aloe scene.*
+To run the **pseudo gt experiments**, modify the file [nerfbusters/nerf/experiment_configs/experiments_pseudo_gt.py](nerfbusters/nerf/experiment_configs/experiments_pseudo_gt.py). *We've commented out everything except the aloe scene.*
 
 ```bash
 python scripts/launch_nerf.py train --experiment-name pseudo-gt --dry-run

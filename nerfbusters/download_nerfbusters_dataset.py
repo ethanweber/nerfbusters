@@ -1,13 +1,11 @@
 """
-Downloads the CleaNeRF dataset.
+Downloads the Nerfbusters dataset.
 We download the videos and the already processed results from running COLMAP.
 """
 
 from __future__ import annotations
 
 import os
-import shutil
-import tarfile
 import zipfile
 from dataclasses import dataclass
 from pathlib import Path
@@ -19,8 +17,6 @@ from rich.console import Console
 from typing_extensions import Annotated
 
 from nerfstudio.configs.base_config import PrintableConfig
-from nerfstudio.utils import install_checks
-from nerfstudio.utils.scripts import run_command
 
 CONSOLE = Console(width=120)
 
@@ -40,25 +36,25 @@ class DatasetDownload(PrintableConfig):
 
 
 @dataclass
-class CleaNeRFDiffusionCubeWeightsDownload(DatasetDownload):
-    """Download the CleaNeRF captures."""
+class NerfbustersDiffusionCubeWeightsDownload(DatasetDownload):
+    """Download the Nerfbusters captures."""
 
     def download(self, save_dir: Path):
         # Download the files
-        url = "https://data.nerf.studio/cleanerf-diffusion-cube-weights.ckpt"
-        download_path = str(save_dir / "cleanerf-diffusion-cube-weights.ckpt")
+        url = "https://data.nerf.studio/nerfbusters-diffusion-cube-weights.ckpt"
+        download_path = str(save_dir / "nerfbusters-diffusion-cube-weights.ckpt")
         gdown.download(url, output=download_path)
 
 
 @dataclass
-class CleaNeRFCapturesDownload(DatasetDownload):
-    """Download the CleaNeRF captures."""
+class NerfbustersCapturesDownload(DatasetDownload):
+    """Download the Nerfbusters captures."""
 
     def download(self, save_dir: Path):
 
         # Download the files
-        url = "https://data.nerf.studio/cleanerf-captures.zip"
-        download_path = str(save_dir / "cleanerf-captures.zip")
+        url = "https://data.nerf.studio/nerfbusters-captures.zip"
+        download_path = str(save_dir / "nerfbusters-captures.zip")
         gdown.download(url, output=download_path)
         with zipfile.ZipFile(download_path, "r") as zip_ref:
             zip_ref.extractall(str(save_dir))
@@ -66,14 +62,14 @@ class CleaNeRFCapturesDownload(DatasetDownload):
 
 
 @dataclass
-class CleaNeRFDataDownload(DatasetDownload):
-    """Download the CleaNeRF dataset."""
+class NerfbustersDataDownload(DatasetDownload):
+    """Download the Nerfbusters dataset."""
 
     def download(self, save_dir: Path):
 
         # Download the files
-        url = "https://data.nerf.studio/cleanerf-dataset.zip"
-        download_path = str(save_dir / "cleanerf-dataset.zip")
+        url = "https://data.nerf.studio/nerfbusters-dataset.zip"
+        download_path = str(save_dir / "nerfbusters-dataset.zip")
         gdown.download(url, output=download_path)
         with zipfile.ZipFile(download_path, "r") as zip_ref:
             zip_ref.extractall(str(save_dir))
@@ -83,7 +79,7 @@ class CleaNeRFDataDownload(DatasetDownload):
 def main(
     dataset: DatasetDownload,
 ):
-    """Script to download the CleaNeRF data.
+    """Script to download the Nerfbusters data.
     - captures: These are the videos which were used the ns-process-data.
     - data: These are the already-processed results from running ns-process-data (ie COLMAP).
     Args:
@@ -95,15 +91,15 @@ def main(
 
 
 Commands = Union[
-    Annotated[CleaNeRFDiffusionCubeWeightsDownload, tyro.conf.subcommand(name="diffusion-cube-weights")],
-    Annotated[CleaNeRFCapturesDownload, tyro.conf.subcommand(name="captures")],
-    Annotated[CleaNeRFDataDownload, tyro.conf.subcommand(name="dataset")],
+    Annotated[NerfbustersDiffusionCubeWeightsDownload, tyro.conf.subcommand(name="diffusion-cube-weights")],
+    Annotated[NerfbustersCapturesDownload, tyro.conf.subcommand(name="captures")],
+    Annotated[NerfbustersDataDownload, tyro.conf.subcommand(name="dataset")],
 ]
 
 
-def cleanerf_setup():
-    """The function that needs to be run to setup CleaNeRF for the Nerfstudio codebase."""
-    CleaNeRFDiffusionCubeWeightsDownload().download(Path("data/"))
+def nerfbusters_setup():
+    """The function that needs to be run to setup Nerfbusters for the Nerfstudio codebase."""
+    NerfbustersDiffusionCubeWeightsDownload().download(Path("data/"))
 
 
 def entrypoint():

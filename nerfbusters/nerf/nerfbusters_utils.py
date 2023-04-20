@@ -1,5 +1,5 @@
 """
-Utils for cleanerf project..
+Utils for Nerfbusters project..
 """
 
 from __future__ import annotations

@@ -9,9 +9,9 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 import trimesh
-from cleanerf.cubes.datasets3D import SyntheticMeshDataset
-from cleanerf.cubes.utils import read_binvox
-from cleanerf.utils.utils import get_gaussian_kernel1d
+from nerfbusters.cubes.datasets3D import SyntheticMeshDataset
+from nerfbusters.cubes.utils import read_binvox
+from nerfbusters.utils.utils import get_gaussian_kernel1d
 from scipy import ndimage as ndi
 from torch.utils import data
 from tqdm import tqdm

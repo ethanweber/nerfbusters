@@ -10,13 +10,13 @@ import torch
 import torch.nn.functional as F
 import torchvision
 import wandb
-from cleanerf.cubes.datasets3D import Crop
-from cleanerf.cubes.visualize3D import (
+from nerfbusters.cubes.datasets3D import Crop
+from nerfbusters.cubes.visualize3D import (
     get_image_grid,
     render_mesh_from_multiple_views,
     write_crop_to_mesh,
 )
-from cleanerf.utils.utils import get_gaussian_kernel1d
+from nerfbusters.utils.utils import get_gaussian_kernel1d
 
 
 def save_voxel_as_point_cloud(voxels, filename, color=[1, 0.706, 0], offsets=[0, 0, 0]):

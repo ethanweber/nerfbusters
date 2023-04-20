@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from cleanerf.utils import metrics
+from nerfbusters.utils import metrics
 from tqdm import tqdm
 import math
 

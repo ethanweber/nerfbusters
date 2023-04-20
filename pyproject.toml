@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "cleanerf"
+name = "nerfbusters"
 version = "0.0.0"
-description = "CleaNeRF package"
+description = "Nerfbusters package"
 requires-python = ">=3.7.3"
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -22,10 +22,10 @@ dependencies = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["cleanerf*"]
+include = ["nerfbusters*"]
 
 [project.entry-points.'nerfstudio.method_configs']
-cleanerf = "cleanerf.nerf.cleanerf_config:cleanerf_config"
+nerfbusters = "nerfbusters.nerf.nerfbusters_config:nerfbusters_config"
 
 [project.scripts]
-cleanerf-setup = "cleanerf.download_cleanerf_dataset:cleanerf_setup"
+nerfbusters-setup = "nerfbusters.download_nerfbusters_dataset:nerfbusters_setup"

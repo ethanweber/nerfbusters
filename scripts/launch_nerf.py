@@ -1,5 +1,5 @@
 """
-Commands for the CleaNeRF paper.
+Commands for the Nerfbusters paper.
 """
 
 import glob
@@ -25,13 +25,13 @@ from nerfstudio.utils.scripts import run_command
 from nerfstudio.viewer.server.subprocess import get_free_port
 from typing_extensions import Annotated, Literal
 
-from cleanerf.nerf.experiment_configs.experiments_ablations import \
+from nerfbusters.nerf.experiment_configs.experiments_ablations import \
     arguments_list_of_lists as experiments_ablations_list
-from cleanerf.nerf.experiment_configs.experiments_baseline import \
+from nerfbusters.nerf.experiment_configs.experiments_baseline import \
     arguments_list_of_lists as experiments_baselines_list
-from cleanerf.nerf.experiment_configs.experiments_pseudo_gt import \
+from nerfbusters.nerf.experiment_configs.experiments_pseudo_gt import \
     arguments_list_of_lists as experiments_pseudo_gt_list
-from cleanerf.nerf.experiment_configs.utils import \
+from nerfbusters.nerf.experiment_configs.utils import \
     get_experiment_name_and_argument_combinations
 
 
@@ -112,7 +112,7 @@ class ExperimentConfig(PrintableConfig):
 
 @dataclass
 class Train(ExperimentConfig):
-    """Train cleanerf models."""
+    """Train nerfbusters models."""
 
     experiment_name: Literal["baselines", "ablations", "pseudo-gt"] = "baselines"
     """Which experiment to run"""
@@ -139,7 +139,7 @@ class Train(ExperimentConfig):
             )
 
         for experiment_name, argument_string in zip(experiment_names, argument_combinations):
-            base_cmd = f"ns-train cleanerf --experiment-name {experiment_name} --vis wandb"
+            base_cmd = f"ns-train nerfbusters --experiment-name {experiment_name} --vis wandb"
             jobs.append(f" {base_cmd} {argument_string}")
 
         launch_experiments(jobs, dry_run=dry_run, gpu_ids=self.gpu_ids)
@@ -147,7 +147,7 @@ class Train(ExperimentConfig):
 
 @dataclass
 class Render(ExperimentConfig):
-    """Render cleanerf models."""
+    """Render nerfbusters models."""
 
     input_folder: Path = Path("input-folder")
     rendered_output_names: List[str] = field(
@@ -187,7 +187,7 @@ class Render(ExperimentConfig):
 
 @dataclass
 class Metrics(ExperimentConfig):
-    """Compute metrics for cleanerf on the renders."""
+    """Compute metrics for nerfbusters on the renders."""
 
     input_folder: Path = Path("input-folder")
     pseudo_gt_experiment_name: Path = Path("pseudo_gt_experiment_name")

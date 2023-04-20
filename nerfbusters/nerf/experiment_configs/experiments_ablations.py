@@ -1,9 +1,9 @@
-from cleanerf.nerf.experiment_configs.utils import Argument
+from nerfbusters.nerf.experiment_configs.utils import Argument
 
 dataset_lists = [
     Argument(
         name="garbage",
-        arg_string="--data data/cleanerf-dataset/garbage --pipeline.nerf_checkpoint_path outputs-checkpoints/garbage-baseline.ckpt --output-dir outputs-postprocessed/garbage",
+        arg_string="--data data/nerfbusters-dataset/garbage --pipeline.nerf_checkpoint_path outputs-checkpoints/garbage-baseline.ckpt --output-dir outputs-postprocessed/garbage",
     )
 ]
 

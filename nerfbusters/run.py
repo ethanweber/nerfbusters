@@ -8,8 +8,8 @@ import pytorch_lightning as pl
 import torch
 import yaml
 from dotmap import DotMap
-from cleanerf.data_modules.datamodule import DataModule
-from cleanerf.lightning.cleanerf_trainer import CleaNerfTrainer
+from nerfbusters.data_modules.datamodule import DataModule
+from nerfbusters.lightning.nerfbusters_trainer import NerfbustersTrainer
 from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 from pytorch_lightning.loggers import WandbLogger
 
@@ -84,7 +84,7 @@ def main(args, config):
 
     callbacks = [LearningRateMonitor(logging_interval="step"), checkpoint_callback]
 
-    model = CleaNerfTrainer(config, savepath=savepath)
+    model = NerfbustersTrainer(config, savepath=savepath)
     data_module = DataModule(**config.toDict())
 
     trainer = pl.Trainer.from_argparse_args(

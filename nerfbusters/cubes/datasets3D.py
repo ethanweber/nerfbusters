@@ -17,7 +17,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 import trimesh
-from cleanerf.cubes.utils import get_random_rotation_matrix, read_binvox
+from nerfbusters.cubes.utils import get_random_rotation_matrix, read_binvox
 from pysdf import SDF
 
 # from scipy.spatial.transform import Rotation as R
