@@ -133,6 +133,14 @@ body {
     opacity: .77;
 }
 
+.github-img-icon-round {
+    max-width: 30%;
+    margin-top: 6px;
+    margin-bottom: 9px;
+    opacity: .77;
+    border-radius: 10px;
+}
+
 .data-img-icon {
     max-width: 30%;
     margin-top: 5px;
