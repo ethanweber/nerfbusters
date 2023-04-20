@@ -13,13 +13,7 @@ num_inference_steps: 1000
 beta_start: 0.0015
 beta_end: 0.05
 
-# noise_scheduler: "ddim"
-# num_train_timesteps: 1000
-# num_inference_steps: 50
-
 save_images_locally: False
-
-# unet values
 
 use_ema: False
 
