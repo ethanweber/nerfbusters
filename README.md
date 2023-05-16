@@ -47,18 +47,20 @@ cd ../
 chmod +x bins/binvox
 ```
 
-Your expected folder structure, should look like this
-
-    repos
-    ├── nerfstudio          # nerfstudio files
-    └── nerfbusters            # nerfbusters files 
-       ├── nerfbusters
-       └── bins
-          └── binvox        # binvox to voxelize cubes
-
 # Train 3D diffusion model
 
 The Nerfbusters local 3D diffusion model is trained on local cubes from ShapeNet. To download the ShapeNet dataset, login or create an account at https://shapenet.org and then download the [ShapeNetCore.v2](https://shapenet.cs.stanford.edu/shapenet/obj-zip/ShapeNetCore.v2.zip) dataset.
+
+Your expected folder structure, should look like this
+
+    repos
+    ├── nerfstudio             # nerfstudio files (but this can live anywhere)
+    └── nerfbusters            # nerfbusters files 
+       ├── nerfbusters
+       ├── data
+          └── ShapeNetCore.v2  # ShapeNet data
+       └── bins
+          └── binvox           # binvox to voxelize cubes
 
 Then you can train the 3D diffusion model.
 

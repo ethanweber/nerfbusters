@@ -10,7 +10,6 @@ from torch.utils.data import DataLoader
 class DataModule(pl.LightningDataModule):
     def __init__(
         self,
-        data_dir: str = "/home/warburg/data",
         batch_size: int = 512,
         val_batch_size: int = 32,
         workers=8,
@@ -27,7 +26,6 @@ class DataModule(pl.LightningDataModule):
     ):
         super().__init__()
 
-        self.data_dir = data_dir
         self.batch_size = batch_size
         self.val_batch_size = val_batch_size
         self.dataset = dataset

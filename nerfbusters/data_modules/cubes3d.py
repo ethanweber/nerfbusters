@@ -258,9 +258,3 @@ class Cubes3D(data.Dataset):
             corrupted_cube = torch.clamp(corrupted_cube, -1.0, 1.0)
 
             return {"corrupted_input": corrupted_cube, "input": cube, "scale": percent_of_scene}
-
-
-if __name__ == "__main__":
-
-    path = "/home/warburg/data/ShapeNetCore.v2"
-    data = Cubes3D(path, train=True)

@@ -1,11 +1,11 @@
 dataset: cubes
 scene: shapenet
-cubes_filename: "/home/warburg/data/ShapeNetCore.v2"
+cubes_filename: "data/ShapeNetCore.v2"
 train_len: 9984
 batch_size: 32
 val_batch_size: 32
 val_len: 96
-val_cubes_filename: "/home/warburg/data/ShapeNetCore.v2"
+val_cubes_filename: "data/ShapeNetCore.v2"
 
 noise_scheduler: "ddpm"
 num_train_timesteps: 1000
