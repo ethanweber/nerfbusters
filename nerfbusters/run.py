@@ -62,14 +62,13 @@ def main(args, config):
     name += datetime.now().strftime("%Y-%m-%d_%H%M%S")
     if args.name:
         name += f"-{args.name}"
-    savepath = f"lightning_logs/{name}"
+    savepath = f"outputs/diffusion/{name}"
     os.makedirs(savepath, exist_ok=True)
 
     # lightning trainer
     checkpoint_callback = ModelCheckpoint(
         monitor="Val_acc/dsds_epoch",
         dirpath=f"{savepath}/checkpoints",
-        # filename="best",
         filename="{epoch:02d}-{Val_acc/dsds_epoch:.2f}",
         save_top_k=-1,
         mode="max",
@@ -78,7 +77,7 @@ def main(args, config):
 
     logger = WandbLogger(
         name=name,
-        project="magic-eraser",
+        project="nerfbusters-diffusion",
         save_dir=savepath,
     )
 
