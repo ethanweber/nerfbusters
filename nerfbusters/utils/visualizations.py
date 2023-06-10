@@ -170,10 +170,9 @@ def make_normals(rays, depth_map):
     return normal_map
 
 
-def render_rays(cube, rays, near, far, N_samples, clip=True):
+def render_rays(cube, rays, near, far, N_samples, clip=True, th = 0.5):
     rays_o, rays_d = rays.chunk(2, dim=-1)
     bs, H, W, _ = rays.shape
-    th = 0.5
 
     # Compute 3D query points
     z_vals = torch.linspace(near, far, N_samples).to(cube.device)
@@ -203,7 +202,7 @@ def render_rays(cube, rays, near, far, N_samples, clip=True):
     return depth_map, acc_map
 
 
-def get_3Dimage_fast(x, num_views=4, format=True):
+def get_3Dimage_fast(x, num_views=4, format=True, th = 0.5):
     """Will return a grid of 3D images.
     Args:
         x: the input and output of the model. (bs, 1, res, res, res)
@@ -242,7 +241,7 @@ def get_3Dimage_fast(x, num_views=4, format=True):
         rays = torch.from_numpy(rays).float().to(x.device)
         rays = rays.permute(1, 2, 0, 3).reshape(H, W, -1)
         rays = rays.unsqueeze(0).repeat(x.shape[0], 1, 1, 1)
-        depth_map, acc_map = render_rays(x, rays, 0, 4, 512, clip=True)
+        depth_map, acc_map = render_rays(x, rays, 0, 4, 512, clip=True, th=th)
         normal_map = make_normals(rays, depth_map) * 0.5 + 0.5
 
         depth_maps.append(depth_map.cpu().numpy())

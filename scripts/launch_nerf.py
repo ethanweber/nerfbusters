@@ -19,7 +19,6 @@ import torch
 import torch.nn.functional as F
 import tyro
 from nerfstudio.configs.base_config import PrintableConfig
-from nerfstudio.model_components.losses import MSELoss
 from nerfstudio.utils.metrics import LPIPSModule, PSNRModule, SSIMModule
 from nerfstudio.utils.scripts import run_command
 from nerfstudio.viewer.server.subprocess import get_free_port

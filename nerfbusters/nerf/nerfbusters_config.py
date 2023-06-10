@@ -18,7 +18,7 @@ from nerfbusters.nerf.nerfbusters_pipeline import NerfbustersPipelineConfig
 nerfbusters_config = MethodSpecification(
     TrainerConfig(
         method_name="nerfbusters",
-        project_name="Nerfbusters",
+        project_name="nerfbusters-project",
         steps_per_eval_batch=1000,
         steps_per_eval_image=1000,
         steps_per_save=5000,

@@ -4,12 +4,11 @@ This project is 👻 Nerfbusters 🧹: Removing Ghostly Artifacts from Casually 
 
 # Project page
 
-
 See the `gh-pages` branch of this repo for the [project website](https://ethanweber.me/nerfbusters/).
 
 # Installation
 
-1) Setup conda enviroment
+1. Setup conda enviroment
 
 ```bash
 conda create --name nerfbusters -y python=3.8
@@ -17,7 +16,7 @@ conda activate nerfbusters
 python -m pip install --upgrade pip
 ```
 
-2) Install Nerfstudio and dependencies. Installation guide can be found [install nerfstudio](https://docs.nerf.studio/en/latest/quickstart/installation.html)
+2. Install Nerfstudio and dependencies. Installation guide can be found [install nerfstudio](https://docs.nerf.studio/en/latest/quickstart/installation.html)
 
 > Currently we are using the branch [nerfbusters-changes](https://github.com/nerfstudio-project/nerfstudio/tree/nerfbusters-changes). You may have to run the viewer locally if you want full functionality (unless these changes are merged into the main branch sometime).
 
@@ -28,7 +27,7 @@ pip install torch==1.13.1 torchvision functorch --extra-index-url https://downlo
 pip install git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
 ```
 
-3) Install Nerfbusters
+3. Install Nerfbusters
 
 ```bash
 cd ../
@@ -37,7 +36,7 @@ cd nerfbusters
 pip install -e .
 ```
 
-4) Install binvox to voxelize cubes
+4. Install binvox to voxelize cubes
 
 ```bash
 mkdir bins
@@ -55,7 +54,7 @@ Your expected folder structure, should look like this
 
     repos
     ├── nerfstudio             # nerfstudio files (but this can live anywhere)
-    └── nerfbusters            # nerfbusters files 
+    └── nerfbusters            # nerfbusters files
        ├── nerfbusters
        ├── data
           └── ShapeNetCore.v2  # ShapeNet data
@@ -87,7 +86,7 @@ Set the checkpoint path to use later.
 export NERF_CHECKPOINT_PATH=path/to/nerfstudio_models/step-000029999.ckpt
 ```
 
-Now you'll need to download the diffusion model weights. Run `python nerfbusters/download_nerfbusters_dataset.py diffusion-cube-weights` if you haven't downloaded them yet or haven't trained your own model. Then you can run post-processing with our method. *If you wan't to use a your own / a specific 3D diffusion model, then update the config `--pipeline.diffusioncube_config_path` and weights checkpoint with `--pipeline.diffusioncube_ckpt_path`.*
+Now you'll need to download the diffusion model weights. Run `python nerfbusters/download_nerfbusters_dataset.py diffusion-cube-weights` if you haven't downloaded them yet or haven't trained your own model. Then you can run post-processing with our method. _If you wan't to use a your own / a specific 3D diffusion model, then update the config `--pipeline.diffusioncube_config_path` and weights checkpoint with `--pipeline.diffusioncube_ckpt_path`._
 
 Now you can fine-tune (i.e., post-process) with our Nerfbusters method!
 

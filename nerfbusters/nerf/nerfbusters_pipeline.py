@@ -41,7 +41,7 @@ from nerfstudio.engine.callbacks import (
 )
 from nerfstudio.fields.visibility_field import VisibilityField
 from nerfstudio.pipelines.base_pipeline import VanillaPipeline, VanillaPipelineConfig
-from nerfstudio.utils import profiler
+from nerfstudio.utils import profiler, writer
 
 print_stats = lambda x: print(f"x mean {x.mean():.3f}, std {x.std():.3f}, min {x.min():.3f}, max {x.max():.3f}")
 
@@ -185,11 +185,12 @@ class NerfbustersPipelineConfig(VanillaPipelineConfig):
     max_num_cubes_to_visualize: int = 6
     """If we should fix the batch of samples for a couple of steps."""
     fixed_cubes_center: Tuple[Tuple[float, float, float], ...] = (
-        (-0.85, 0.85, -0.5),  # plant - vase
+        (0.0, 0.0, -0.15),  # picnic - vase
+        # (-0.85, 0.85, -0.5),  # plant - vase
         # (0.03, 0.28, -0.23), # table - chair
         # (-0.07, 0.02, -0.36),  # table - table
     )
-    fixed_cubes_scale_perc: Tuple[Tuple[float], ...] = ((0.1),)
+    fixed_cubes_scale_perc: Tuple[Tuple[float], ...] = ((0.02),)
     aabb_scalar: float = 1.5
 
     # weight grid settings
@@ -486,7 +487,6 @@ class NerfbustersPipeline(VanillaPipeline):
         return self.config.singlestep_cube_loss_mult * loss
 
     def apply_threshold_loss(self, step, x, density, res, scales):
-
         target = 0.0
 
         # binarize
@@ -542,7 +542,6 @@ class NerfbustersPipeline(VanillaPipeline):
         return grad_mag
 
     def apply_total_variation_loss(self, step: int, density: TensorType["num_cubes", "res", "res", "res"], res):
-
         # x = self.density_to_x(density)
         x = density
         delta_x = x[..., 1:, :-1, :-1] - x[..., :-1, :-1, :-1]
@@ -659,20 +658,36 @@ class NerfbustersPipeline(VanillaPipeline):
         num_cubes = min(max_num_cubes, x.shape[0])
         with torch.no_grad():
             x_input = x[:num_cubes][:, None]
-            # np.save("x.npy", x.detach().cpu().numpy())
-            depth_maps, normal_maps = get_3Dimage_fast(x_input, num_views=num_views, format=False)
-            depth_maps = depth_maps.reshape(num_views, num_cubes, *depth_maps.shape[-3:])
-            normal_maps = normal_maps.reshape(num_views, num_cubes, *normal_maps.shape[-3:])
-            image_grid = []
-            for i in range(num_cubes):
-                image_row = []
-                for j in range(num_views):
-                    image_row.append(normal_maps[j, i])
-                image_row = np.hstack(image_row)
-                image_grid.append(image_row)
-            image_grid = np.vstack(image_grid)
-            media.write_image("cubes_normal_maps.png", image_grid)
-            # media.write_image(f"temp/cubes_normal_maps_step{step:05d}.png", image_grid)
+
+            with torch.no_grad():
+                xhat_input, _ = self.diffusioncube_model.single_step_reverse_process(
+                    sample=x_input,
+                    starting_t=self.config.singlestep_starting_t,
+                    scale=self.scales,
+                )
+                xhat_input = torch.where(xhat_input < 0, -1, 1).float()
+            x_diff = torch.where(torch.abs(xhat_input - x_input) > 0, 1, -1).float()
+
+            def get_image_grid_from_x(xin):
+                depth_maps, normal_maps = get_3Dimage_fast(xin, num_views=num_views, format=False, th=0.0)
+                depth_maps = depth_maps.reshape(num_views, num_cubes, *depth_maps.shape[-3:])
+                normal_maps = normal_maps.reshape(num_views, num_cubes, *normal_maps.shape[-3:])
+                image_grid = []
+                for i in range(num_cubes):
+                    image_row = []
+                    for j in range(num_views):
+                        image_row.append(normal_maps[j, i])
+                    image_row = np.hstack(image_row)
+                    image_grid.append(image_row)
+                image_grid = np.vstack(image_grid)
+                return image_grid
+
+            image_grid_x = get_image_grid_from_x(x_input)
+            image_grid_xhat = get_image_grid_from_x(xhat_input)
+            image_grid_xdiff = get_image_grid_from_x(x_diff)
+            writer.put_image(name="visualize_cubes/image_grid_x", image=torch.tensor(image_grid_x), step=step)
+            writer.put_image(name="visualize_cubes/image_grid_xhat", image=torch.tensor(image_grid_xhat), step=step)
+            writer.put_image(name="visualize_cubes/image_grid_xdiff", image=torch.tensor(image_grid_xdiff), step=step)
 
     @profiler.time_function
     def get_train_loss_dict(self, step: int):
@@ -907,7 +922,6 @@ class NerfbustersPipeline(VanillaPipeline):
 
         # multistep cube loss
         if self.config.use_multistep_cube_loss:
-
             assert x is not None
             assert x.min() >= -1.0 and x.max() <= 1.0, f"x.min()={x.min()}, x.max()={x.max()}"
 
@@ -916,7 +930,6 @@ class NerfbustersPipeline(VanillaPipeline):
 
         # single step cube loss
         if self.config.use_singlestep_cube_loss:
-
             assert x is not None
             assert x.min() >= -1.0 and x.max() <= 1.0, f"x.min()={x.min()}, x.max()={x.max()}"
 
