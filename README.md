@@ -18,7 +18,7 @@ python -m pip install --upgrade pip
 
 2. Install Nerfstudio and dependencies. Installation guide can be found [install nerfstudio](https://docs.nerf.studio/en/latest/quickstart/installation.html)
 
-> Currently we are using the branch [nerfbusters-changes](https://github.com/nerfstudio-project/nerfstudio/tree/nerfbusters-changes). You may have to run the viewer locally if you want full functionality (unless these changes are merged into the main branch sometime).
+> Currently we are using the branch [nerfbusters-changes](https://github.com/nerfstudio-project/nerfstudio/tree/nerfbusters-changes). You may have to run the viewer locally if you want full functionality.
 
 ```bash
 cd path/to/nerfstudio
