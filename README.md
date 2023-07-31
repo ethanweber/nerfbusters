@@ -126,3 +126,15 @@ ns-process-data video --data data/nerfbusters-captures/${DATASET}/${DATASET}.mp4
 ### NeRF experiments
 
 See for [README_NERF_EXPERIMENTS.md](README_NERF_EXPERIMENTS.md) to replicate our experiments and evaluation procedure described in the paper.
+
+
+# Citing
+
+If you find this code or data useful for your research, please consider citing the following paper:
+
+    @inproceedings{Nerfbusters2023,
+	    Title        = {Nerfbusters: Removing Ghostly Artifacts from Casually Captured NeRFs},
+	    Author       = {Frederik Warburg* and Ethan Weber* and Matthew Tancik and Aleksander Hołyński and Angjoo Kanazawa},
+        Booktile     = {ICCV},
+	    Year         = {2023}
+    }
