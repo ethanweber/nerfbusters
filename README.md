@@ -123,6 +123,8 @@ export DATASET=aloe;
 ns-process-data video --data data/nerfbusters-captures/${DATASET}/${DATASET}.mp4 data/nerfbusters-captures/${DATASET}/${DATASET}-eval.mp4 --output-dir data/nerfbusters-processed-data/${DATASET} --num-frames-target 300;
 ```
 
+*If you want to download any of the data from Google Drive directly, you can access the folder [here](https://drive.google.com/drive/folders/19NkX_FXLMnD4Mzv5efxESLrSln5TN1ZB?usp=drive_link).*
+
 ### NeRF experiments
 
 See for [README_NERF_EXPERIMENTS.md](README_NERF_EXPERIMENTS.md) to replicate our experiments and evaluation procedure described in the paper.
