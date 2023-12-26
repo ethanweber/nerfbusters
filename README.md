@@ -67,7 +67,7 @@ Then you can train the 3D diffusion model.
 python nerfbusters/run.py --config config/shapenet.yaml --name shapenet-experiment
 ```
 
-We also provide checkpoints for a trained diffusion model [pretrained checkpoint](https://data.nerf.studio/nerfbusters-diffusion-cube-weights.ckpt)
+We also provide checkpoints for a trained diffusion model [pretrained checkpoint](https://drive.google.com/uc?id=1iioFQrH8cCmYxjLSoBb6DHHP7pP4QnIp)
 
 # Running Nerfbusters in-the-wild
 
