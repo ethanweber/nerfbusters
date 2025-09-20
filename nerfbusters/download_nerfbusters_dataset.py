@@ -41,7 +41,7 @@ class NerfbustersDiffusionCubeWeightsDownload(DatasetDownload):
 
     def download(self, save_dir: Path):
         # Download the files
-        url = "https://drive.google.com/uc?id=1iioFQrH8cCmYxjLSoBb6DHHP7pP4QnIp"
+        url = "https://drive.google.com/uc?id=19NkX_FXLMnD4Mzv5efxESLrSln5TN1ZB"
         download_path = str(save_dir / "nerfbusters-diffusion-cube-weights.ckpt")
         gdown.download(url, output=download_path)
 
@@ -52,7 +52,7 @@ class NerfbustersCapturesDownload(DatasetDownload):
 
     def download(self, save_dir: Path):
         # Download the files
-        url = "https://drive.google.com/uc?id=1MHztZNohVS7sZ09Yl-LkUOkfsu2pVEge"
+        url = "https://drive.google.com/uc?id=1RLpcUf77-oCyHc9-8wVR5Vyl_Q6bpnxb"
         download_path = str(save_dir / "nerfbusters-captures.zip")
         gdown.download(url, output=download_path)
         with zipfile.ZipFile(download_path, "r") as zip_ref:
@@ -66,7 +66,7 @@ class NerfbustersDataDownload(DatasetDownload):
 
     def download(self, save_dir: Path):
         # Download the files
-        url = "https://drive.google.com/uc?id=197bfxxvDEJr9lPf5_QZzbItsBnNfChOt"
+        url = "https://drive.google.com/uc?id=1X6qq46M7FGMR_X0fHt9TBlFzmFwSpodi"
         download_path = str(save_dir / "nerfbusters-dataset.zip")
         gdown.download(url, output=download_path)
         with zipfile.ZipFile(download_path, "r") as zip_ref:

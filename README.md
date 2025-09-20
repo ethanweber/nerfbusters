@@ -67,7 +67,7 @@ Then you can train the 3D diffusion model.
 python nerfbusters/run.py --config config/shapenet.yaml --name shapenet-experiment
 ```
 
-We also provide checkpoints for a trained diffusion model [pretrained checkpoint](https://drive.google.com/uc?id=1iioFQrH8cCmYxjLSoBb6DHHP7pP4QnIp)
+We also provide checkpoints for a trained diffusion model [pretrained checkpoint](https://drive.google.com/uc?id=1xXQUbuXEcI7i_J7AYTwXwtZhGka4MeOi)
 
 # Running Nerfbusters in-the-wild
 
@@ -123,7 +123,7 @@ export DATASET=aloe;
 ns-process-data video --data data/nerfbusters-captures/${DATASET}/${DATASET}.mp4 data/nerfbusters-captures/${DATASET}/${DATASET}-eval.mp4 --output-dir data/nerfbusters-processed-data/${DATASET} --num-frames-target 300;
 ```
 
-*If you want to download any of the data from Google Drive directly, you can access the folder [here](https://drive.google.com/drive/folders/19NkX_FXLMnD4Mzv5efxESLrSln5TN1ZB?usp=drive_link).*
+*If you want to download any of the data from Google Drive directly, you can access the folder [here](https://drive.google.com/drive/folders/0B6AC0-HiND_6flc1WXBHRU9rVXlLZlRRbWg5OTY2Mkg3cTJxTWJnYWJWS3ZuNlA3aDdVWTg?resourcekey=0-9JVtiCM_mxTWmJ9eCmXpcQ&usp=sharing).*
 
 ### NeRF experiments
 
